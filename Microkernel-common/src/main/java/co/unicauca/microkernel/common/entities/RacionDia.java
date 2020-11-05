@@ -15,13 +15,15 @@ public class RacionDia {
     private int precio;
     private String nombre;
     private int menuId;
+    private byte [] imagen;
 
-    public RacionDia(int racId, CategoriaEnum tipo, int precio, String nombre, int menuId) {
+    public RacionDia(int racId, CategoriaEnum tipo, int precio, String nombre, int menuId, byte [] imagen) {
         this.racId = racId;
         this.tipo = tipo;
         this.precio = precio;
         this.nombre = nombre;
         this.menuId = menuId;
+        this.imagen=imagen;
     }
 
     public int getRacId() {
@@ -63,6 +65,13 @@ public class RacionDia {
     public void setMenuId(int menuId) {
         this.menuId = menuId;
     }
-    
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
     
 }
