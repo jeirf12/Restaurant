@@ -12,13 +12,15 @@ package co.unicauca.microkernel.common.entities;
 public class Restaurante {
     private String nombre;
     private int id;
+    private byte [] imagen;
 
     public Restaurante() {
     }
 
-    public Restaurante(String nombre, int id) {
+    public Restaurante(String nombre, int id, byte[] imagen) {
         this.nombre = nombre;
         this.id = id;
+        this.imagen=imagen;
     }
 
     public String getNombre() {
@@ -35,6 +37,14 @@ public class Restaurante {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
     }
     
 }
