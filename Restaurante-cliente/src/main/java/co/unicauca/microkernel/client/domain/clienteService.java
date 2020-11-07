@@ -30,4 +30,13 @@ public class clienteService {
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
     }
+    
+    //
+    public String deleteRacionDia(int rac_id) throws Exception{
+        return service.deleteRacionDia(rac_id);
+    }
+    //
+    public String deletePlatoEspecial(int plae_id) throws Exception{
+        return service.deletePlatoEspecial(plae_id);
+    }
 }

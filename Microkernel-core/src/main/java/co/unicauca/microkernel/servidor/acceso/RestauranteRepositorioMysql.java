@@ -8,7 +8,6 @@ package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.app.Application;
 import co.unicauca.microkernel.business.DeliveryService;
-import co.unicauca.microkernel.common.entities.Delivery;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
@@ -36,6 +35,23 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
 
     public RestauranteRepositorioMysql(){
 
+    }
+    private boolean findRacionDia(int id){
+        boolean resultado;
+        try{
+            this.connect();
+            String sql = "select rac_nombre from raciondia where RAC_ID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            resultado = rs.next();
+            ps.close();
+            this.disconnect();
+            return resultado;
+        }catch(SQLException ex){
+            System.out.println("revento excepcion encontrar racion_:"+ex.getMessage());
+            return false;
+        }
     }
     private boolean findPlatoEspecial(int id){
         boolean resultado;
@@ -176,5 +192,72 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         }
         //lo ideal es retornor un id
         return instancia.getNombre();
+    }
+    /**
+     * cumunicacion con la base de datos para eliminar una racion del dia
+     * @param rac_id id racion que se desea eliminar
+     * @return 
+     */
+    @Override
+    public String deleteRacionDia(int rac_id) {
+        if(findRacionDia(rac_id)){
+            System.out.println("EXISTE EL ELEMENTO");
+        }else{
+            System.out.println("NO EXISTE EL ELEMENTO");
+            return "FALLO";
+        }
+        try{
+            //primero se establece la conexion
+            this.connect(); //validar cuando la conexion no sea exitosa
+            //se estructura la sentencia sql en un string
+            String sql = "DELETE FROM raciondia WHERE rac_id = (?)";
+            //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            //se compara el id, OJO Ddebe cumplir estrictamente el orden y el tipo de dato(de las tablas)
+            pstmt.setInt(1,rac_id);
+            //se ejecuta la sentencia sql
+            pstmt.executeUpdate();
+            //se cierra
+            pstmt.close();
+            //se termina la coneccion
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al eliminar la racion", ex);
+        }
+        return ""+rac_id;
+    }
+    /**
+     * cumunicacion con la base de datos para eliminar un plato especial
+     * @param plae_id id plato que se desea eliminar
+     * @return 
+     */
+    @Override
+    public String deletePlatoEspecial(int plae_id) {
+        if(findPlatoEspecial(plae_id)){
+            System.out.println("EXISTE EL ELEMENTO");
+        }else{
+            System.out.println("NO EXISTE EL ELEMENTO");
+            return "FALLO";
+        }
+        try{
+            //primero se establece la conexion
+            this.connect(); //validar cuando la conexion no sea exitosa
+            //se estructura la sentencia sql en un string
+            String sql = "DELETE FROM platoespecial WHERE plae_id = (?)";
+            //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            //se compara el id, OJO Ddebe cumplir estrictamente el orden y el tipo de dato(de las tablas)
+            pstmt.setInt(1,plae_id);
+            //se ejecuta la sentencia sql
+            pstmt.executeUpdate();
+            //se cierra
+            pstmt.close();
+            //se termina la coneccion
+            this.disconnect();
+  
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al eliminar el plato", ex);
+        }
+        return ""+plae_id;
     }
 }

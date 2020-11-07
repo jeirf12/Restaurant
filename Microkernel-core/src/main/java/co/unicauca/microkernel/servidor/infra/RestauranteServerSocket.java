@@ -164,6 +164,16 @@ public class RestauranteServerSocket implements Runnable{
                 if(protocolRequest.getAction().equals("postPlatoEspecial")){
                     administradorRegistrarPlatoEspecial(protocolRequest);               
                 }
+                //
+                if(protocolRequest.getAction().equals("deleteRacionDia")){
+                    administradordeleteRacionDia(protocolRequest);               
+                }
+                //
+                if(protocolRequest.getAction().equals("deletePlatoEspecial")){
+                    administradordeletePlatoEspecial(protocolRequest);               
+                }
+                
+                break;
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
@@ -254,4 +264,32 @@ public class RestauranteServerSocket implements Runnable{
         String strObject = gson.toJson(customer);
         return strObject;
     }*/
+
+    private void administradordeleteRacionDia(Protocol protocolRequest) {
+        //creo el id de la racion
+        int rac_id;
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        rac_id = (Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.deleteRacionDia(rac_id);
+        output.println(response);
+    }
+
+    private void administradordeletePlatoEspecial(Protocol protocolRequest) {
+        //creo el id de la racion
+        int plae_id;
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        plae_id = (Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.deletePlatoEspecial(plae_id);
+        output.println(response);
+    }
 }

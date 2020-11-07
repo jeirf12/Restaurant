@@ -17,4 +17,9 @@ public interface IClienteAccess {
     
     public String calcularCosto(int idCliente, int idPedido)throws Exception;
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception;
+    
+    //
+    public String deleteRacionDia(int rac_id)throws Exception;
+    //
+    public String deletePlatoEspecial(int plae_id)throws Exception;
 }

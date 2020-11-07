@@ -25,8 +25,8 @@ public class test {
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
         
-        MenuEspecial menuEspecial = new MenuEspecial(366,1);
-        PlatoEspecial platoEspecial = new PlatoEspecial(1,menuEspecial.getId(),"Nombre","Descripcion",123);
+        //MenuEspecial menuEspecial = new MenuEspecial(366,1);
+        PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
         try{
             String platoE = servicioRestaurante.savePlatoEspecial(platoEspecial);
             System.out.println(platoE);

@@ -136,4 +136,60 @@ public class ClienteAccessSocket implements IClienteAccess{
         System.out.println("json: "+requestJson);
         return requestJson;
     }   
+
+    /**
+     *
+     * @param rac_id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public String deleteRacionDia(int rac_id) throws Exception{
+        String respJson = deletePlatoDiaJson(rac_id);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+rac_id;
+    }
+
+    /**
+     *
+     * @param plae_id
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public String deletePlatoEspecial(int plae_id) throws Exception{
+        String respJson = deletePlatoEspecialJson(plae_id);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+plae_id;
+    }
+
+    private String deletePlatoDiaJson(int rac_id){
+        Protocol protocol = new Protocol();
+        protocol.setResource("administrador");
+        protocol.setAction("deleteRacionDia");
+        protocol.addParameter("rac_id", ""+rac_id);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        
+        return requestJson;
+    }
+
+    private String deletePlatoEspecialJson(int plae_id){
+        Protocol protocol = new Protocol();
+        protocol.setResource("administrador");
+        protocol.setAction("deletePlatoEspecial");
+        protocol.addParameter("plae_id", ""+plae_id);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        
+        return requestJson;
+    }
 }

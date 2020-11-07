@@ -16,4 +16,17 @@ public interface IPlatoRepositorio {
  
     public String calcularCosto(int idCliente, int idPedido);
     public String savePlatoEspecial(PlatoEspecial plato);
+
+    /**
+     * 
+     * @param rac_id
+     * @return 
+     */
+    public String deleteRacionDia(int rac_id);
+    /**
+     * 
+     * @param plae_id
+     * @return 
+     */
+    public String deletePlatoEspecial(int plae_id);
 }
