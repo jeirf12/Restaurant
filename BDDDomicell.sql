@@ -25,7 +25,7 @@ CREATE TABLE `cliente` (
 CREATE TABLE `menudia` (
   `MEND_ID` int(11) AUTO_INCREMENT,
   `RES_ID` int(11) NOT NULL,
-  `MEND_DIASEM` varchar(10) NOT NULL CHECK ('MEND_DIASEM' IN ('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo')),
+  `MEND_DIASEM` varchar(10) NOT NULL CHECK (`MEND_DIASEM` IN ('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo')),
   CONSTRAINT PK_MENUDIA PRIMARY KEY (`MEND_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -51,7 +51,7 @@ CREATE TABLE `pedido` (
   `PED_ID` int(11) AUTO_INCREMENT,
   `CLI_ID` int(11) NOT NULL,
   `RES_ID` int(11) NOT NULL,
-  `PED_ESTADO` varchar(10) NOT NULL,
+  `PED_ESTADO` varchar(10) DEFAULT 'CREADO' CHECK (`PED_ESTADO` in ('CREADO','CANCELADO','PAGADO')),
   `PED_FECHA` datetime NOT NULL,
   CONSTRAINT PK_PEDIDO PRIMARY KEY (`PED_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -81,6 +81,7 @@ CREATE TABLE `platoespecial` (
 CREATE TABLE `platoespecialpedido` (
   `PLAEP_ID` int(11) AUTO_INCREMENT,
   `PED_ID` int(11) NOT NULL,
+  `PLAE_ID` int(11) NOT NULL,
   CONSTRAINT PK_PLATOESPECIALPEDIDO PRIMARY KEY (`PLAEP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -109,6 +110,7 @@ CREATE TABLE `raciondia` (
 CREATE TABLE `racionpedido` (
   `RACP_ID` int(11) AUTO_INCREMENT,
   `PED_ID` int(11) NOT NULL,
+  `RAC_ID` int(11) NOT NULL,
   CONSTRAINT PK_RACIONDIAPEDIDO PRIMARY KEY (`RACP_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -126,53 +128,6 @@ CREATE TABLE `restaurante` (
   `RES_DIRECCION` varchar(100) NOT NULL,
   CONSTRAINT PK_RESTAURANTE PRIMARY KEY (`RES_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `menudia`
---
-ALTER TABLE `menudia`
-  ADD KEY `TIENE_FK` (`RES_ID`);
-
---
--- Indices de la tabla `menuespecial`
---
-ALTER TABLE `menuespecial`
-  ADD KEY `TIENE2_FK` (`RES_ID`);
-
---
--- Indices de la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD KEY `HACE_FK` (`CLI_ID`),
-  ADD KEY `TIENE7_FK` (`RES_ID`);
-
---
--- Indices de la tabla `platoespecial`
---
-ALTER TABLE `platoespecial`
-  ADD KEY `TIENE4_FK` (`MENE_ID`);
-
---
--- Indices de la tabla `platoespecialpedido`
---
-ALTER TABLE `platoespecialpedido`
-  ADD KEY `TIENE6_FK` (`PED_ID`);
-
---
--- Indices de la tabla `raciondia`
---
-ALTER TABLE `raciondia`
-  ADD KEY `TIENE3_FK` (`MEND_ID`);
-
---
--- Indices de la tabla `racionpedido`
---
-ALTER TABLE `racionpedido`
-  ADD KEY `TIENE5_FK` (`PED_ID`);
 
 --
 -- Restricciones para tablas volcadas
@@ -206,17 +161,19 @@ ALTER TABLE `platoespecial`
 -- Filtros para la tabla `platoespecialpedido`
 --
 ALTER TABLE `platoespecialpedido`
-  ADD CONSTRAINT `FK_PLATOESP_TIENE6_PEDIDO` FOREIGN KEY (`PED_ID`) REFERENCES `pedido` (`PED_ID`);
+  ADD CONSTRAINT `FK_PLATOESP_TIENE6_PEDIDO` FOREIGN KEY (`PED_ID`) REFERENCES `pedido` (`PED_ID`),
+  ADD CONSTRAINT `FK_PLATOESP_TIENE9_PLATOES` FOREIGN KEY (`PLAE_ID`) REFERENCES `platoespecial` (`PLAE_ID`);
 
 --
 -- Filtros para la tabla `raciondia`
 --
 ALTER TABLE `raciondia`
-  ADD CONSTRAINT `FK_RACIONDI_TIENE3_MENUDIA` FOREIGN KEY (`MEND_ID`) REFERENCES `menudia`(`MEND_ID`);
+  ADD CONSTRAINT `FK_RACIONDI_TIENE3_MENUDIA` FOREIGN KEY (`MEND_ID`) REFERENCES `menudia` (`MEND_ID`);
 
 --
 -- Filtros para la tabla `racionpedido`
 --
 ALTER TABLE `racionpedido`
-  ADD CONSTRAINT `FK_RACIONPE_TIENE5_PEDIDO` FOREIGN KEY (`PED_ID`) REFERENCES `pedido` (`PED_ID`);
+  ADD CONSTRAINT `FK_RACIONPE_TIENE5_PEDIDO` FOREIGN KEY (`PED_ID`) REFERENCES `pedido` (`PED_ID`),
+  ADD CONSTRAINT `FK_RACIONPE_TIENE8_RACIOND` FOREIGN KEY (`RAC_ID`) REFERENCES `raciondia` (`RAC_ID`);
 COMMIT;
