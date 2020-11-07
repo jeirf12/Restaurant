@@ -34,6 +34,7 @@ public class test {
         }catch(Exception ex) {
                 JOptionPane.showMessageDialog(null, "El plato ya esta registrado" + ex.getMessage());
         }
+        
     }
     
 }

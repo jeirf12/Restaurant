@@ -30,4 +30,30 @@ public class clienteService {
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
     }
+    
+    /**
+     * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
+     * @param clave identificador del plato
+     * @param atributo columna a ser modificada
+     * @param valor nuevo valor a almacenar
+     * @return true si la operacion es exitosa, false si erra
+     * @throws Exception 
+     */
+    public boolean updatePlatoEspecial(int clave, String atributo, String valor) throws Exception{
+        //validaciones
+        return service.updatePlatoEspecial(clave, atributo, valor);
+    }
+    
+    /**
+     * el cliente solicita la modificacion de un parametro en la base de datos para racion
+     * @param clave identificador de la racion
+     * @param atributo columna a ser modificada
+     * @param valor nuevo valor a almacenar
+     * @return true si la operacion es exitosa, false si erra
+     * @throws Exception 
+     */
+    public boolean updateRacion(int clave, String atributo, String valor) throws Exception{
+        //validaciones
+        return service.updateRacion(clave, atributo, valor);
+    }
 }

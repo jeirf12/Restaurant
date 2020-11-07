@@ -54,6 +54,101 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             return false;
         }
     }
+    
+    /**
+     * busca un plato del dia en la base de datos
+     * @param id identificador del plato
+     * @return true si lo encuentra, false de lo contrario.
+     */
+    private boolean findRacion(int id){
+        boolean resultado;
+        try{
+            this.connect();
+            String sql = "select RAC_NOMBRE from raciondia where RAC_ID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            resultado = rs.next();
+            ps.close();
+            this.disconnect();
+            return resultado;
+        }catch(SQLException ex){
+            System.out.println("revento excepcion encontrar plato_:"+ex.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * actualiza un item plato especial en la base de datos
+     * @param clave identificador del plato
+     * @param atributo columna a modificarse en la base de datos.
+     * @param valor nuevo valor para la celda
+     * @return retorna "FALLO" si el metodo erra
+     */
+    @Override
+    public String updatePlatoEspecial(String clave, String atributo, String valor){
+        if(!this.findPlatoEspecial(Integer.parseInt(clave))){
+            return "FALLO";
+        }
+        try{
+            this.connect();
+            String sql = "UPDATE platoespecial SET "+atributo+" = ? WHERE PLAE_ID = ?";
+            System.out.println("SENTENCIA SQL UPDATE PLATO ESPECIAL: "+sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            if(atributo.equals("PLAE_PRECIO")){
+                int valorNum = Integer.parseInt(valor);
+                pstmt.setInt(1, valorNum);
+            }else{
+                pstmt.setString(1, valor);
+            }
+            pstmt.setInt(2, Integer.parseInt(clave));
+            
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+        }
+        return clave;
+    }
+    
+    /**
+     * actualiza un item de racion en la base de datos.
+     * @param clave identificador de la racion
+     * @param atributo columna a modificar en la base de datos.
+     * @param valor nuevo valor para la columna.
+     * @return retorna "FALLO" si erra el metodo, identificador de lo contrario.
+     */
+    @Override
+    public String updateRacion(String clave, String atributo, String valor){
+        if(!this.findRacion(Integer.parseInt(clave))){
+            return "FALLO";
+        }
+        try{
+            this.connect();
+            //String sql = "UPDATE platoespecial set "+atributo+" = "+valor+" WHERE PESP_NOMBRE = "+clave;
+            String sql = "UPDATE raciondia SET "+atributo+" = ? WHERE RAC_ID = ?";
+            System.out.println("SENTENCIA SQL UPDATE RACION: "+sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            if(atributo.equals("RAC_PRECIO") || atributo.equals("MEND_ID")){
+                int valorNum = Integer.parseInt(valor);
+                pstmt.setInt(1, valorNum);
+            }else{
+                pstmt.setString(1, valor);
+            }
+            pstmt.setInt(2, Integer.parseInt(clave));
+            
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+        }
+        return clave;
+    }
+    
     public int connect() {
         try {
             Class.forName(Utilities.loadProperty("server.db.driver"));

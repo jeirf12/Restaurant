@@ -164,6 +164,14 @@ public class RestauranteServerSocket implements Runnable{
                 if(protocolRequest.getAction().equals("postPlatoEspecial")){
                     administradorRegistrarPlatoEspecial(protocolRequest);               
                 }
+                
+                if(protocolRequest.getAction().equals("updateEspecial")){
+                    administradorUpdateEspecial(protocolRequest);
+                }
+                
+                if(protocolRequest.getAction().equals("updateRacion")){
+                    administradorUpdateRacion(protocolRequest);
+                }
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
@@ -175,6 +183,34 @@ public class RestauranteServerSocket implements Runnable{
 
             }
 
+    }
+    
+    /**
+     * recibe un protocolo con la informacion necesarioa para modificar el plato del dia en la base de datos.
+     * @param protocol protocolo en formato Json
+     */
+    private void administradorUpdateRacion(Protocol protocol){
+        String clave = protocol.getParameters().get(0).getValue();
+        String atributo = protocol.getParameters().get(1).getValue();
+        String valor = protocol.getParameters().get(2).getValue();
+        String response = null;
+        response = service.updateRacion(clave, atributo, valor);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" clave:"+clave+" atributo:"+atributo+" valor: "+valor);
+    }
+    
+    /**
+     * recibe un protocolo con la informacion necesarioa para modificar el plato especial en la base de datos.
+     * @param protocol 
+     */
+    private void administradorUpdateEspecial(Protocol protocol){
+        String clave = protocol.getParameters().get(0).getValue();
+        String atributo = protocol.getParameters().get(1).getValue();
+        String valor = protocol.getParameters().get(2).getValue();
+        String response = null;
+        response = service.updatePlatoEspecial(clave, atributo, valor);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" clave:"+clave+" atributo:"+atributo+" valor: "+valor);
     }
 
     /**
@@ -237,7 +273,7 @@ public class RestauranteServerSocket implements Runnable{
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.savePlatoEspecial(platoE);
         output.println(response);
-    }    
+    }
     /**
      * Cierra los flujos de entrada y salida
      *

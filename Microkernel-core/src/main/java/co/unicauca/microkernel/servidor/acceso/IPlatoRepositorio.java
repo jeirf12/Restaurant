@@ -16,4 +16,21 @@ public interface IPlatoRepositorio {
  
     public String calcularCosto(int idCliente, int idPedido);
     public String savePlatoEspecial(PlatoEspecial plato);
+    /**
+     * hace un update sobre la tabla platoEspecial
+     * @param clave valor con el que se encuentra la tupla
+     * @param atributo columna a modificar
+     * @param valor nuevo valor
+     * @return 
+     */
+    public String updatePlatoEspecial(String clave, String atributo, String valor);
+    
+    /**
+     * hace un update sobre la tabla racion
+     * @param clave identificador de la racion
+     * @param atributo columna a modificar
+     * @param valor nuevo valor
+     * @return 
+     */
+    public String updateRacion(String clave, String atributo, String valor);
 }
