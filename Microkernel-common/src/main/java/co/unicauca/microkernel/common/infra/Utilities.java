@@ -1,5 +1,6 @@
 package co.unicauca.microkernel.common.infra;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,5 +49,18 @@ public class Utilities {
         }
 
         return resultado;
+    }
+    
+    public static byte [] convertirFoto(String ruta){
+        byte[] icono;
+        try {
+            File rut=new File(ruta);
+            icono = new byte[(int) rut.length()];
+            InputStream input = new FileInputStream(ruta);
+            input.read(icono);
+        } catch (Exception ex) {
+            return null;
+        }
+        return icono;
     }
 }
