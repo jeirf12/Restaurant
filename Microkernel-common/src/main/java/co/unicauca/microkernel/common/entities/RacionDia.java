@@ -26,6 +26,10 @@ public class RacionDia {
         this.imagen=imagen;
     }
 
+    public RacionDia(){};
+
+
+
     public int getRacId() {
         return racId;
     }
@@ -42,7 +46,7 @@ public class RacionDia {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 

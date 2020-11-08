@@ -1,0 +1,17 @@
+co\unicauca\microkernel\common\interfaces\IDeliveryPlugin.class
+co\unicauca\microkernel\common\infra\Protocol.class
+co\unicauca\microkernel\common\infra\Parameter.class
+co\unicauca\microkernel\common\entities\RacionDia.class
+co\unicauca\microkernel\common\entities\Cliente.class
+co\unicauca\microkernel\common\entities\MenuEspecial.class
+co\unicauca\microkernel\common\infra\Utilities.class
+co\unicauca\microkernel\common\entities\CategoriaEnum.class
+co\unicauca\microkernel\common\entities\RacionPed.class
+co\unicauca\microkernel\common\entities\PlatoEspecial.class
+co\unicauca\microkernel\common\entities\DiaEnum.class
+co\unicauca\microkernel\common\entities\PlatoEspecialPed.class
+co\unicauca\microkernel\common\entities\Restaurante.class
+co\unicauca\microkernel\common\entities\Delivery.class
+co\unicauca\microkernel\common\entities\Pedido.class
+co\unicauca\microkernel\common\infra\JsonError.class
+co\unicauca\microkernel\common\entities\MenuDia.class

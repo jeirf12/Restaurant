@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.client.access;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 
 
 /**
@@ -17,4 +18,5 @@ public interface IClienteAccess {
     
     public String calcularCosto(int idCliente, int idPedido)throws Exception;
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception;
+    public String saveRacionDia(RacionDia racion) throws Exception;
 }

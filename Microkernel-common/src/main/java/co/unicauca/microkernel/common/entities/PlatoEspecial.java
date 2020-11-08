@@ -36,6 +36,7 @@ public class PlatoEspecial{
         this.imagen=imagen;
     }
 
+
     public int getMenuEsp() {
         return menuEsp;
     }

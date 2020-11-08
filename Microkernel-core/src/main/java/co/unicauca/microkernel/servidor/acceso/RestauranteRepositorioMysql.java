@@ -8,8 +8,10 @@ package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.app.Application;
 import co.unicauca.microkernel.business.DeliveryService;
+import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.Delivery;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
 import java.io.File;
@@ -28,6 +30,7 @@ import java.util.logging.Logger;
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
+//AUTO_INCREMENT
 public class RestauranteRepositorioMysql implements IPlatoRepositorio{
     /**
      * Conección con Mysql
@@ -42,6 +45,24 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         try{
             this.connect();
             String sql = "select plae_nombre from platoespecial where PLAE_ID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            resultado = rs.next();
+            ps.close();
+            this.disconnect();
+            return resultado;
+        }catch(SQLException ex){
+            System.out.println("revento excepcion encontrar plato especial_:"+ex.getMessage());
+            return false;
+        }
+    }
+    
+     private boolean findRacion (int id){
+        boolean resultado;
+        try{
+            this.connect();
+            String sql = "select rac_nombre from raciondia where rac_ID = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -156,15 +177,50 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO platoespecial(PLAE_ID,MENE_ID,PLAE_NOMBRE,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO platoespecial(PLAE_ID,MENE_ID,PLAE_NOMBRE,PLAE_FOTO,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
             pstmt.setInt(1, instancia.getId_pe());
             pstmt.setInt(2, instancia.getMenuEsp());
             pstmt.setString(3, instancia.getNombre());
-            pstmt.setString(4, instancia.getDescripcion());
-            pstmt.setInt(5, (int) instancia.getPrecio());
+            pstmt.setBytes(4, instancia.getImagen());
+            pstmt.setString(5, instancia.getDescripcion());
+            pstmt.setInt(6, (int) instancia.getPrecio());
+            //se ejecuta la sentencia sql
+            pstmt.executeUpdate();
+            //se cierra
+            pstmt.close();
+            //se termina la coneccion
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+        }
+        //lo ideal es retornor un id
+        return instancia.getNombre();
+    }
+
+    @Override
+    public String saveRacionDia(RacionDia instancia) {
+      try{
+       //    if (findRacion(instancia.getRacId()))
+ //           {
+//                return "FALLO";
+//            }
+            System.out.println("entro");
+            //primero se establece la conexion
+            this.connect(); //validar cuando la conexion no sea exitosa
+            //se estructura la sentencia sql en un string
+            String sql = "INSERT INTO raciondia(RAC_ID,MEND_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?,?)";
+            //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
+            pstmt.setInt(1, instancia.getRacId());
+            pstmt.setInt(2, instancia.getMenuId());
+            pstmt.setString(3,  instancia.getNombre());
+            pstmt.setBytes(4, instancia.getImagen());
+            pstmt.setString(5, instancia.getTipo().toString());
+            pstmt.setInt(6, instancia.getPrecio());
             //se ejecuta la sentencia sql
             pstmt.executeUpdate();
             //se cierra

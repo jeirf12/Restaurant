@@ -7,6 +7,7 @@ package co.unicauca.microkernel.servidor.dominio.servidor;
 
 import co.unicauca.microkernel.common.entities.Pedido;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.servidor.acceso.IPlatoRepositorio;
 
@@ -33,4 +34,10 @@ public class PlatoServicio {
         //hacer validaciones aqui
         return repositorio.savePlatoEspecial(plato);
     }
+    
+    public String saveRacionDia(RacionDia racion){
+        //hacer validaciones aqui
+        return repositorio.saveRacionDia(racion);
+    }
+
 }

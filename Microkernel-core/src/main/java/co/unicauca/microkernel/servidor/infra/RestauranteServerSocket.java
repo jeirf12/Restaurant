@@ -5,7 +5,10 @@
  */
 package co.unicauca.microkernel.servidor.infra;
 
+import co.unicauca.microkernel.common.entities.CategoriaEnum;
+import co.unicauca.microkernel.common.entities.DiaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -164,6 +167,11 @@ public class RestauranteServerSocket implements Runnable{
                 if(protocolRequest.getAction().equals("postPlatoEspecial")){
                     administradorRegistrarPlatoEspecial(protocolRequest);               
                 }
+                if(protocolRequest.getAction().equals("postRacionDia")){
+                    administradorRegistrarRacionDia(protocolRequest);   
+                    
+                }
+                break;
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
@@ -216,7 +224,7 @@ public class RestauranteServerSocket implements Runnable{
     private void administrarCalcularCosto(Protocol protocolRequest){
         int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
-        String response = null;
+        String response;
         response = service.calcularCosto(idCliente, idPedido);
         output.println(response);
         Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" idCliente:"+idCliente+" idPedido:"+idPedido);
@@ -229,15 +237,36 @@ public class RestauranteServerSocket implements Runnable{
         platoE.setId_pe(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         platoE.setMenuEsp(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
         platoE.setNombre(protocolRequest.getParameters().get(2).getValue());
-        platoE.setDescripcion(protocolRequest.getParameters().get(3).getValue());
-        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
+        platoE.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
+        platoE.setDescripcion(protocolRequest.getParameters().get(4).getValue());
+        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
-        String response=null;
+        String response;
         //el servicio comunicara con la base de datos,
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.savePlatoEspecial(platoE);
         output.println(response);
-    }    
+    }   
+    
+    
+     private void administradorRegistrarRacionDia(Protocol protocolRequest) {
+        //crea la instancia
+        RacionDia racionD = new RacionDia();
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        racionD.setRacId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        racionD.setMenuId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        racionD.setNombre(protocolRequest.getParameters().get(2).getValue());
+        racionD.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
+        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(4).getValue()));
+        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.saveRacionDia(racionD);
+        output.println(response);
+    }  
     /**
      * Cierra los flujos de entrada y salida
      *
