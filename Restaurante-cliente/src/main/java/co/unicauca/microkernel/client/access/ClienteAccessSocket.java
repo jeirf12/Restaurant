@@ -6,10 +6,16 @@
 package co.unicauca.microkernel.client.access;
 import co.unicauca.microkernel.client.infra.RestauranteSocket;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+import java.util.List;
 /**
  *
  * @author EdynsonMJ
@@ -136,4 +142,112 @@ public class ClienteAccessSocket implements IClienteAccess{
         System.out.println("json: "+requestJson);
         return requestJson;
     }   
+    /**
+     * Envia el id de un restaurante y devuelve la lista llegada desde el servidor 
+     * el cual transforma el json recibido desde este
+     * en una lista de PLlato dia que conforma un menu por dias
+     * 
+     * @param idRes
+     * @param diaSem
+     * @param resource
+     * @return
+     * @throws Exception 
+     */
+    @Override
+    public List<RacionDia> listMenuDay(int idRes,String diaSem,String resource) throws Exception {
+        String accion="listMenuDay";
+        String [] parameters={""+idRes,diaSem};
+        String requestJson = createlistMenuJson(resource,accion,parameters);
+        String response=procesarConexion(requestJson);
+        return jsonListMenuDay(response);
+    }
+    
+    /**
+     * Envia el id de un restaurante y devuelve la lista llegada desde el servidor 
+     * el cual transforma el json recibido desde este
+     * en una lista de PlatoEspecial que conforma un menu especial
+     * 
+     * @param idRes
+     * @param resource
+     * @return
+     * @throws Exception 
+     */
+    @Override
+    public List<PlatoEspecial> listMenuSpecial(int idRes,String resource) throws Exception {
+        String accion="listMenuSpecial";
+        String [] parameters={""+idRes};
+        String requestJson = createlistMenuJson(resource,accion,parameters);
+        String response= procesarConexion(requestJson);
+        return jsonListMenuSpecial(response);
+    }
+    /**
+     * Crea el plato recibido en un json para el envio por el sockect al servidor
+     * 
+     * @param resource
+     * @param accion
+     * @param resId
+     * @return 
+     */
+    private String createlistMenuJson(String resource,String accion,String[] parameters){
+        Protocol protocol=new Protocol();
+        protocol.setResource(resource);
+        protocol.setAction(accion);
+        protocol.addParameter("resId", String.valueOf(parameters[0]));
+        if (accion.equals("listMenuDay")) {
+            protocol.addParameter("DiaSemana", parameters[1]);
+        }
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    /**
+     * Convierte un json en una lista de tipo plato dia
+     * 
+     * @param jsonListarMenu
+     * @return 
+     */
+    private List<RacionDia> jsonListMenuDay(String jsonListarMenu){
+        Gson gson=new Gson();
+        Type list = new TypeToken<List<RacionDia>>(){}.getType();
+        return gson.fromJson(jsonListarMenu, list);
+    }
+    
+    /**
+     * Convierte un json en una lista de tipo plato especial
+     * 
+     * @param jsonListarMenu
+     * @return 
+     */
+    private List<PlatoEspecial> jsonListMenuSpecial(String jsonListMenu){
+        Gson gson=new Gson();
+        Type list = new TypeToken<List<PlatoEspecial>>(){}.getType();
+        return gson.fromJson(jsonListMenu, list);
+    }
+
+    @Override
+    public String saveRestaurant(Restaurante restaurant) throws Exception {
+        String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        String requestJson = createRestaurantJson(restaurant);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
+            return null;
+        }
+        return restaurant.getNombre();
+    }
+    private String createRestaurantJson(Restaurante restaurante){
+        Protocol protocol = new Protocol();
+        protocol.setResource("administrador");
+        protocol.setAction("postRestaurant");
+        protocol.addParameter("res_id", String.valueOf(restaurante.getId()));
+        protocol.addParameter("res_codigo", String.valueOf(restaurante.getCodigo()));
+        protocol.addParameter("res_nombre", restaurante.getNombre());
+        protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
+        protocol.addParameter("res_direccion", restaurante.getDireccion());
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
 }
