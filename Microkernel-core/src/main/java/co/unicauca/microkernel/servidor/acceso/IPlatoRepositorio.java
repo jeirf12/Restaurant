@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.Restaurante;
 
 /**
  *interface del repositorio de platos, usarla mediante inyeccion de dependencias
@@ -15,6 +16,7 @@ import co.unicauca.microkernel.common.entities.PlatoEspecial;
 public interface IPlatoRepositorio {
  
     public String calcularCosto(int idCliente, int idPedido);
+    public String saveRestaurant(Restaurante res);
     public String savePlatoEspecial(PlatoEspecial plato);
 
     /**
@@ -29,4 +31,8 @@ public interface IPlatoRepositorio {
      * @return 
      */
     public String deletePlatoEspecial(int plae_id);
+
+    public String listMenuDay(int idRes,String dia);
+    public String listMenuSpecial(int idRes);
+
 }

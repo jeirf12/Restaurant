@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.servidor.dominio.servidor;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.servidor.acceso.IPlatoRepositorio;
 
 /**
@@ -31,7 +32,7 @@ public class PlatoServicio {
         //hacer validaciones aqui
         return repositorio.savePlatoEspecial(plato);
     }
-    
+
     /**
      * 
      * @param rac_id
@@ -47,5 +48,14 @@ public class PlatoServicio {
      */
     public String deletePlatoEspecial(int plae_id) {
         return repositorio.deletePlatoEspecial(plae_id);
+    }
+    public String saveRestaurant(Restaurante restaurant){
+        return repositorio.saveRestaurant(restaurant);
+    }
+    public String listMenuDay(int resId,String dia){
+        return repositorio.listMenuDay(resId,dia);
+    }
+    public String listMenuSpecial(int resId){
+        return repositorio.listMenuSpecial(resId);
     }
 }
