@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.servidor.infra;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -22,7 +23,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import co.unicauca.microkernel.servidor.acceso.IPlatoRepositorio;
-import java.time.LocalDateTime;
 
 /**
  * esta clase se encarga de establecer y gestionar la conexion entre el servidor y los clientes
@@ -164,6 +164,7 @@ public class RestauranteServerSocket implements Runnable{
                 if(protocolRequest.getAction().equals("postPlatoEspecial")){
                     administradorRegistrarPlatoEspecial(protocolRequest);               
                 }
+
                 
                 if(protocolRequest.getAction().equals("updateEspecial")){
                     administradorUpdateEspecial(protocolRequest);
@@ -172,13 +173,30 @@ public class RestauranteServerSocket implements Runnable{
                 if(protocolRequest.getAction().equals("updateRacion")){
                     administradorUpdateRacion(protocolRequest);
                 }
+
+                if (protocolRequest.getAction().equals("listarMenuDia")) {
+                    this.listarMenuDia(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("listarMenuEspecial")) {
+                    this.listarMenuEspecial(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("postRestaurant")) {
+                    this.administradorRestaurante(protocolRequest);
+                }
+                break;
+
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
                 if (protocolRequest.getAction().equals("postRacionPedido")) {
                     this.administrarCalcularCosto(protocolRequest);
                 }
-                
+                if (protocolRequest.getAction().equals("listarMenuDia")) {
+                    this.listarMenuDia(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("listarMenuEspecial")) {
+                    this.listarMenuEspecial(protocolRequest);
+                }
                 break;
 
             }
@@ -290,4 +308,51 @@ public class RestauranteServerSocket implements Runnable{
         String strObject = gson.toJson(customer);
         return strObject;
     }*/
+    
+    /**
+     * Recibe la peticion del cliente, manda el id del restaurante
+     * y manda esta peticion procesada al repositorio del servidor
+     * para el menu por dias
+     * 
+     * @param protocolRequest 
+     */
+    private void listarMenuDia(Protocol protocolRequest){
+        int resId =Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String diaSem=protocolRequest.getParameters().get(1).getValue();
+        String response;
+        response=service.listMenuDay(resId,diaSem);
+        output.println(response);
+        
+    }
+    /**
+     * Recibe la peticion del cliente, manda el id del restaurante
+     * y manda esta peticion procesada al repositorio del servidor
+     * para el menu especial
+     * 
+     * @param protocolRequest 
+     */
+    private void listarMenuEspecial(Protocol protocolRequest){
+        int resdId=Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response;
+        response=service.listMenuSpecial(resdId);
+        output.println(response);
+    }
+    
+    private void administradorRestaurante(Protocol protocolRequest) {
+        //crea la instancia
+        Restaurante res = new Restaurante();
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        res.setId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        res.setCodigo(protocolRequest.getParameters().get(1).getValue());
+        res.setNombre(protocolRequest.getParameters().get(2).getValue());
+        res.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
+        res.setDireccion(protocolRequest.getParameters().get(4).getValue());
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.saveRestaurant(res);
+        output.println(response);
+    } 
 }

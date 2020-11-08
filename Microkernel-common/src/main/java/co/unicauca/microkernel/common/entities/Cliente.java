@@ -13,11 +13,13 @@ public class Cliente {
     private int idCliente;
     private String nombre;
     private String direccion;
+    private byte [] imagen;
 
-    public Cliente(int idCliente, String nombre, String direccion) {
+    public Cliente(int idCliente, String nombre, String direccion,byte [] imagen) {
         this.idCliente = idCliente;
         this.nombre = nombre;
         this.direccion = direccion;
+        this.imagen=imagen;
     }
 
     public int getIdCliente() {
@@ -43,5 +45,12 @@ public class Cliente {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-    
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
 }

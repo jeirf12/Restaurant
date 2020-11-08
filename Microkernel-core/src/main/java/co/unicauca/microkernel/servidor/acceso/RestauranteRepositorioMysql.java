@@ -8,10 +8,13 @@ package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.app.Application;
 import co.unicauca.microkernel.business.DeliveryService;
-import co.unicauca.microkernel.common.entities.Delivery;
+import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -20,6 +23,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -251,15 +256,16 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO platoespecial(PLAE_ID,MENE_ID,PLAE_NOMBRE,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO platoespecial (PLAE_ID,MENE_ID,PLAE_NOMBRE,PLAE_FOTO,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
             pstmt.setInt(1, instancia.getId_pe());
             pstmt.setInt(2, instancia.getMenuEsp());
             pstmt.setString(3, instancia.getNombre());
-            pstmt.setString(4, instancia.getDescripcion());
-            pstmt.setInt(5, (int) instancia.getPrecio());
+            pstmt.setBytes(4, instancia.getImagen());
+            pstmt.setString(5, instancia.getDescripcion());
+            pstmt.setInt(6, (int) instancia.getPrecio());
             //se ejecuta la sentencia sql
             pstmt.executeUpdate();
             //se cierra
@@ -272,4 +278,104 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         //lo ideal es retornor un id
         return instancia.getNombre();
     }
+    /**
+     * Lista el menu por dias desde la consulta hecha a la base de datos 
+     * añade las tuplas encontradas en una lista las raciones del dia
+     * y convierte la lista en json para enviarla por el sockect devuelta
+     * al cliente
+     * @param idRes
+     * @param dia
+     * @return 
+     */
+    @Override
+    public String listMenuDay(int idRes,String dia) {
+        List<RacionDia> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the list menu day");
+        try{
+            this.connect();
+            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto "
+                    + "from (restaurante r inner join menudia m on r.res_id=m.res_id) "
+                    + "inner join raciondia p on m.mend_id=p.mend_id where r.res_id ="+idRes
+                    +" and m.mend_diasem = '"+dia+"'";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {      
+                RacionDia pla=  new RacionDia(Integer.parseInt(rs.getString(1)), CategoriaEnum.valueOf(rs.getString(2)), Integer.parseInt(rs.getString(3)), rs.getString(4), Integer.parseInt(rs.getString(5)),rs.getBytes(6));
+                list.add(pla);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al listar el menu del dia", ex);
+        }
+        return response;
+    }
+    /**
+     * Lista el menu especial desde la consulta hecha a la base de datos 
+     * añade las tuplas encontradas en una lista de Plato especial
+     * y convierte la lista en json para enviarla por el sockect devuelta
+     * al cliente
+     * @param idRes
+     * @return 
+     */
+    @Override
+    public String listMenuSpecial(int idRes) {
+        List<PlatoEspecial> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the list menu Special");
+        try{
+            this.connect();
+            String sql = "select plae_id,m.mene_id,plae_nombre,plae_descripcion,plae_precio,plae_foto from (restaurante r inner join menuespecial m on r.res_id=m.res_id) inner join platoespecial p on m.mesp_id=p.mesp_id where r.res_id = (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idRes);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {   
+                
+                PlatoEspecial pla = new PlatoEspecial(Integer.parseInt(rs.getString(1)), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4), Integer.parseInt(rs.getString(5)),rs.getBytes(6));
+                list.add(pla);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al listar el menu del especial", ex);
+        }
+       return response;
+    }
+    
+    /**
+     * Convierte una lista de tipo plato en un json
+     * 
+     * @param list
+     * @return 
+     */
+    public String listMenuToJson (List list){
+        Gson gson=new Gson();
+        String response=gson.toJson(list);
+        return response;
+    }
+
+    @Override
+    public String saveRestaurant(Restaurante res) {
+        System.out.println("Entered the list menu Special");
+        try{
+            this.connect();
+            String sql = "INSERT INTO restaurante (RES_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_DIRECCION) values (?,?,?,?,?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, res.getId());
+            pstmt.setString(2, res.getCodigo());
+            pstmt.setString(3, res.getNombre());
+            pstmt.setBytes(4, res.getImagen());
+            pstmt.setString(5, res.getDireccion());
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al listar el menu del especial", ex);
+        }
+       return res.getNombre();
+    }
+
 }

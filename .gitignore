@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 /Microkernel-common/target/
 /Microkernel-mexicano-plugin/target/
 /Microkernel-oriental-plugin/target/
 /Microkernel-core/target/
 /Restaurante-cliente/target/
+=======
+/Microkernel-core/target/
+/Restaurante-cliente/target/
+/Microkernel-common/target/
+/Microkernel-mexicano-plugin/target/
+/Microkernel-oriental-plugin/target/
+>>>>>>> d6b3872bf4e0e2eae3374c32de4876ed5ccb5be4
