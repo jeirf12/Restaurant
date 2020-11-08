@@ -5,7 +5,7 @@
  */
 package co.unicauca.microkernel.servidor.infra;
 
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.*;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -167,8 +167,17 @@ public class RestauranteServerSocket implements Runnable{
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
-                if (protocolRequest.getAction().equals("postRacionPedido")) {
+                if (protocolRequest.getAction().equals("calcularCosto")) {
                     this.administrarCalcularCosto(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("agregarPedido")) {
+                    this.administradorAddPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("agregarRacionPedido")) {
+                    this.administradorAddRacionPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("agregarPlatoEspecialPedido")) {
+                    this.administradorAddPlatoEspecialPedido(protocolRequest);
                 }
                 
                 break;
@@ -215,11 +224,10 @@ public class RestauranteServerSocket implements Runnable{
     }
     private void administrarCalcularCosto(Protocol protocolRequest){
         int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
         String response = null;
-        response = service.calcularCosto(idCliente, idPedido);
+        response = service.calcularCosto(idCliente);
         output.println(response);
-        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" idCliente:"+idCliente+" idPedido:"+idPedido);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" idCliente:"+idCliente);
     }
     private void administradorRegistrarPlatoEspecial(Protocol protocolRequest) {
         //crea la instancia
@@ -237,7 +245,52 @@ public class RestauranteServerSocket implements Runnable{
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.savePlatoEspecial(platoE);
         output.println(response);
-    }    
+    }
+    private void administradorAddPedido(Protocol protocolRequest) {
+        //crea la instancia
+        Pedido pedido = new Pedido();
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        pedido.setIdPedido(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        pedido.setCliente(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        pedido.setResId(Integer.parseInt(protocolRequest.getParameters().get(2).getValue()));
+        pedido.setEstado(EstadoPed.valueOf(protocolRequest.getParameters().get(3).getValue()));
+        pedido.setFecha(LocalDateTime.parse(protocolRequest.getParameters().get(4).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.addPedido(pedido);
+        output.println(response);
+    }
+    private void administradorAddRacionPedido(Protocol protocolRequest) {
+        //crea la instancia
+        RacionPed racionPedido = new RacionPed();
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        racionPedido.setRacpId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        racionPedido.setPedId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.addRacionPedido(racionPedido);
+        output.println(response);
+    } 
+    private void administradorAddPlatoEspecialPedido(Protocol protocolRequest) {
+        
+        PlatoEspecialPed platoEspecialPed = new PlatoEspecialPed();
+        //se asignan los atributos de la instancia, segun los valores de los parametros
+        //el orden debe ser exacto
+        platoEspecialPed.setPlaepId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        platoEspecialPed.setPedId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        //hacer validacion para esta, es decir sobre el parseo del dato
+        String response=null;
+        //el servicio comunicara con la base de datos,
+        //se pasa el plato creado, y servicio llamara al repositorio
+        response = service.addPlatoEspecialPedido(platoEspecialPed);
+        output.println(response);
+    }     
     /**
      * Cierra los flujos de entrada y salida
      *

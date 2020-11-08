@@ -12,10 +12,20 @@ package co.unicauca.microkernel.common.entities;
 public class RacionPed {
     private int racpId;
     private int pedId;
+    private int racId;
 
-    public RacionPed(int racpId, int pedId) {
+    public RacionPed(int racpId, int pedId, int racId) {
         this.racpId = racpId;
         this.pedId = pedId;
+        this.racId = racId;
+    }
+
+    public int getRacId() {
+        return racId;
+    }
+
+    public void setRacId(int racId) {
+        this.racId = racId;
     }
 
     public RacionPed() {

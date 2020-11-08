@@ -8,8 +8,10 @@ package co.unicauca.microkernel.client.presentation;
 import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
-import co.unicauca.microkernel.common.entities.MenuEspecial;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.*;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.Month;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,8 +29,12 @@ public class test {
         
         MenuEspecial menuEspecial = new MenuEspecial(366,1);
         PlatoEspecial platoEspecial = new PlatoEspecial(1,menuEspecial.getId(),"Nombre","Descripcion",123);
+        Clock cl = Clock.systemUTC();
+        LocalDateTime date = LocalDateTime.now();
+        Pedido pedido = new Pedido(1,1,1,EstadoPed.CREADO,LocalDateTime.of(date.getYear(),date.getMonth(),date.getDayOfMonth(),date.getHour(),date.getMinute()));
         try{
-            String platoE = servicioRestaurante.savePlatoEspecial(platoEspecial);
+            String platoE = servicioRestaurante.addPedido(pedido);
+            System.out.println(date);
             System.out.println(platoE);
             
         }catch(Exception ex) {

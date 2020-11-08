@@ -5,16 +5,18 @@
  */
 package co.unicauca.microkernel.client.access;
 
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-
-
+import co.unicauca.microkernel.common.entities.*;
 /**
  * entidad abstracta del los servicios que el cliente puede solicitar al servidor
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
+
 public interface IClienteAccess {
     
-    public String calcularCosto(int idCliente, int idPedido)throws Exception;
+    public String calcularCosto(int idCliente)throws Exception;
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception;
+    public String addPedido(Pedido pedido) throws Exception;
+    public String addRacionPedido(RacionPed racionPed) throws Exception;
+    public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
 }

@@ -23,7 +23,7 @@ public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
 
         double cost;
         
-        cost = (distancia*1000)+total+(total*0.19);
+        cost = (distancia)+(total*1000);
         
 
         return cost;

@@ -21,7 +21,7 @@ public class OrientalDeliveryPlugin implements IDeliveryPlugin {
 
         double cost;
         
-        cost = (distancia*2000)+total+(total*0.19);
+        cost = (distancia*0)+total;
         
 
         return cost;

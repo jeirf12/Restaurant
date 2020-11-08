@@ -5,7 +5,7 @@
  */
 package co.unicauca.microkernel.client.access;
 import co.unicauca.microkernel.client.infra.RestauranteSocket;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.*;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import com.google.gson.Gson;
@@ -88,23 +88,21 @@ public class ClienteAccessSocket implements IClienteAccess{
     }
      
     @Override
-    public String calcularCosto(int idCliente, int idPedido)throws Exception{
-        String requestJson = calcularCostoJson(idCliente,idPedido);
+    public String calcularCosto(int idCliente)throws Exception{
+        String requestJson = calcularCostoJson(idCliente);
         String valor = this.procesarConexion(requestJson);
         if(valor.equals("FALLO")){
             return null;
         }
-        return "00";
+        return valor;
     }
-    private String calcularCostoJson(int idCliente, int idPedido){
+    private String calcularCostoJson(int idCliente){
         Protocol protocol = new Protocol();
         //el orden debe ser respetado
         protocol.setResource("comprador");
         protocol.setAction("calcularCosto");
         protocol.addParameter("idCliente", ""+idCliente);
-        protocol.addParameter("idPedido", ""+idPedido);
-
-        
+      
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
         System.out.println("json enviado: "+requestJson);
@@ -135,5 +133,80 @@ public class ClienteAccessSocket implements IClienteAccess{
         String requestJson = gson.toJson(protocol);
         System.out.println("json: "+requestJson);
         return requestJson;
-    }   
+    }
+    @Override
+    public String addPedido(Pedido instancia) throws Exception{
+        String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        String requestJson = crearPedido(instancia);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
+            return null;
+        }
+        return String.valueOf(instancia.getEstado());
+
+    }
+    private String crearPedido(Pedido instancia){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("agregarPedido");
+        protocol.addParameter("ped_id", String.valueOf(instancia.getIdPedido()));
+        protocol.addParameter("cli_id", String.valueOf(instancia.getCliente()));
+        protocol.addParameter("res_id", String.valueOf(instancia.getResId()));
+        protocol.addParameter("ped_estado", String.valueOf(instancia.getEstado()));
+        protocol.addParameter("ped_fecha", String.valueOf(instancia.getFecha()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    @Override
+    public String addRacionPedido(RacionPed instancia) throws Exception{
+        String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        String requestJson = crearRacionPedido(instancia);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
+            return null;
+        }
+        return String.valueOf(instancia.getRacpId());
+
+    }
+    private String crearRacionPedido(RacionPed instancia){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("agregarRacionPedido");
+        protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
+        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
+        protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    @Override
+    public String addPlatoEspecialPedido(PlatoEspecialPed instancia) throws Exception{
+        String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        String requestJson = crearRacionPedido(instancia);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
+            return null;
+        }
+        return String.valueOf(instancia.getPlaepId());
+
+    }
+    private String crearRacionPedido(PlatoEspecialPed instancia){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("agregarPlatoEspecialPedido");
+        protocol.addParameter("plaep_id", String.valueOf(instancia.getPlaepId()));
+        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
+        protocol.addParameter("plae_id", String.valueOf(instancia.getPlaeId()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    
 }
