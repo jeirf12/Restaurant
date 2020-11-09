@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 /Microkernel-core/target/
 /Restaurante-cliente/target/
 /Microkernel-common/target/
 /Microkernel-mexicano-plugin/target/
 /Microkernel-oriental-plugin/target/
+=======
+/Restaurante-cliente/target/
+/Microkernel-core/target/
+/Microkernel-oriental-plugin/target/
+/Microkernel-common/target/
+/Microkernel-mexicano-plugin/target/
+>>>>>>> james
