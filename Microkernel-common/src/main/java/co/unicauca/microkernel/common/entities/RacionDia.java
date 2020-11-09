@@ -28,10 +28,6 @@ public class RacionDia {
         this.imagen=imagen;
     }
 
-    public RacionDia(){};
-
-
-
     public int getRacId() {
         return racId;
     }
