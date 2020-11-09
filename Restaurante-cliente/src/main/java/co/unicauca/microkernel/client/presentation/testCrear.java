@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author jafes
  */
-public class test {
+public class testCrear {
 
     /**
      * @param args the command line arguments
