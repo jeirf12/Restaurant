@@ -264,7 +264,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
 
     @Override
     public String saveRestaurant(Restaurante res) {
-        System.out.println("Entered the list menu Special");
+        System.out.println("Entered the save restaurant");
         try{
             this.connect();
             String sql = "INSERT INTO restaurante (RES_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_DIRECCION) values (?,?,?,?,?)";
@@ -278,7 +278,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             pstmt.close();
             this.disconnect();
         }catch (SQLException ex) {
-            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al listar el menu del especial", ex);
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al guardar el restaurante", ex);
         }
        return res.getNombre();
     }
