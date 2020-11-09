@@ -15,13 +15,15 @@ public class Pedido {
     private int idPedido;
     private int cliente;
     private int resId;
+    private EstadoPed estado;
     private LocalDateTime fecha;
 
-    public Pedido(int idPedido, int cliente, int resId, LocalDateTime fecha) {
+    public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fecha) {
         this.idPedido = idPedido;
         this.cliente = cliente;
         this.resId = resId;
         this.fecha = fecha;
+        this.estado = estado;
     }
 
     public Pedido() {
@@ -58,4 +60,12 @@ public class Pedido {
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }    
+
+    public EstadoPed getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPed estado) {
+        this.estado = estado;
+    }
 }

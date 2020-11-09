@@ -5,23 +5,26 @@
  */
 package co.unicauca.microkernel.client.access;
 
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
-import co.unicauca.microkernel.common.entities.Restaurante;
-import java.util.List;
 
+import java.util.List;
+import co.unicauca.microkernel.common.entities.*;
 
 /**
  * entidad abstracta del los servicios que el cliente puede solicitar al servidor
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
+
 public interface IClienteAccess {
     
-    public String calcularCosto(int idCliente, int idPedido)throws Exception;
     public String saveRestaurant(Restaurante restaurant) throws Exception;
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception;
     
+    //
+    public String deleteRacionDia(int rac_id)throws Exception;
+    //
+    public String deletePlatoEspecial(int plae_id)throws Exception;
+
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
      * @param plato informacion a modificar
@@ -60,5 +63,11 @@ public interface IClienteAccess {
      * @throws Exception 
      */
     public List<PlatoEspecial> listMenuSpecial(int idRes,String resource)throws Exception;
+
+
+    public String calcularCosto(int idCliente)throws Exception;
+    public String addPedido(Pedido pedido) throws Exception;
+    public String addRacionPedido(RacionPed racionPed) throws Exception;
+    public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
 
 }

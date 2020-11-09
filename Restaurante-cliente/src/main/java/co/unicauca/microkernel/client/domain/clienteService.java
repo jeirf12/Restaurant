@@ -6,10 +6,12 @@
 package co.unicauca.microkernel.client.domain;
 
 import co.unicauca.microkernel.client.access.IClienteAccess;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
-import co.unicauca.microkernel.common.entities.Restaurante;
+
+
 import java.util.List;
+
+import co.unicauca.microkernel.common.entities.*;
+
 
 /**
  * servicios que el cliente puede usar del servidor (mascaras)
@@ -26,9 +28,9 @@ public class clienteService {
     public clienteService(IClienteAccess service) {
         this.service = service;
     }
-    public String calcularCosto(int idCliente, int idPedido)throws Exception{
+    public String calcularCosto(int idCliente)throws Exception{
         
-        return service.calcularCosto(idCliente, idPedido);
+        return service.calcularCosto(idCliente);
     }
     public String saveRestaurant(Restaurante restaurant) throws Exception{
         return service.saveRestaurant(restaurant);
@@ -57,5 +59,22 @@ public class clienteService {
     public boolean updateRacion(RacionDia racion) throws Exception{
         //validaciones
         return service.updateRacion(racion);
+    }
+
+    public String deleteRacionDia(int rac_id) throws Exception{
+        return service.deleteRacionDia(rac_id);
+    }
+    //
+    public String deletePlatoEspecial(int plae_id) throws Exception{
+        return service.deletePlatoEspecial(plae_id);
+    }
+    public String addPedido(Pedido pedido) throws Exception{
+        return service.addPedido(pedido);
+    }
+    public String addRacionPedido(RacionPed racionPed) throws Exception{
+        return service.addRacionPedido(racionPed);
+    }
+    public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
+        return service.addPlatoEspecialPedido(platoEspecialPed);
     }
 }

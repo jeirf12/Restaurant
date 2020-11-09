@@ -12,10 +12,20 @@ package co.unicauca.microkernel.common.entities;
 public class PlatoEspecialPed {
     private int plaepId;
     private int pedId;
+    private int plaeId;
 
-    public PlatoEspecialPed(int plaepId, int pedId) {
+    public PlatoEspecialPed(int plaepId, int pedId, int plaeId) {
         this.plaepId = plaepId;
         this.pedId = pedId;
+        this.plaeId = plaeId;
+    }
+
+    public int getPlaeId() {
+        return plaeId;
+    }
+
+    public void setPlaeId(int plaeId) {
+        this.plaeId = plaeId;
     }
 
     public PlatoEspecialPed() {
