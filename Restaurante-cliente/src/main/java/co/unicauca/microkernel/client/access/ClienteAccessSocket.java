@@ -130,15 +130,13 @@ public class ClienteAccessSocket implements IClienteAccess{
     
     /**
      * hace un update sobre la tabla menu especial en la base de datos
-     * @param clave valor con el que se encontraran coincidencias, en este caso el nombre
-     * @param atributo columna que se va a modificar
-     * @param valor nuevo valor a establecer
+     * @param plato informacion del plato a actualizar
      * @return 
      */
     @Override
-    public boolean updatePlatoEspecial(int clave, String atributo, String valor) throws Exception{
+    public boolean updatePlatoEspecial(PlatoEspecial plato) throws Exception{
         //estring en formato json que se enviara al servidor
-        String requestJson = updateEspecialJson(clave, atributo, valor);
+        String requestJson = updateEspecialJson(plato);
          if(procesarConexion(requestJson).equals("FALLO")){
             System.out.println("devolvio fallo");
             return false;
@@ -154,14 +152,17 @@ public class ClienteAccessSocket implements IClienteAccess{
      * @param valor
      * @return 
      */
-    private String updateEspecialJson(int clave, String atributo, String valor){
+    private String updateEspecialJson(PlatoEspecial plato){
         Protocol protocol = new Protocol();
         //el orden debe ser respetado
         protocol.setResource("administrador");
         protocol.setAction("updateEspecial");
-        protocol.addParameter("clave", ""+clave);
-        protocol.addParameter("atributo", atributo);
-        protocol.addParameter("valor", valor);
+        protocol.addParameter("clave", ""+plato.getId_pe());
+        protocol.addParameter("nombre", plato.getNombre());
+        protocol.addParameter("precio", ""+plato.getPrecio());
+        protocol.addParameter("descripcion", plato.getDescripcion());
+        protocol.addParameter("menu", ""+plato.getMenuEsp());
+        protocol.addParameter("imagen", Arrays.toString(plato.getImagen()));
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -170,15 +171,13 @@ public class ClienteAccessSocket implements IClienteAccess{
     }
     /**
      * solicitud al servidor para hacer update sobre la tabla racion
-     * @param clave identificador de la racion
-     * @param atributo columna a modificar
-     * @param valor nuevo valor
+     * @param racion informacion a modificar
      * @return true operacion exitosa, false de lo contrario
      * @throws Exception 
      */
      @Override
-    public boolean updateRacion(int clave, String atributo, String valor) throws Exception{
-        String requestJson = updateRacionJson(clave, atributo, valor);
+    public boolean updateRacion(RacionDia racion) throws Exception{
+        String requestJson = updateRacionJson(racion);
         if(procesarConexion(requestJson).equals("FALLO")){
             return false;
         }
@@ -186,19 +185,20 @@ public class ClienteAccessSocket implements IClienteAccess{
     }
     /**
      * genera un string con el formato para ser enviado, con la informacion del update racion
-     * @param clave
-     * @param atributo
-     * @param valor
+     * @param racion objeto a convertir
      * @return 
      */
-    public String updateRacionJson(int clave, String atributo, String valor){
+    public String updateRacionJson(RacionDia racion){
         Protocol protocol = new Protocol();
         //el orden debe ser respetado
         protocol.setResource("administrador");
         protocol.setAction("updateRacion");
-        protocol.addParameter("clave", ""+clave);
-        protocol.addParameter("atributo", atributo);
-        protocol.addParameter("valor", valor);
+        protocol.addParameter("clave", ""+racion.getRacId());
+        protocol.addParameter("nombre", racion.getNombre());
+        protocol.addParameter("precio", ""+racion.getPrecio());
+        protocol.addParameter("tipo", ""+racion.getTipo());
+        protocol.addParameter("dia", ""+racion.getMenuId());
+        protocol.addParameter("imagen", Arrays.toString(racion.getImagen()));
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

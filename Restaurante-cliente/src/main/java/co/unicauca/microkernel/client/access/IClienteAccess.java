@@ -24,23 +24,19 @@ public interface IClienteAccess {
     
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
-     * @param clave identificador del plato
-     * @param atributo columna a ser modificada
-     * @param valor nuevo valor a almacenar
+     * @param plato informacion a modificar
      * @return true si la operacion es exitosa, false si erra
      * @throws Exception 
      */
-    public boolean updatePlatoEspecial(int clave, String atributo, String valor)throws Exception;
+    public boolean updatePlatoEspecial(PlatoEspecial plato)throws Exception;
     
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para racion
-     * @param clave identificador de la racion
-     * @param atributo columna a ser modificada
-     * @param valor nuevo valor a almacenar
+     * @param racion informacion a moficar
      * @return true si la operacion es exitosa, false si erra
      * @throws Exception 
      */
-    public boolean updateRacion(int clave, String atributo, String valor)throws Exception;
+    public boolean updateRacion(RacionDia racion)throws Exception;
     /**
      * Implementacion que se hara en clienteAccessSocket para el recibimiento 
      * de este tipo por parte del servidor que esta devolviendo una respuesta

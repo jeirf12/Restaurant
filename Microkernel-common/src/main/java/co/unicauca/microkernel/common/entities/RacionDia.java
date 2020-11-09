@@ -17,6 +17,8 @@ public class RacionDia {
     private int menuId;
     private byte [] imagen;
 
+    public RacionDia(){}
+    
     public RacionDia(int racId, CategoriaEnum tipo, int precio, String nombre, int menuId, byte [] imagen) {
         this.racId = racId;
         this.tipo = tipo;
@@ -42,7 +44,7 @@ public class RacionDia {
         this.tipo = tipo;
     }
 
-    public double getPrecio() {
+    public int getPrecio() {
         return precio;
     }
 

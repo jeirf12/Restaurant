@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.Restaurante;
 
 /**
@@ -26,16 +27,14 @@ public interface IPlatoRepositorio {
      * @param valor nuevo valor
      * @return 
      */
-    public String updatePlatoEspecial(String clave, String atributo, String valor);
+    public String updatePlatoEspecial(PlatoEspecial plato);
     
     /**
      * hace un update sobre la tabla racion
-     * @param clave identificador de la racion
-     * @param atributo columna a modificar
-     * @param valor nuevo valor
+     * @param racion informacion a modificar
      * @return 
      */
-    public String updateRacion(String clave, String atributo, String valor);
+    public String updateRacion(RacionDia racion);
 
     public String listMenuDay(int idRes,String dia);
     public String listMenuSpecial(int idRes);

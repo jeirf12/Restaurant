@@ -5,6 +5,15 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
+import co.unicauca.microkernel.client.access.Factory;
+import co.unicauca.microkernel.client.access.IClienteAccess;
+import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.common.entities.CategoriaEnum;
+import co.unicauca.microkernel.common.entities.RacionDia;
+import co.unicauca.microkernel.common.infra.Utilities;
+import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,12 +22,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author EdynsonMJ
  */
-public class FrameEdynson extends javax.swing.JFrame {
+public class EdynsonModificarRacion extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameEdynson
      */
-    public FrameEdynson() {
+    public EdynsonModificarRacion() {
         initComponents();
     }
 
@@ -47,6 +56,7 @@ public class FrameEdynson extends javax.swing.JFrame {
         btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,7 +95,7 @@ public class FrameEdynson extends javax.swing.JFrame {
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
-        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Entrada", "Base", "Bebida", "Carne" }));
+        cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "ENTRADA", "BASE", "BEBIDA", "CARNE" }));
 
         lblDia.setForeground(new java.awt.Color(255, 255, 255));
         lblDia.setText("Dia:");
@@ -107,6 +117,13 @@ public class FrameEdynson extends javax.swing.JFrame {
         txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
 
+        jButton1.setText("UPDATE");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
@@ -114,12 +131,6 @@ public class FrameEdynson extends javax.swing.JFrame {
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFoto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -131,9 +142,9 @@ public class FrameEdynson extends javax.swing.JFrame {
                                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                         .addComponent(lblTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbxTipo, 0, 1, Short.MAX_VALUE)
+                                        .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(2, 2, 2)))
-                                .addGap(29, 29, 29))
+                                .addGap(30, 30, 30))
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -148,10 +159,21 @@ public class FrameEdynson extends javax.swing.JFrame {
                                         .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)))
+                                .addGap(28, 28, 28)))
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addGap(0, 6, Short.MAX_VALUE))
+                        .addGap(17, 17, 17))
+                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnFoto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jButton1))
+                            .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(0, 15, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                     .addContainerGap(238, Short.MAX_VALUE)
@@ -161,9 +183,9 @@ public class FrameEdynson extends javax.swing.JFrame {
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblRacion)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -182,17 +204,16 @@ public class FrameEdynson extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDia)
-                            .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                            .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFoto)
                     .addComponent(btnFoto)
                     .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
@@ -215,49 +236,37 @@ public class FrameEdynson extends javax.swing.JFrame {
             String ruta = j.getSelectedFile().getAbsolutePath();
             txtRuta.setText(ruta);
             ImageIcon imagen = new ImageIcon(ruta);
-            this.lblImagen.setIcon(imagen);
+            this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), Image.SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        RacionDia racion = new RacionDia();
+        racion.setRacId(Integer.parseInt(this.txtId.getText()));
+        racion.setNombre(this.txtNombre.getText());
+        racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
+        racion.setMenuId(this.cbxDia.getSelectedIndex());
+        racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
+        racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
+        
+        IClienteAccess service = Factory.getInstance().getClienteService();
+        clienteService servicioRestaurante = new clienteService(service);
+        
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameEdynson.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameEdynson.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameEdynson.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameEdynson.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            servicioRestaurante.updateRacion(racion);
+        } catch (Exception ex) {
+            Logger.getLogger(EdynsonModificarRacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrameEdynson().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFoto;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxTipo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;

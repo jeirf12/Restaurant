@@ -5,7 +5,9 @@
  */
 package co.unicauca.microkernel.servidor.infra;
 
+import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
@@ -208,13 +210,19 @@ public class RestauranteServerSocket implements Runnable{
      * @param protocol protocolo en formato Json
      */
     private void administradorUpdateRacion(Protocol protocol){
-        String clave = protocol.getParameters().get(0).getValue();
-        String atributo = protocol.getParameters().get(1).getValue();
-        String valor = protocol.getParameters().get(2).getValue();
+        RacionDia racion = new RacionDia();
+        racion.setRacId(Integer.parseInt(protocol.getParameters().get(0).getValue()));
+        racion.setNombre(protocol.getParameters().get(1).getValue());
+        racion.setPrecio(Integer.parseInt(protocol.getParameters().get(2).getValue()));
+        racion.setTipo(CategoriaEnum.valueOf(protocol.getParameters().get(3).getValue()));
+        racion.setMenuId(Integer.parseInt(protocol.getParameters().get(4).getValue()));
+        racion.setImagen(protocol.getParameters().get(5).getValue().getBytes());
+
+        
         String response = null;
-        response = service.updateRacion(clave, atributo, valor);
+        response = service.updateRacion(racion);
         output.println(response);
-        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" clave:"+clave+" atributo:"+atributo+" valor: "+valor);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
     }
     
     /**
@@ -222,13 +230,17 @@ public class RestauranteServerSocket implements Runnable{
      * @param protocol 
      */
     private void administradorUpdateEspecial(Protocol protocol){
-        String clave = protocol.getParameters().get(0).getValue();
-        String atributo = protocol.getParameters().get(1).getValue();
-        String valor = protocol.getParameters().get(2).getValue();
+        PlatoEspecial plato = new PlatoEspecial();
+        plato.setId_pe(Integer.parseInt(protocol.getParameters().get(0).getValue()));
+        plato.setNombre(protocol.getParameters().get(1).getValue());
+        plato.setPrecio(Integer.parseInt(protocol.getParameters().get(2).getValue()));
+        plato.setDescripcion(protocol.getParameters().get(3).getValue());
+        plato.setMenuEsp(Integer.parseInt(protocol.getParameters().get(4).getValue()));
+        plato.setImagen(protocol.getParameters().get(5).getValue().getBytes());
         String response = null;
-        response = service.updatePlatoEspecial(clave, atributo, valor);
+        response = service.updatePlatoEspecial(plato);
         output.println(response);
-        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response+" clave:"+clave+" atributo:"+atributo+" valor: "+valor);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
     }
 
     /**

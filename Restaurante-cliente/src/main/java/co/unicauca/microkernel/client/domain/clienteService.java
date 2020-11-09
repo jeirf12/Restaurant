@@ -7,6 +7,7 @@ package co.unicauca.microkernel.client.domain;
 
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.Restaurante;
 import java.util.List;
 
@@ -38,27 +39,23 @@ public class clienteService {
     
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
-     * @param clave identificador del plato
-     * @param atributo columna a ser modificada
-     * @param valor nuevo valor a almacenar
+     * @param plato informacion del plato a actualizar
      * @return true si la operacion es exitosa, false si erra
      * @throws Exception 
      */
-    public boolean updatePlatoEspecial(int clave, String atributo, String valor) throws Exception{
+    public boolean updatePlatoEspecial(PlatoEspecial plato) throws Exception{
         //validaciones
-        return service.updatePlatoEspecial(clave, atributo, valor);
+        return service.updatePlatoEspecial(plato);
     }
     
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para racion
-     * @param clave identificador de la racion
-     * @param atributo columna a ser modificada
-     * @param valor nuevo valor a almacenar
+     * @param racion informacion de la racion a actualizar
      * @return true si la operacion es exitosa, false si erra
      * @throws Exception 
      */
-    public boolean updateRacion(int clave, String atributo, String valor) throws Exception{
+    public boolean updateRacion(RacionDia racion) throws Exception{
         //validaciones
-        return service.updateRacion(clave, atributo, valor);
+        return service.updateRacion(racion);
     }
 }
