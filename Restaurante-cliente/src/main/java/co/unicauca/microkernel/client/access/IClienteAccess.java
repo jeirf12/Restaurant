@@ -19,7 +19,7 @@ public interface IClienteAccess {
     
     public String saveRestaurant(Restaurante restaurant) throws Exception;
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception;
-    
+
     //
     public String deleteRacionDia(int rac_id)throws Exception;
     //
@@ -69,5 +69,7 @@ public interface IClienteAccess {
     public String addPedido(Pedido pedido) throws Exception;
     public String addRacionPedido(RacionPed racionPed) throws Exception;
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
+
+    public String saveRacionDia(RacionDia racion) throws Exception;
 
 }

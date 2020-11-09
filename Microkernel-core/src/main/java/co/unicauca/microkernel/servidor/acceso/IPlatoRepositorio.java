@@ -6,7 +6,10 @@
 package co.unicauca.microkernel.servidor.acceso;
 
 
+
 import co.unicauca.microkernel.common.entities.*;
+
+
 
 
 
@@ -20,7 +23,7 @@ public interface IPlatoRepositorio {
     public String saveRestaurant(Restaurante res);
 
     public String savePlatoEspecial(PlatoEspecial plato);
-    
+
     /**
      * hace un update sobre la tabla platoEspecial
      * @param clave valor con el que se encuentra la tupla
@@ -63,5 +66,8 @@ public interface IPlatoRepositorio {
     public String addRacionPedido(RacionPed racionPed);
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
 
+
+
+    public String saveRacionDia(RacionDia racion);
 
 }

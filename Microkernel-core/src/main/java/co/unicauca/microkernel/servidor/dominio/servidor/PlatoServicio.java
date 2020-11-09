@@ -5,6 +5,7 @@
  */
 package co.unicauca.microkernel.servidor.dominio.servidor;
 
+
 import co.unicauca.microkernel.common.entities.*;
 
 import co.unicauca.microkernel.servidor.acceso.IPlatoRepositorio;
@@ -32,6 +33,7 @@ public class PlatoServicio {
         //hacer validaciones aqui
         return repositorio.savePlatoEspecial(plato);
     }
+
 
     /**
      * modifica un plato especial en la base de datos
@@ -89,4 +91,11 @@ public class PlatoServicio {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed){
         return repositorio.addPlatoEspecialPedido(platoEspecialPed);
     }
+
+    
+    public String saveRacionDia(RacionDia racion){
+        //hacer validaciones aqui
+        return repositorio.saveRacionDia(racion);
+    }
+
 }

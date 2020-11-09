@@ -6,12 +6,8 @@
 package co.unicauca.microkernel.client.domain;
 
 import co.unicauca.microkernel.client.access.IClienteAccess;
-
-
 import java.util.List;
-
 import co.unicauca.microkernel.common.entities.*;
-
 
 /**
  * servicios que el cliente puede usar del servidor (mascaras)
@@ -38,6 +34,7 @@ public class clienteService {
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
     }
+
     
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
@@ -76,5 +73,9 @@ public class clienteService {
     }
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
+    }
+    public String saveRacionDia(RacionDia racion) throws Exception{
+        return service.saveRacionDia(racion);
+
     }
 }
