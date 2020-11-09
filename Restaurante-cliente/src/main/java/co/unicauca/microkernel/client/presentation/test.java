@@ -37,7 +37,7 @@ public class test {
         //MenuEspecial menuEspecial = new MenuEspecial(366,1);
         //PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
         //Si devuelve nulo, entonces significa que no encontro la ruta de la foto
-        byte [] photoRestaurant=Utilities.convertirFoto("/home/fallen/Imágenes/imagen1.png");
+        byte [] photoRestaurant=Utilities.convertirFoto("C:\\Users\\edyns\\OneDrive\\Imágenes\\Sin título-1.png");
         
         Restaurante res=new Restaurante(2,"co","pipo",photoRestaurant,"calle31");
         
@@ -45,7 +45,7 @@ public class test {
             String restaurante =servicioRestaurante.saveRestaurant(res);
             System.out.println(restaurante);
 
-        MenuEspecial menuEspecial = new MenuEspecial(366,1);
+        /*MenuEspecial menuEspecial = new MenuEspecial(366,1);
         
         Clock cl = Clock.systemUTC();
         LocalDateTime date = LocalDateTime.now();
@@ -53,8 +53,7 @@ public class test {
         
             String platoE = servicioRestaurante.addPedido(pedido);
             System.out.println(date);
-            System.out.println(platoE);
-
+            System.out.println(platoE);*/
             
         }catch(Exception ex) {
             JOptionPane.showMessageDialog(null, "El restaurante ya esta registrado" + ex.getMessage());
