@@ -195,8 +195,10 @@ public class RestauranteServerSocket implements Runnable{
                 }
 
                 if(protocolRequest.getAction().equals("postRacionDia")){
-                    administradorRegistrarRacionDia(protocolRequest);   
-                    
+                    this.administradorRegistrarRacionDia(protocolRequest);       
+                }
+                if(protocolRequest.getAction().equals("deletePedido")){
+                    this.administradorDeletePedido(protocolRequest);       
                 }
                 break;
 
@@ -222,6 +224,18 @@ public class RestauranteServerSocket implements Runnable{
                 }
                 if (protocolRequest.getAction().equals("agregarPlatoEspecialPedido")) {
                     this.administradorAddPlatoEspecialPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("payedPedido")) {
+                    this.administradorPayedPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("cancelPedido")) {
+                    this.administradorCancelPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("deleteRacionPedido")) {
+                    this.administradorDeleteRacionPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("deletePlatoEspecialPedido")) {
+                    this.administradorDeletePlatoEspecialPedido(protocolRequest);
                 }
                 
                 break;
@@ -340,7 +354,10 @@ public class RestauranteServerSocket implements Runnable{
         pedido.setCliente(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
         pedido.setResId(Integer.parseInt(protocolRequest.getParameters().get(2).getValue()));
         pedido.setEstado(EstadoPed.valueOf(protocolRequest.getParameters().get(3).getValue()));
-        pedido.setFecha(LocalDateTime.parse(protocolRequest.getParameters().get(4).getValue()));
+        pedido.setFechaCreado(LocalDateTime.parse(protocolRequest.getParameters().get(4).getValue()));
+        pedido.setFechaPagado(LocalDateTime.parse(protocolRequest.getParameters().get(5).getValue()));
+
+        
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response=null;
         //el servicio comunicara con la base de datos,
@@ -355,6 +372,8 @@ public class RestauranteServerSocket implements Runnable{
         //el orden debe ser exacto
         racionPedido.setRacpId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         racionPedido.setPedId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        racionPedido.setRacId(Integer.parseInt(protocolRequest.getParameters().get(2).getValue()));
+        racionPedido.setCantidad(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response=null;
         //el servicio comunicara con la base de datos,
@@ -369,6 +388,8 @@ public class RestauranteServerSocket implements Runnable{
         //el orden debe ser exacto
         platoEspecialPed.setPlaepId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         platoEspecialPed.setPedId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
+        platoEspecialPed.setPlaeId(Integer.parseInt(protocolRequest.getParameters().get(2).getValue()));
+        platoEspecialPed.setCantidad(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response=null;
         //el servicio comunicara con la base de datos,
@@ -479,11 +500,66 @@ public class RestauranteServerSocket implements Runnable{
         res.setCodigo(protocolRequest.getParameters().get(1).getValue());
         res.setNombre(protocolRequest.getParameters().get(2).getValue());
         res.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
-        res.setDireccion(protocolRequest.getParameters().get(4).getValue());
+        res.setCalle(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
+        res.setCarrera(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response=null;
         //el servicio comunicara con la base de datos,
         response = service.saveRestaurant(res);
         output.println(response);
-    } 
+    }
+    
+    private void administradorDeletePedido(Protocol protocol){
+        int pedidoId = 0;
+        
+        pedidoId = Integer.parseInt(protocol.getParameters().get(0).getValue());    
+        
+        String response = null;
+        response = service.deletePedido(pedidoId);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
+    private void administradorPayedPedido(Protocol protocol){
+        Pedido pedido = new Pedido();
+        
+        pedido.setIdPedido(Integer.parseInt(protocol.getParameters().get(0).getValue()));    
+        pedido.setCliente(Integer.parseInt(protocol.getParameters().get(1).getValue()));
+        String response = null;
+        response = service.payedPedido(pedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
+    private void administradorCancelPedido(Protocol protocol){
+        Pedido pedido = new Pedido();
+        
+        pedido.setIdPedido(Integer.parseInt(protocol.getParameters().get(0).getValue()));    
+        pedido.setCliente(Integer.parseInt(protocol.getParameters().get(1).getValue()));
+        
+        String response = null;
+        response = service.cancelPedido(pedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
+    private void administradorDeleteRacionPedido(Protocol protocol){
+        int idRacionPedido = 0;
+        
+        idRacionPedido = Integer.parseInt(protocol.getParameters().get(0).getValue());    
+        
+        String response = null;
+        response = service.deleteRacionPedido(idRacionPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
+    private void administradorDeletePlatoEspecialPedido(Protocol protocol){
+        int idPlatoEspecialPedido = 0;
+        
+        idPlatoEspecialPedido = Integer.parseInt(protocol.getParameters().get(0).getValue());    
+        
+        String response = null;
+        response = service.deletePlatoEspecialPedido(idPlatoEspecialPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
+    
+    
 }

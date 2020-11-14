@@ -69,7 +69,11 @@ public interface IClienteAccess {
     public String addPedido(Pedido pedido) throws Exception;
     public String addRacionPedido(RacionPed racionPed) throws Exception;
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
-
     public String saveRacionDia(RacionDia racion) throws Exception;
+    public String deletePedido(int pedidoId) throws Exception;
+    public String payedPedido(Pedido pedido) throws Exception;
+    public String cancelPedido(Pedido pedido) throws Exception;
+    public String deleteRacionPedido(int idRacionPedido) throws Exception;
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido) throws Exception;
 
 }

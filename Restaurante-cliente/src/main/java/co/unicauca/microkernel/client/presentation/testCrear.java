@@ -38,7 +38,7 @@ public class testCrear {
         //PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
         //Si devuelve nulo, entonces significa que no encontro la ruta de la foto
         byte [] photoRestaurant=Utilities.convertirFoto("C:\\Users\\Camilo Gonzalez\\Desktop\\prueba\\ss.png");
-       Restaurante res=new Restaurante(2,"co","pipo",photoRestaurant,"calle31");
+       Restaurante res=new Restaurante(2,"mx","pipo",photoRestaurant,31,11);
         MenuEspecial menuEspecial = new MenuEspecial(366,1);
         PlatoEspecial platoEspecial = new PlatoEspecial(74,menuEspecial.getId(),"Nombre","Descripcion",123,photoRestaurant);
         try{

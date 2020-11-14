@@ -15,17 +15,19 @@ public class Restaurante {
     private String codigo;
     private String nombre;
     private byte[] imagen;
-    private String direccion;
+    private int calle;
+    private int carrera;
 
     public Restaurante() {
     }
 
-    public Restaurante(int id, String codigo, String nombre, byte[] imagen, String direccion) {
+    public Restaurante(int id, String codigo, String nombre, byte[] imagen, int calle, int carrera) {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.imagen = imagen;
-        this.direccion = direccion;
+        this.calle = calle;
+        this.carrera = carrera;
     }
 
     public String getNombre() {
@@ -60,12 +62,20 @@ public class Restaurante {
         this.codigo = codigo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public int getCalle() {
+        return calle;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setCalle(int calle) {
+        this.calle = calle;
     }
 
+    public int getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
+    }
+    
 }

@@ -12,13 +12,16 @@ package co.unicauca.microkernel.common.entities;
 public class Cliente {
     private int idCliente;
     private String nombre;
-    private String direccion;
+    private int calle;
+    private int carrera;
+    //private String direccion;
     private byte [] imagen;
 
-    public Cliente(int idCliente, String nombre, String direccion,byte [] imagen) {
+    public Cliente(int idCliente, String nombre, int calle, int carrera,byte [] imagen) {
         this.idCliente = idCliente;
         this.nombre = nombre;
-        this.direccion = direccion;
+        this.calle = calle;
+        this.carrera = carrera;
         this.imagen=imagen;
     }
 
@@ -38,19 +41,27 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     public byte[] getImagen() {
         return imagen;
     }
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
+    }
+
+    public int getCalle() {
+        return calle;
+    }
+
+    public void setCalle(int calle) {
+        this.calle = calle;
+    }
+
+    public int getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
     }
 }

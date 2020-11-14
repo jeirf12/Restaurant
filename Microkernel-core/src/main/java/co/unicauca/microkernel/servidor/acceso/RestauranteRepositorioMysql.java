@@ -202,6 +202,8 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
     @Override
     public String calcularCosto(int idCliente){
         double cost = 0;
+        String codigo = "";
+        double distancia = 0;
         int total =0;
         int sumaRaciones = 0;
         int sumaPlatosE = 0;
@@ -210,12 +212,18 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             sumaPlatosE = this.sumaPlatos(idCliente);
             
             total = sumaRaciones+sumaPlatosE;
+            
+            codigo = this.codigoRestaurante(idCliente);
+            
+            distancia = this.calcularDistancia(idCliente);
+            
+            
         try {    
             String basePath = getBaseFilePath();
             DeliveryService deliveryService = new DeliveryService();
             
             DeliveryPluginManager.init(basePath);
-            Delivery deliveryEntity = new Delivery(total, 999, "or");
+            Delivery deliveryEntity = new Delivery(total, distancia, codigo);
             cost = deliveryService.calculateDeliveryCost(deliveryEntity);
             
             return ""+cost;
@@ -332,14 +340,13 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO pedido (PED_ID,CLI_ID,RES_ID,PED_FECHA) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO pedido (CLI_ID,RES_ID) VALUES (?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setString(1, null);
-            pstmt.setInt(2, instancia.getCliente());
-            pstmt.setInt(3, instancia.getResId());
-            pstmt.setDate(4, java.sql.Date.valueOf(instancia.getFecha().toLocalDate()));
+            pstmt.setInt(1, instancia.getCliente());
+            pstmt.setInt(2, instancia.getResId());
+            
 
             //se ejecuta la sentencia sql
             pstmt.executeUpdate();
@@ -399,12 +406,13 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO racionpedido (RACP_ID,PED_ID) VALUES (?,?)";
+            String sql = "INSERT INTO racionpedido (PED_ID,RAC_ID,RACP_ID) VALUES (?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setInt(1, instancia.getRacpId());
-            pstmt.setInt(2, instancia.getPedId());
+            pstmt.setInt(1, instancia.getPedId());
+            pstmt.setInt(2, instancia.getRacId());
+            pstmt.setInt(3, instancia.getCantidad());
             
             //se ejecuta la sentencia sql
             pstmt.executeUpdate();
@@ -504,13 +512,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         System.out.println("Entered the save restaurant");
         try{
             this.connect();
-            String sql = "INSERT INTO restaurante (RES_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_DIRECCION) values (?,?,?,?,?)";
+            String sql = "INSERT INTO restaurante (RES_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_CARRERA,RES_CALLE) values (?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, res.getId());
             pstmt.setString(2, res.getCodigo());
             pstmt.setString(3, res.getNombre());
             pstmt.setBytes(4, res.getImagen());
-            pstmt.setString(5, res.getDireccion());
+            pstmt.setInt(5, res.getCarrera());
+            pstmt.setInt(6, res.getCalle());
             pstmt.executeUpdate();
             pstmt.close();
             this.disconnect();
@@ -528,12 +537,13 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO platoespecialpedido (PLAEP_ID,PED_ID) VALUES (?,?)";
+            String sql = "INSERT INTO platoespecialpedido (PED_ID,PLAE_ID,PLAEP_CANTIDAD) VALUES (?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setInt(1, instancia.getPlaepId());
-            pstmt.setInt(2, instancia.getPedId());
+            pstmt.setInt(1, instancia.getPedId());
+            pstmt.setInt(2, instancia.getPlaeId());
+            pstmt.setInt(3, instancia.getCantidad());
             //se ejecuta la sentencia sql
             pstmt.executeUpdate();
             //se cierra
@@ -547,6 +557,108 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         }
         return null;
     }
+    @Override
+    public String deletePedido(int pedidoId){
+
+        try{
+
+            this.connect();
+            String sql = "DELETE FROM platoespecial WHERE plae_id = (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,pedidoId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al eliminar el plato", ex);
+        }
+        return ""+pedidoId;
+    }
+    @Override
+    public String payedPedido(Pedido pedido){
+
+        try{
+            this.connect();
+            //String sql = "UPDATE platoespecial set "+atributo+" = "+valor+" WHERE PESP_NOMBRE = "+clave;
+            String sql = "UPDATE pedido SET PED_ESTADO='PAGADO' WHERE PED_ID = ? AND CLI_ID = ? ";
+            System.out.println("SENTENCIA SQL UPDATE RACION: "+sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, pedido.getIdPedido());
+            pstmt.setInt(2, pedido.getCliente());
+
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+            return "FALLO";
+        }
+        return ""+pedido.getIdPedido();
+    }
+    @Override
+    public String cancelPedido(Pedido pedido){
+
+        try{
+            this.connect();
+            //String sql = "UPDATE platoespecial set "+atributo+" = "+valor+" WHERE PESP_NOMBRE = "+clave;
+            String sql = "UPDATE pedido SET PED_ESTADO='CANCELADO' WHERE PED_ID = ? AND CLI_ID = ? ";
+            System.out.println("SENTENCIA SQL UPDATE RACION: "+sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, pedido.getIdPedido());
+            pstmt.setInt(2, pedido.getCliente());
+
+            pstmt.executeUpdate();
+            
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+            return "FALLO";
+        }
+        return ""+pedido.getIdPedido();
+    }
+    @Override
+    public String deleteRacionPedido(int idRacionPedido){
+        try{
+            
+            this.connect(); 
+            String sql = "DELETE FROM racionpedido WHERE plae_id = (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,idRacionPedido);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al eliminar el plato", ex);
+        }
+        return ""+idRacionPedido;
+    }
+    
+    @Override
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido){
+        try{
+
+            this.connect(); 
+            String sql = "DELETE FROM platoespecialpedido WHERE plae_id = (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,idPlatoEspecialPedido);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al eliminar el plato", ex);
+        }
+        return ""+idPlatoEspecialPedido;
+    }
+    
+    
     public int sumaRaciones(int idCliente){
         int sumaRaciones=0;
         try{
@@ -571,6 +683,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             System.out.println("algo:"+ex.getMessage());
 
         }
+        System.out.println("Las raciones dan = "+sumaRaciones);
         return sumaRaciones;
     }
     public int sumaPlatos(int idCliente){
@@ -597,7 +710,77 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             System.out.println("algo:"+ex.getMessage());
 
         }
+        System.out.println("Las platos especiales dan = "+sumaPlatos);
         return sumaPlatos;
+    }
+    public double calcularDistancia(int idCliente){
+        int x1 = 0;
+        int y1 = 0;
+        int x2 = 0;
+        int y2 = 0;
+        double distancia = 0;
+        try{
+            this.connect();
+            String sqlRacion = 
+            "SELECT res.RES_CALLE,res.RES_CARRERA,cli.CLI_CALLE,cli.CLI_CARRERA"
+            + " FROM pedido ped INNER JOIN restaurante res on ped.RES_ID=res.RES_ID"
+            + " INNER JOIN cliente cli on cli.CLI_ID=ped.CLI_ID"
+            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ESTADO LIKE 'CREADO'";
+
+            PreparedStatement ps1 = conn.prepareStatement(sqlRacion);
+            ResultSet rs1 = ps1.executeQuery();
+            
+            while (rs1.next()){
+                x1 = rs1.getInt(1);
+                y1 = rs1.getInt(2);
+                x2 = rs1.getInt(3);
+                y2 = rs1.getInt(4);
+            }
+            distancia=this.calcularDistancia(x1,y1,x2,y2);
+
+            ps1.close();
+            this.disconnect();
+ 
+        }catch(SQLException ex){
+            System.out.println("algo:"+ex.getMessage());
+
+        }
+        System.out.println("Las distancia da = "+distancia);
+        return distancia;
+    }
+    public double calcularDistancia(int x1, int y1, int x2, int y2){
+    
+        int a = (int)Math.pow(x2-x1,2);
+        int b = (int)Math.pow(y2-y1,2);
+        double distancia = Math.sqrt(a+b);
+        return distancia;
+    }
+    public String codigoRestaurante (int idCliente){
+        String codigo = "";
+        
+        try{
+            this.connect();
+            String sqlRacion = 
+            "SELECT res.RES_CODIGO"
+            + " FROM pedido ped INNER JOIN restaurante res on ped.RES_ID=res.RES_ID"
+            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ESTADO LIKE 'CREADO'";
+
+            PreparedStatement ps1 = conn.prepareStatement(sqlRacion);
+            ResultSet rs1 = ps1.executeQuery();
+            
+            while (rs1.next()){
+                codigo = rs1.getString(1);
+            }
+
+            ps1.close();
+            this.disconnect();
+ 
+        }catch(SQLException ex){
+            System.out.println("algo:"+ex.getMessage());
+
+        }
+        System.out.println("el codigo de restaurante da = "+codigo);
+        return codigo;
     }
     
 

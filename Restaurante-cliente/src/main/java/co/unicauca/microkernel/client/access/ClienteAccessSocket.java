@@ -339,7 +339,8 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("cli_id", String.valueOf(instancia.getCliente()));
         protocol.addParameter("res_id", String.valueOf(instancia.getResId()));
         protocol.addParameter("ped_estado", String.valueOf(instancia.getEstado()));
-        protocol.addParameter("ped_fecha", String.valueOf(instancia.getFecha()));
+        protocol.addParameter("ped_fecha_creado", String.valueOf(instancia.getFechaCreado()));
+        protocol.addParameter("ped_fecha_pagado", String.valueOf(instancia.getFechaPagado()));
         
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -428,6 +429,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
         protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
         protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
+        protocol.addParameter("cantidad", String.valueOf(instancia.getCantidad()));
         
 
         Gson gson = new Gson();
@@ -478,7 +480,9 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("res_codigo", String.valueOf(restaurante.getCodigo()));
         protocol.addParameter("res_nombre", restaurante.getNombre());
         protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
-        protocol.addParameter("res_direccion", restaurante.getDireccion());
+        protocol.addParameter("res_calle", String.valueOf(restaurante.getCalle()));
+        protocol.addParameter("res_carrera", String.valueOf(restaurante.getCarrera()));
+
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -491,17 +495,199 @@ public class ClienteAccessSocket implements IClienteAccess {
     public String addPlatoEspecialPedido(PlatoEspecialPed instancia) throws Exception{
         String jsonResponse = null;
         //devuelve un string en formato Json que lo que se enviara
-        String requestJson = crearRacionPedido(instancia);
+        String requestJson = crearPlatoEspecialPedido(instancia);
         if((this.procesarConexion(requestJson).equals("FALLO"))){
             return null;
         }
         return String.valueOf(instancia.getPlaepId());
 
     }
-    private String crearRacionPedido(PlatoEspecialPed instancia){
+    private String crearPlatoEspecialPedido(PlatoEspecialPed instancia){
         Protocol protocol = new Protocol();
         protocol.setResource("comprador");
         protocol.setAction("agregarPlatoEspecialPedido");
+        protocol.addParameter("plaep_id", String.valueOf(instancia.getPlaepId()));
+        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
+        protocol.addParameter("plae_id", String.valueOf(instancia.getPlaeId()));
+        protocol.addParameter("cantidad", String.valueOf(instancia.getCantidad()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    @Override
+    public String deletePedido(int pedidoId) throws Exception{
+        String respJson = deletePedidoJson(pedidoId);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+pedidoId;
+    }
+    private String deletePedidoJson(int pedidoId){
+        Protocol protocol = new Protocol();
+        protocol.setResource("administrador");
+        protocol.setAction("deletePedido");
+        protocol.addParameter("ped_id", ""+pedidoId);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+
+    }
+    @Override
+    public String payedPedido(Pedido pedido) throws Exception{
+        String respJson = payedPedidoJson(pedido);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+pedido;
+    }
+    private String payedPedidoJson(Pedido pedido){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("payedPedido");
+        protocol.addParameter("ped_id", String.valueOf(pedido.getIdPedido()));
+        protocol.addParameter("cli_id", String.valueOf(pedido.getCliente()));
+        
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+
+    }
+    @Override
+    public String cancelPedido(Pedido pedido) throws Exception{
+        String respJson = cancelPedidoJson(pedido);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+pedido;
+    }
+    private String cancelPedidoJson(Pedido pedido){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("cancelPedido");
+        protocol.addParameter("ped_id", String.valueOf(pedido.getIdPedido()));
+        protocol.addParameter("cli_id", String.valueOf(pedido.getCliente()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+
+    }
+    @Override
+    public String deleteRacionPedido(int idRacionPedido) throws Exception{
+        String respJson = deleteRacionPedidoJson(idRacionPedido);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+idRacionPedido;
+    }
+    private String deleteRacionPedidoJson(int idRacionPedido){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("deleteRacionPedido");
+        protocol.addParameter("racp_id", ""+idRacionPedido);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+
+    }
+    @Override
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido) throws Exception{
+        String respJson = deletePlatoEspecialPedidoJson(idPlatoEspecialPedido);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+idPlatoEspecialPedido;
+    }
+    private String deletePlatoEspecialPedidoJson(int idPlatoEspecialPedido){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("deletePlatoEspecialPedido");
+        protocol.addParameter("plaep_id", ""+idPlatoEspecialPedido);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+    }
+    /*
+    
+    @Override
+    public boolean updatePedido(Pedido pedido) throws Exception{
+        String requestJson = updatePedidoJson(pedido);
+        if(procesarConexion(requestJson).equals("FALLO")){
+            return false;
+        }
+        return true;
+    }
+
+    public String updatePedidoJson(Pedido instancia){
+        Protocol protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("comprador");
+        protocol.setAction("updatePedido");
+        protocol.addParameter("ped_id", String.valueOf(instancia.getIdPedido()));
+        protocol.addParameter("cli_id", String.valueOf(instancia.getCliente()));
+        protocol.addParameter("res_id", String.valueOf(instancia.getResId()));
+        protocol.addParameter("ped_estado", String.valueOf(instancia.getEstado()));
+        protocol.addParameter("ped_fecha_creado", String.valueOf(instancia.getFechaCreado()));
+        protocol.addParameter("ped_fecha_pagado", String.valueOf(instancia.getFechaPagado()));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+
+        return requestJson;
+    }
+    @Override
+    public boolean updateRacionPedido(RacionPed racionPed) throws Exception{
+        String requestJson = updateRacionPedidoJson(racionPed);
+        if(procesarConexion(requestJson).equals("FALLO")){
+            return false;
+        }
+        return true;
+    }
+
+    public String updateRacionPedidoJson(RacionPed instancia){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("updateRacionPedido");
+        protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
+        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
+        protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
+        
+
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
+        return requestJson;
+    }
+    @Override
+    public boolean updatePlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
+        String requestJson = updatePlatoEspecialPedidoJson(platoEspecialPed);
+        if(procesarConexion(requestJson).equals("FALLO")){
+            return false;
+        }
+        return true;
+    }
+
+    public String updatePlatoEspecialPedidoJson(PlatoEspecialPed instancia){
+        Protocol protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("updatePlatoEspecialPedido");
         protocol.addParameter("plaep_id", String.valueOf(instancia.getPlaepId()));
         protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
         protocol.addParameter("plae_id", String.valueOf(instancia.getPlaeId()));
@@ -511,5 +697,30 @@ public class ClienteAccessSocket implements IClienteAccess {
         System.out.println("json: "+requestJson);
         return requestJson;
     }
+    @Override
+    public String deletePedido(int pedidoId) throws Exception{
+        String respJson = deletePedidoJson(pedidoId);
+        if(this.procesarConexion(respJson).equals("FALLO")){
+            return "FALLO";
+        }
+        return ""+pedidoId;
+    }
+    private String deletePedidoJson(int pedidoId){
+        Protocol protocol = new Protocol();
+        protocol.setResource("administrador");
+        protocol.setAction("deletePedido");
+        protocol.addParameter("ped_id", ""+pedidoId);
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        System.out.println("json: "+requestJson);
 
+        return requestJson;
+
+    }
+    
+    
+
+    }*/
+    
 }

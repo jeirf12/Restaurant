@@ -65,9 +65,12 @@ public interface IPlatoRepositorio {
     public String addPedido(Pedido pedido);
     public String addRacionPedido(RacionPed racionPed);
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
-
-
-
     public String saveRacionDia(RacionDia racion);
+
+    public String deletePedido(int pedidoId);
+    public String payedPedido(Pedido pedido);
+    public String cancelPedido(Pedido pedido);
+    public String deleteRacionPedido(int idRacionPedido);
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido);
 
 }

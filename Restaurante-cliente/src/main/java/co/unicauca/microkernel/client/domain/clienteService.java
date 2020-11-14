@@ -76,6 +76,20 @@ public class clienteService {
     }
     public String saveRacionDia(RacionDia racion) throws Exception{
         return service.saveRacionDia(racion);
-
+    }    
+    public String deletePedido(int pedidoId) throws Exception{
+        return service.deletePedido(pedidoId);
+    }    
+    public String payedPedido(Pedido pedido) throws Exception{
+        return service.payedPedido(pedido);
+    }
+    public String cancelPedido(Pedido pedido) throws Exception{
+        return service.cancelPedido(pedido);
+    }
+    public String deleteRacionPedido(int idRacionPedido) throws Exception{
+        return service.deleteRacionPedido(idRacionPedido);
+    }
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido) throws Exception{
+        return service.deletePlatoEspecialPedido(idPlatoEspecialPedido);
     }
 }

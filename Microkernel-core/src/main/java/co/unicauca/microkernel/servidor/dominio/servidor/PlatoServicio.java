@@ -97,5 +97,22 @@ public class PlatoServicio {
         //hacer validaciones aqui
         return repositorio.saveRacionDia(racion);
     }
+ 
+    
+    public String deletePedido(int pedidoId){
+        return repositorio.deletePedido(pedidoId);
+    }
+    public String payedPedido(Pedido pedido){
+        return repositorio.payedPedido(pedido);
+    }
+    public String cancelPedido(Pedido pedido){
+        return repositorio.cancelPedido(pedido);
+    }
+    public String deleteRacionPedido(int idRacionPedido){
+        return repositorio.deleteRacionPedido(idRacionPedido);
+    }
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido){
+        return repositorio.deletePlatoEspecialPedido(idPlatoEspecialPedido);
+    }
 
 }
