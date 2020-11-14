@@ -6,12 +6,15 @@
 package gestionTabla;
 
 import java.awt.Color;
+import static java.awt.Color.white;
 import java.awt.Component;
 import java.awt.Dimension;
+import static javax.swing.BorderFactory.createMatteBorder;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -26,18 +29,18 @@ public class GestionEncabezadoTabla implements TableCellRenderer{
         
         if( value instanceof String ) {
             jcomponent = new JLabel((String) value);
-            ((JLabel)jcomponent).setHorizontalAlignment( SwingConstants.CENTER );
+            ((JLabel)jcomponent).setHorizontalAlignment(CENTER);
             ((JLabel)jcomponent).setSize( 30, jcomponent.getWidth() );   
             ((JLabel)jcomponent).setPreferredSize( new Dimension(6, jcomponent.getWidth())  );
         }         
    
         //jcomponent.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(221, 211, 211)));
-        jcomponent.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 1, new java.awt.Color(255, 255, 255)));
+        jcomponent.setBorder(createMatteBorder(0, 0, 1, 1, new java.awt.Color(255, 255, 255)));
         jcomponent.setOpaque(true);
         //jcomponent.setBackground( new Color(236,234,219) );
         jcomponent.setBackground( new Color(65,65,65) );
         jcomponent.setToolTipText("Tabla Seguimiento");
-        jcomponent.setForeground(Color.white);
+        jcomponent.setForeground(white);
         
         return jcomponent;
     }

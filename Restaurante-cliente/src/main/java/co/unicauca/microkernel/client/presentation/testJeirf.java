@@ -6,10 +6,12 @@
 package co.unicauca.microkernel.client.presentation;
 
 import co.unicauca.microkernel.client.access.Factory;
+import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
+import static java.lang.System.out;
 import java.util.List;
 
 /**
@@ -22,20 +24,20 @@ public class testJeirf {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        IClienteAccess service = Factory.getInstance().getClienteService();
-        clienteService servicioRestaurante = new clienteService(service);
+        var service = getInstance().getClienteService();
+        var servicioRestaurante = new clienteService(service);
         try {
-            List<RacionDia> pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
-            List<PlatoEspecial> pes=servicioRestaurante.listMenuSpecial(1, "administrador");
-            for (RacionDia rdia : pdia) {
-                System.out.println("valor rdia: "+rdia.getNombre());
+            var pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
+            var pes=servicioRestaurante.listMenuSpecial(1, "administrador");
+            for (var rdia : pdia) {
+                out.println("valor rdia: "+rdia.getNombre());
             }
-            for (PlatoEspecial pe : pes) {
-                System.out.println("valor pes: "+pe.getNombre());
+            for (var pe : pes) {
+                out.println("valor pes: "+pe.getNombre());
             }
             
         } catch (Exception e) {
-            System.out.println("FALLO PERRAS");
+            out.println("FALLO PERRAS");
         }
         
     }

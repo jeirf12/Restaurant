@@ -5,12 +5,19 @@
  */
 package gestionTabla;
 
-
 import co.unicauca.microkernel.common.entities.RacionDia;
+import static gestionTabla.StructRaciones.DIA;
+import static gestionTabla.StructRaciones.ELIMINAR;
+import static gestionTabla.StructRaciones.ID;
+import static gestionTabla.StructRaciones.MODIFICAR;
+import static gestionTabla.StructRaciones.NOMBRE;
+import static gestionTabla.StructRaciones.PRECIO;
+import static gestionTabla.StructRaciones.TIPO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import javax.swing.table.DefaultTableModel;
 
 public class TablaRaciones {
@@ -19,7 +26,7 @@ public class TablaRaciones {
         tabla.setDefaultRenderer(Object.class, new Render());
 
         //lista de titulos
-        ArrayList<String> titulosList = new ArrayList<>();
+        var titulosList = new ArrayList<String>();
 
         titulosList.add("ID");
         titulosList.add("NOMBRE");
@@ -30,12 +37,12 @@ public class TablaRaciones {
         titulosList.add(" ");
 
         //copiar titulos
-        String titulos[] = new String[titulosList.size()];
-        for (int i = 0; i < titulos.length; i++) {
+        var titulos = new String[titulosList.size()];
+        for (var i = 0; i < titulos.length; i++) {
             titulos[i] = titulosList.get(i);
         }
 
-        Object[][] data =obtenerMatrizDatos(titulosList,raciones);
+        var data =obtenerMatrizDatos(titulosList,raciones);
         
         DefaultTableModel d = new DefaultTableModel(data, titulos)  {
             public boolean isCellEditable(int row, int column){
@@ -43,7 +50,7 @@ public class TablaRaciones {
             }
         };
         
-        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tabla.setAutoResizeMode(AUTO_RESIZE_OFF);
         tabla.setModel(d);
 
         tabla.setPreferredScrollableViewportSize(tabla.getPreferredSize());
@@ -56,22 +63,22 @@ public class TablaRaciones {
 		 * a todos los usuarios, mientras que las columnas son estaticas
 		 * correspondiendo a las columnas definidas por defecto
          */
-        int tamaño = titulosList.size();
-        Object informacion[][] = new Object[raciones.size()][tamaño];
+        var tamaño = titulosList.size();
+        var informacion = new Object[raciones.size()][tamaño];
         //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
-        for (int x = 0; x < informacion.length; x++) {
-            JButton btnModificar = new JButton("modificar");
+        for (var x = 0; x < informacion.length; x++) {
+            var btnModificar = new JButton("modificar");
             btnModificar.setName("modificar");
-            JButton btnEliminar = new JButton("eliminar");
+            var btnEliminar = new JButton("eliminar");
             btnEliminar.setName("eliminar");
             
-            informacion[x][StructRaciones.ID] = raciones.get(x).getRacId() + "";
-            informacion[x][StructRaciones.NOMBRE] = raciones.get(x).getNombre() + "";
-            informacion[x][StructRaciones.TIPO] = raciones.get(x).getTipo() + "";
-            informacion[x][StructRaciones.PRECIO] = raciones.get(x).getPrecio() + "";
-            informacion[x][StructRaciones.DIA] = raciones.get(x).getMenuId() + "";
-            informacion[x][StructRaciones.MODIFICAR] = btnModificar;
-            informacion[x][StructRaciones.ELIMINAR] = btnEliminar;
+            informacion[x][ID] = raciones.get(x).getRacId() + "";
+            informacion[x][NOMBRE] = raciones.get(x).getNombre() + "";
+            informacion[x][TIPO] = raciones.get(x).getTipo() + "";
+            informacion[x][PRECIO] = raciones.get(x).getPrecio() + "";
+            informacion[x][DIA] = raciones.get(x).getMenuId() + "";
+            informacion[x][MODIFICAR] = btnModificar;
+            informacion[x][ELIMINAR] = btnEliminar;
         }
         return informacion;
     }

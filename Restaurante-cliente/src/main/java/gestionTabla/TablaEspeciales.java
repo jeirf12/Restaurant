@@ -6,10 +6,17 @@
 package gestionTabla;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
+import static gestionTabla.StructEspeciales.DESCRIPCION;
+import static gestionTabla.StructEspeciales.ELIMINAR;
+import static gestionTabla.StructEspeciales.ID;
+import static gestionTabla.StructEspeciales.MODIFICAR;
+import static gestionTabla.StructEspeciales.NOMBRE;
+import static gestionTabla.StructEspeciales.PRECIO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,7 +28,7 @@ public class TablaEspeciales {
         tabla.setDefaultRenderer(Object.class, new Render());
 
         //lista de titulos
-        ArrayList<String> titulosList = new ArrayList<>();
+        var titulosList = new ArrayList<String>();
 
         titulosList.add("ID");
         titulosList.add("NOMBRE");
@@ -31,12 +38,12 @@ public class TablaEspeciales {
         titulosList.add(" ");
 
         //copiar titulos
-        String titulos[] = new String[titulosList.size()];
-        for (int i = 0; i < titulos.length; i++) {
+        var titulos = new String[titulosList.size()];
+        for (var i = 0; i < titulos.length; i++) {
             titulos[i] = titulosList.get(i);
         }
 
-        Object[][] data =obtenerMatrizDatos(titulosList,especiales);
+        var data =obtenerMatrizDatos(titulosList,especiales);
         
         DefaultTableModel d = new DefaultTableModel(data, titulos){
             public boolean isCellEditable(int row, int column){
@@ -44,7 +51,7 @@ public class TablaEspeciales {
             }
         };
         
-        tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        tabla.setAutoResizeMode(AUTO_RESIZE_OFF);
         tabla.setModel(d);
 
         tabla.setPreferredScrollableViewportSize(tabla.getPreferredSize());
@@ -57,21 +64,21 @@ public class TablaEspeciales {
 		 * a todos los usuarios, mientras que las columnas son estaticas
 		 * correspondiendo a las columnas definidas por defecto
          */
-        int tamaño = titulosList.size();
-        Object informacion[][] = new Object[especiales.size()][tamaño];
+        var tamaño = titulosList.size();
+        var informacion = new Object[especiales.size()][tamaño];
         //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
-        for (int x = 0; x < informacion.length; x++) {
-            JButton btnModificar = new JButton("modificar");
+        for (var x = 0; x < informacion.length; x++) {
+            var btnModificar = new JButton("modificar");
             btnModificar.setName("modificar");
-            JButton btnEliminar = new JButton("eliminar");
+            var btnEliminar = new JButton("eliminar");
             btnEliminar.setName("eliminar");
             
-            informacion[x][StructEspeciales.ID] = especiales.get(x).getId_pe() + "";
-            informacion[x][StructEspeciales.NOMBRE] = especiales.get(x).getNombre() + "";
-            informacion[x][StructEspeciales.DESCRIPCION] = especiales.get(x).getDescripcion() + "";
-            informacion[x][StructEspeciales.PRECIO] = especiales.get(x).getPrecio() + "";
-            informacion[x][StructEspeciales.ELIMINAR] = btnEliminar;
-            informacion[x][StructEspeciales.MODIFICAR] = btnModificar;
+            informacion[x][ID] = especiales.get(x).getId_pe() + "";
+            informacion[x][NOMBRE] = especiales.get(x).getNombre() + "";
+            informacion[x][DESCRIPCION] = especiales.get(x).getDescripcion() + "";
+            informacion[x][PRECIO] = especiales.get(x).getPrecio() + "";
+            informacion[x][ELIMINAR] = btnEliminar;
+            informacion[x][MODIFICAR] = btnModificar;
         }
         return informacion;
     }

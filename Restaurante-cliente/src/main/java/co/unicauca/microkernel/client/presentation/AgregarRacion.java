@@ -6,14 +6,20 @@
 package co.unicauca.microkernel.client.presentation;
 
 import co.unicauca.microkernel.client.access.Factory;
+import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
+import static co.unicauca.microkernel.common.entities.CategoriaEnum.valueOf;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
+import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
 import java.awt.Image;
+import static java.awt.Image.SCALE_SMOOTH;
+import static java.lang.Integer.parseInt;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -208,29 +214,29 @@ public class AgregarRacion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
-        JFileChooser j = new JFileChooser();
-        FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        var j = new JFileChooser();
+        var fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
         j.setFileFilter(fil);
         
-        int s = j.showOpenDialog(this);
-        if(s == JFileChooser.APPROVE_OPTION){
-            String ruta = j.getSelectedFile().getAbsolutePath();
+        var s = j.showOpenDialog(this);
+        if(s == APPROVE_OPTION){
+            var ruta = j.getSelectedFile().getAbsolutePath();
             txtRuta.setText(ruta);
-            ImageIcon imagen = new ImageIcon(ruta);
-            this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), Image.SCALE_SMOOTH)));
+            var imagen = new ImageIcon(ruta);
+            this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        RacionDia racion = new RacionDia();
+        var racion = new RacionDia();
         racion.setNombre(this.txtNombre.getText());
-        racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
+        racion.setPrecio(parseInt(this.txtPrecio.getText()));
         racion.setMenuId(this.cbxDia.getSelectedIndex());
-        racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
-        racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
+        racion.setImagen(convertirFoto(this.txtRuta.getText()));
+        racion.setTipo(valueOf(this.cbxTipo.getSelectedItem().toString()));
         
-        IClienteAccess service = Factory.getInstance().getClienteService();
-        clienteService servicioRestaurante = new clienteService(service);
+        var service = getInstance().getClienteService();
+        var servicioRestaurante = new clienteService(service);
         
         //aqui usar servicio para agregar
         /*try {

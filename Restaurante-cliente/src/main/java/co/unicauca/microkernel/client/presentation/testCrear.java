@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.client.presentation;
 
 import co.unicauca.microkernel.client.access.Factory;
+import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 
@@ -14,10 +15,15 @@ import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.common.entities.*;
+import static co.unicauca.microkernel.common.entities.CategoriaEnum.BEBIDA;
+import static co.unicauca.microkernel.common.entities.DiaEnum.DOMINGO;
+import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
+import static java.lang.System.out;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.Month;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -29,35 +35,32 @@ public class testCrear {
      * @param args the command line arguments
      */
    public static void main(String[] args) {
-        IClienteAccess service = Factory.getInstance().getClienteService();
-        clienteService servicioRestaurante = new clienteService(service);
-        
-
-
+        var service = getInstance().getClienteService();
+        var servicioRestaurante = new clienteService(service);
         //MenuEspecial menuEspecial = new MenuEspecial(366,1);
         //PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
         //Si devuelve nulo, entonces significa que no encontro la ruta de la foto
-        byte [] photoRestaurant=Utilities.convertirFoto("C:\\Users\\Camilo Gonzalez\\Desktop\\prueba\\ss.png");
-       Restaurante res=new Restaurante(2,"co","pipo",photoRestaurant,"calle31");
-        MenuEspecial menuEspecial = new MenuEspecial(366,1);
-        PlatoEspecial platoEspecial = new PlatoEspecial(74,menuEspecial.getId(),"Nombre","Descripcion",123,photoRestaurant);
+        var photoRestaurant=convertirFoto("C:\\Users\\Camilo Gonzalez\\Desktop\\prueba\\ss.png");
+       var res=new Restaurante(2,"co","pipo",photoRestaurant,"calle31");
+        var menuEspecial = new MenuEspecial(366,1);
+        var platoEspecial = new PlatoEspecial(74,menuEspecial.getId(),"Nombre","Descripcion",123,photoRestaurant);
         try{
-            String restaurante =servicioRestaurante.saveRestaurant(res);
-            System.out.println(restaurante);
+            var restaurante =servicioRestaurante.saveRestaurant(res);
+            out.println(restaurante);
             
         }catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, "El restaurante ya esta registrado" + ex.getMessage());
+            showMessageDialog(null, "El restaurante ya esta registrado" + ex.getMessage());
         }
 
-        MenuDia menuDia = new MenuDia(123,DiaEnum.DOMINGO,1);
-        RacionDia racion = new RacionDia(44,CategoriaEnum.BEBIDA,55,"cocacola",menuDia.getIdMenu(),photoRestaurant);
+        var menuDia = new MenuDia(123, DOMINGO,1);
+        var racion = new RacionDia(44, BEBIDA,55,"cocacola",menuDia.getIdMenu(),photoRestaurant);
         
         try{
-            String racionD = servicioRestaurante.saveRacionDia(racion);
-            System.out.println(racionD);
+            var racionD = servicioRestaurante.saveRacionDia(racion);
+            out.println(racionD);
             
         }catch(Exception ex) {
-                JOptionPane.showMessageDialog(null, "La racion ya esta registrada" + ex.getMessage());
+                showMessageDialog(null, "La racion ya esta registrada" + ex.getMessage());
         }
 
     }

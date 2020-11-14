@@ -6,8 +6,12 @@
 package gestionTabla;
 
 import java.awt.Color;
+import static java.awt.Color.WHITE;
+import static java.awt.Color.white;
 import java.awt.Component;
 import java.awt.Font;
+import static java.awt.Font.BOLD;
+import static java.awt.Font.PLAIN;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -21,8 +25,8 @@ public class GestionCeldas extends DefaultTableCellRenderer{
     private String tipo="texto";
 
 	//se definen por defecto los tipos de datos a usar
-	private Font normal = new Font( "Verdana",Font.PLAIN ,12 );
-	private Font bold = new Font( "Verdana",Font.BOLD ,12 );
+	private Font normal = new Font( "Verdana", PLAIN,12 );
+	private Font bold = new Font( "Verdana", BOLD,12 );
 	//etiqueta que almacenará el icono a mostrar
 	private JLabel label = new JLabel();
 	//iconos disponibles para ser mostrados en la etiqueta dependiendo de la columna que lo contenga
@@ -55,8 +59,8 @@ public class GestionCeldas extends DefaultTableCellRenderer{
 		
 		//definimos colores por defecto
         Color colorFondo = null;
-        Color colorFondoPorDefecto=new Color( 192, 192, 192);
-        Color colorFondoSeleccion=new Color( 140, 140 , 140);
+        var colorFondoPorDefecto=new Color( 192, 192, 192);
+        var colorFondoSeleccion=new Color( 140, 140 , 140);
     	
         /*
          * Si la celda del evento es la seleccionada se asigna el fondo por defecto para la selección
@@ -67,7 +71,7 @@ public class GestionCeldas extends DefaultTableCellRenderer{
         else
         {
         	//Para las que no están seleccionadas se pinta el fondo de las celdas de blanco
-            this.setBackground(Color.white);
+            this.setBackground(white);
         }
                 
         /*
@@ -82,11 +86,11 @@ public class GestionCeldas extends DefaultTableCellRenderer{
     		}else{
     			colorFondo= colorFondoPorDefecto;
     		}
-            this.setHorizontalAlignment( JLabel.LEFT );
+            this.setHorizontalAlignment(LEFT);
             this.setText( (String) value );
             //this.setForeground( (selected)? new Color(255,255,255) :new Color(0,0,0) );   
             //this.setForeground( (selected)? new Color(255,255,255) :new Color(32,117,32) );
-            this.setBackground( (selected)? colorFondo :Color.WHITE);	
+            this.setBackground((selected)? colorFondo :WHITE);	
             this.setFont(normal);   
             //this.setFont(bold);
             return this;
@@ -118,10 +122,10 @@ public class GestionCeldas extends DefaultTableCellRenderer{
      			colorFondo=colorFondoPorDefecto;
      		}
         	// System.out.println(value);
-            this.setHorizontalAlignment( JLabel.CENTER );
+            this.setHorizontalAlignment(CENTER);
             this.setText( (String) value );            
             this.setForeground( (selected)? new Color(255,255,255) :new Color(32,117,32) );    
-            this.setBackground( (selected)? colorFondo :Color.WHITE);
+            this.setBackground((selected)? colorFondo :WHITE);
            // this.setBackground( (selected)? colorFondo :Color.MAGENTA);
             this.setFont(bold);            
             return this;   

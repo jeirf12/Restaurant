@@ -6,6 +6,7 @@
 package co.unicauca.microkernel.client.access;
 
 import co.unicauca.microkernel.common.infra.Utilities;
+import static co.unicauca.microkernel.common.infra.Utilities.loadProperty;
 
 /**
  * fabrica que retorna una instancia para el acceso al servidor
@@ -29,7 +30,7 @@ public class Factory {
      */
     public IClienteAccess getClienteService(){
         IClienteAccess result = null;
-        String type = Utilities.loadProperty("customer.service");
+        var type = loadProperty("customer.service");
         switch (type){
             case "default":
                 result =new ClienteAccessSocket();
