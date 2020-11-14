@@ -25,7 +25,7 @@ public class testJeirf {
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
         try {
-            List<RacionDia> pdia=servicioRestaurante.listMenuDay(1, "Lunes", "administrador");
+            List<RacionDia> pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
             List<PlatoEspecial> pes=servicioRestaurante.listMenuSpecial(1, "administrador");
             for (RacionDia rdia : pdia) {
                 System.out.println("valor rdia: "+rdia.getNombre());
