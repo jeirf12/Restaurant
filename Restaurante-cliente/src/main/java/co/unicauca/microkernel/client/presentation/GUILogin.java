@@ -58,6 +58,7 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 204));
+        jPanel2.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("INICIO DE SESION");
@@ -129,9 +130,9 @@ public class GUILogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
-                GUIMenuAdmin ingreso = new GUIMenuAdmin();
-                ingreso.setVisible(true);
-                ingreso.pack();
+               // GUIMenuAdmin ingreso = new GUIMenuAdmin();
+               // ingreso.setVisible(true);
+              //  ingreso.pack();
 
             }
             
@@ -140,9 +141,9 @@ public class GUILogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
-                EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
-                ingresos.setVisible(true);
-                ingresos.pack();
+               // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
+                //ingresos.setVisible(true);
+               // ingresos.pack();
 
             }
           

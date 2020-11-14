@@ -12,7 +12,6 @@ import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
 import com.google.gson.Gson;
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -444,11 +442,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Entered the list menu day");
         try {
             this.connect();
-            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto "
-                    + "from (restaurante r inner join menudia m on r.res_id=m.res_id) "
-                    + "inner join raciondia p on m.mend_id=p.mend_id where r.res_id =" + idRes
-                    + " and m.mend_diasem = '" + dia + "'";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto"
+                    + " from (restaurante r inner join menudia m on r.res_id=m.res_id)"
+                    + " inner join raciondia p on m.mend_id=p.mend_id where r.res_id = (?)"
+                    + " and m.mend_diasem = (?)";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1, idRes);
+            pstmt.setString(2, dia);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 RacionDia pla = new RacionDia(Integer.parseInt(rs.getString(1)), CategoriaEnum.valueOf(rs.getString(2)), Integer.parseInt(rs.getString(3)), rs.getString(4), Integer.parseInt(rs.getString(5)), rs.getBytes(6));
@@ -478,7 +479,9 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Entered the list menu Special");
         try {
             this.connect();
-            String sql = "select plae_id,m.mene_id,plae_nombre,plae_descripcion,plae_precio,plae_foto from (restaurante r inner join menuespecial m on r.res_id=m.res_id) inner join platoespecial p on m.mesp_id=p.mesp_id where r.res_id = (?)";
+            String sql = "select plae_id,m.mene_id,plae_nombre,plae_descripcion,plae_precio,plae_foto"
+                    + " from (restaurante r inner join menuespecial m on r.res_id=m.res_id)"
+                    + " inner join platoespecial p on m.mene_id=p.mene_id where r.res_id = (?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idRes);
             ResultSet rs = pstmt.executeQuery();
@@ -609,6 +612,42 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         }
         return sumaPlatos;
     }
+
+    
+    /**
+     * Lista el menu de toda la semana desde la consulta hecha a la base de datos 
+     * añade las tuplas encontradas en una lista las raciones de dia
+     * y convierte la lista en json para enviarla por el sockect devuelta
+     * al cliente
+     * @param idRes
+     * @return 
+     */
+    @Override
+    public String listMenuDayAll(int idRes) {
+        List<RacionDia> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the list menu day all");
+        try{
+            this.connect();
+            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto"
+                    + " from (restaurante r inner join menudia m on r.res_id=m.res_id)"
+                    + " inner join raciondia p on m.mend_id=p.mend_id where r.res_id = (?)";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1, idRes);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {      
+                RacionDia pla=  new RacionDia(Integer.parseInt(rs.getString(1)), CategoriaEnum.valueOf(rs.getString(2)), Integer.parseInt(rs.getString(3)), rs.getString(4), Integer.parseInt(rs.getString(5)),rs.getBytes(6));
+                list.add(pla);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al listar el menu del dia de toda la semana", ex);
+        }
+        return response;
+    }
+    
 
     @Override
     public String validarAcceso(Cliente cliente) {

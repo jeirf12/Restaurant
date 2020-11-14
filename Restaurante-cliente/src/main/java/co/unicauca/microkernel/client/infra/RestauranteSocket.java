@@ -6,11 +6,16 @@
 package co.unicauca.microkernel.client.infra;
 
 import co.unicauca.microkernel.common.infra.Utilities;
+import static co.unicauca.microkernel.common.infra.Utilities.loadProperty;
 import java.io.IOException;
 import java.io.PrintStream;
+import static java.lang.Integer.parseInt;
 import java.util.Scanner;
 import java.util.logging.Level;
+import static java.util.logging.Level.INFO;
+import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
 
 /**
  *establece las configuaciones para la comunicacion con el cliente, (es usada)
@@ -33,11 +38,11 @@ public class RestauranteSocket {
     /**
      * Ip del Server Socket, es obtenida del archivo propertis
      */
-    private final String IP_SERVER = Utilities.loadProperty("server.ip");
+    private final String IP_SERVER = loadProperty("server.ip");
     /**
      * Puerto del server socket
      */
-    private final int PORT = Integer.parseInt(Utilities.loadProperty("server.port"));
+    private final int PORT = parseInt(loadProperty("server.port"));
 
     /**
      * Envia una solicitud desde la aplicación cliente al servidor mediate el
@@ -48,7 +53,7 @@ public class RestauranteSocket {
      * @throws IOException error de entrada y salida
      */
     public String sendStream(String requestJson) throws IOException {
-        String response = "";
+        var response = "";
         input = new Scanner(socket.getInputStream());
         output = new PrintStream(socket.getOutputStream());
         output.flush();
@@ -78,7 +83,7 @@ public class RestauranteSocket {
         try {
             socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(RestauranteSocket.class.getName()).log(Level.SEVERE, null, ex);
+            getLogger(RestauranteSocket.class.getName()).log(SEVERE, null, ex);
         }
     }
 
@@ -89,7 +94,7 @@ public class RestauranteSocket {
      */
     public void connect() throws IOException {
         socket = new java.net.Socket(IP_SERVER, PORT);
-        Logger.getLogger("SocketClient").log(Level.INFO, "Socket establecido");
+        getLogger("SocketClient").log(INFO, "Socket establecido");
     }
 
 }

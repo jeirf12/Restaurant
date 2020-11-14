@@ -26,9 +26,7 @@ public interface IPlatoRepositorio {
 
     /**
      * hace un update sobre la tabla platoEspecial
-     * @param clave valor con el que se encuentra la tupla
-     * @param atributo columna a modificar
-     * @param valor nuevo valor
+     * @param plato informacion a modificar
      * @return 
      */
     public String updatePlatoEspecial(PlatoEspecial plato);
@@ -57,8 +55,7 @@ public interface IPlatoRepositorio {
 
     public String listMenuDay(int idRes,String dia);
     public String listMenuSpecial(int idRes);
-
-
+    public String listMenuDayAll(int idRes);
 
     public String calcularCosto(int idCliente);
     

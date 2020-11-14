@@ -99,7 +99,14 @@ public class PlatoServicio {
     }
 
 
+
    public String validarAcceso(Cliente cliente){
        return repositorio.validarAcceso(cliente);
    }
+
+    
+    public String listMenuDayAll(int resId){
+        return repositorio.listMenuDayAll(resId);
+    } 
+
 }
