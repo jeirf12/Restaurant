@@ -77,4 +77,17 @@ public class clienteService {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
     }
+    
+    public List<RacionDia> listMenuDay(int idRes,String diaSem,String resource)throws Exception{
+        List<RacionDia> lista = service.listMenuDay(idRes, diaSem, resource);
+        RacionDia aux = new RacionDia();
+        for(int i = 0; i<lista.size();i++){
+            System.out.println("id: "+lista.get(i).getRacId());
+            System.out.println("nombre: "+lista.get(i).getNombre());
+            System.out.println("precio: "+lista.get(i).getPrecio());
+            System.out.println("tipo: "+lista.get(i).getTipo());
+            System.out.println("dia: "+lista.get(i).getMenuId());
+        }
+        return lista;
+    }
 }

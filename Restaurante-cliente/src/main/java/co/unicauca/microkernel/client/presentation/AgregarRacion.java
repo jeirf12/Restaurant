@@ -22,12 +22,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author EdynsonMJ
  */
-public class EdynsonModificarRacion extends javax.swing.JFrame {
+public class AgregarRacion extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameEdynson
      */
-    public EdynsonModificarRacion() {
+    public AgregarRacion() {
         initComponents();
     }
 
@@ -41,7 +41,6 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
-        lblRacion = new javax.swing.JLabel();
         lblTitulo1 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
@@ -49,7 +48,6 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtRuta = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
         cbxTipo = new javax.swing.JComboBox<>();
         lblDia = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
@@ -62,11 +60,8 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
 
         pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
 
-        lblRacion.setForeground(new java.awt.Color(255, 255, 255));
-        lblRacion.setText("Id racion:");
-
         lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo1.setText("Modificar racion");
+        lblTitulo1.setText("Agregar Racion");
 
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
@@ -88,10 +83,6 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
         txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        txtId.setBackground(new java.awt.Color(0, 0, 0));
-        txtId.setForeground(new java.awt.Color(255, 255, 255));
-        txtId.setCaretColor(new java.awt.Color(255, 0, 0));
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
@@ -148,10 +139,6 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                        .addComponent(lblRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                         .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -161,7 +148,7 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(28, 28, 28)))
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
+                        .addGap(17, 32, Short.MAX_VALUE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -172,11 +159,10 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
                                 .addGap(6, 6, 6)
                                 .addComponent(jButton1))
                             .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                        .addGap(0, 24, Short.MAX_VALUE))))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(238, Short.MAX_VALUE)
+                    .addContainerGap(244, Short.MAX_VALUE)
                     .addComponent(lblTitulo1)
                     .addGap(229, 229, 229)))
         );
@@ -186,10 +172,7 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblRacion)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
+                        .addGap(43, 43, 43)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,7 +238,7 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
         try {
             servicioRestaurante.updateRacion(racion);
         } catch (Exception ex) {
-            Logger.getLogger(EdynsonModificarRacion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AgregarRacion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -272,11 +255,9 @@ public class EdynsonModificarRacion extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
-    private javax.swing.JLabel lblRacion;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JPanel pnlPrincipal;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtRuta;
