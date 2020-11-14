@@ -27,11 +27,15 @@ public class testJeirf {
         try {
             List<RacionDia> pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
             List<PlatoEspecial> pes=servicioRestaurante.listMenuSpecial(1, "administrador");
+            List<RacionDia> pdiaAll=servicioRestaurante.listMenuDayAll(1, "administrador");
             for (RacionDia rdia : pdia) {
                 System.out.println("valor rdia: "+rdia.getNombre());
             }
             for (PlatoEspecial pe : pes) {
                 System.out.println("valor pes: "+pe.getNombre());
+            }
+            for (RacionDia rdia : pdiaAll) {
+                System.out.println("valor rdiaAll: "+rdia.getNombre());
             }
             
         } catch (Exception e) {
