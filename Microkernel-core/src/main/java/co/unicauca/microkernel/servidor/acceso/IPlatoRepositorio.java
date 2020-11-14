@@ -63,5 +63,6 @@ public interface IPlatoRepositorio {
     public String addRacionPedido(RacionPed racionPed);
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
     public String saveRacionDia(RacionDia racion);
+    public String validarAcceso(Cliente cliente);
 
 }

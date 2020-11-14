@@ -13,7 +13,7 @@ public class DeliveryService {
         IDeliveryPlugin plugin = manager.getDeliveryPlugin(resCode);
 
         if (plugin == null) {
-            throw new Exception("No hay un plugin disponible para el país indicado: " + resCode);
+            throw new Exception("No hay un plugin disponible para el Restaurante indicado: " + resCode);
         }
 
         return plugin.calculateCost(deliveryData);

@@ -1,7 +1,5 @@
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.access.Factory;
-import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import static java.lang.Integer.parseInt;
@@ -15,6 +13,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author Jhonny Rosero
  */
 public class test_delete {
+    /*
     public static void main(String[] args) {
         var service = getInstance().getClienteService();
         var servicioRestaurante = new clienteService(service);
@@ -35,5 +34,5 @@ public class test_delete {
         }catch(Exception ex) {
                 showMessageDialog(null, "El plato no existe" + ex.getMessage());
         }
-    }
+    }*/
 }
