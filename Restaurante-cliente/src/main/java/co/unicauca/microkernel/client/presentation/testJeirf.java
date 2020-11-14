@@ -27,13 +27,24 @@ public class testJeirf {
         var service = getInstance().getClienteService();
         var servicioRestaurante = new clienteService(service);
         try {
+<<<<<<< HEAD
             var pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
             var pes=servicioRestaurante.listMenuSpecial(1, "administrador");
             for (var rdia : pdia) {
                 out.println("valor rdia: "+rdia.getNombre());
+=======
+            List<RacionDia> pdia=servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
+            List<PlatoEspecial> pes=servicioRestaurante.listMenuSpecial(1, "administrador");
+            List<RacionDia> pdiaAll=servicioRestaurante.listMenuDayAll(1, "administrador");
+            for (RacionDia rdia : pdia) {
+                System.out.println("valor rdia: "+rdia.getNombre());
+>>>>>>> 041fec504a66dbdc1704776f0f28f117e80dfdb5
             }
             for (var pe : pes) {
                 out.println("valor pes: "+pe.getNombre());
+            }
+            for (RacionDia rdia : pdiaAll) {
+                System.out.println("valor rdiaAll: "+rdia.getNombre());
             }
             
         } catch (Exception e) {

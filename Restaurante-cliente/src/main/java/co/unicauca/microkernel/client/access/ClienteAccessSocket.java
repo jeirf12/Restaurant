@@ -517,5 +517,24 @@ public class ClienteAccessSocket implements IClienteAccess {
         out.println("json: "+requestJson);
         return requestJson;
     }
+    
+     /**
+     * Envia el id de un restaurante y devuelve la lista llegada desde el servidor 
+     * el cual transforma el json recibido desde este
+     * en una lista de todos los Plato dia que conforma el menu de la semana
+     * 
+     * @param idRes
+     * @param resource
+     * @return
+     * @throws Exception 
+     */
+    @Override
+    public List<RacionDia> listMenuDayAll(int idRes, String resource) throws Exception {
+        String accion="listMenuDayAll";
+        String [] parameters={""+idRes};
+        String requestJson = createlistMenuJson(resource,accion,parameters);
+        String response=procesarConexion(requestJson);
+        return jsonListMenuDay(response);
+    }
 
 }

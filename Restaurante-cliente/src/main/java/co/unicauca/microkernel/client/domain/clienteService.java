@@ -84,4 +84,7 @@ public class clienteService {
     public List<PlatoEspecial> listMenuSpecial(int idRes,String resource)throws Exception{
         return service.listMenuSpecial(idRes, resource);
     }
+    public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception{
+        return service.listMenuDayAll(idRes,resource);
+    }
 }
