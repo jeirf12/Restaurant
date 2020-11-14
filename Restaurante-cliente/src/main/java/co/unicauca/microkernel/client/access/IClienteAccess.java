@@ -71,5 +71,16 @@ public interface IClienteAccess {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
 
     public String saveRacionDia(RacionDia racion) throws Exception;
-
+    
+    /**
+     * Implementacion que se hara en clienteAccessSocket para el recibimiento 
+     * de este tipo por parte del servidor que esta devolviendo una respuesta
+     * a la solicitud del cliente de listar menu dia todos
+     * 
+     * @param idRes
+     * @param resource
+     * @return
+     * @throws Exception 
+     */
+    public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception;
 }
