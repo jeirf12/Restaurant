@@ -184,10 +184,10 @@ public class RestauranteServerSocket implements Runnable{
                     administradordeletePlatoEspecial(protocolRequest);               
                 }
                 
-                if (protocolRequest.getAction().equals("listarMenuDia")) {
+                if (protocolRequest.getAction().equals("listMenuDay")) {
                     this.listarMenuDia(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("listarMenuEspecial")) {
+                if (protocolRequest.getAction().equals("listMenuSpecial")) {
                     this.listarMenuEspecial(protocolRequest);
                 }
                 if (protocolRequest.getAction().equals("postRestaurant")) {
@@ -196,7 +196,10 @@ public class RestauranteServerSocket implements Runnable{
 
                 if(protocolRequest.getAction().equals("postRacionDia")){
                     administradorRegistrarRacionDia(protocolRequest);   
-                    
+                }
+                
+                if (protocolRequest.getAction().equals("listMenuDayAll")) {
+                    this.listarMenuDiaTodos(protocolRequest);
                 }
                 break;
 
@@ -222,6 +225,9 @@ public class RestauranteServerSocket implements Runnable{
                 }
                 if (protocolRequest.getAction().equals("agregarPlatoEspecialPedido")) {
                     this.administradorAddPlatoEspecialPedido(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("listMenuDayAll")) {
+                    this.listarMenuDiaTodos(protocolRequest);
                 }
                 
                 break;
@@ -486,4 +492,17 @@ public class RestauranteServerSocket implements Runnable{
         response = service.saveRestaurant(res);
         output.println(response);
     } 
+    /**
+     * Recibe la peticion del cliente, manda el id del restaurante
+     * y manda esta peticion procesada al repositorio del servidor
+     * para el menu por dias todos
+     * 
+     * @param protocolRequest 
+     */
+    private void listarMenuDiaTodos(Protocol protocolRequest){
+        int resId =Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response;
+        response=service.listMenuDayAll(resId);
+        output.println(response); 
+    }
 }

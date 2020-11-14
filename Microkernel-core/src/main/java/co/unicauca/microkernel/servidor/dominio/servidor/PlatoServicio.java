@@ -97,5 +97,8 @@ public class PlatoServicio {
         //hacer validaciones aqui
         return repositorio.saveRacionDia(racion);
     }
-
+    
+    public String listMenuDayAll(int resId){
+        return repositorio.listMenuDayAll(resId);
+    } 
 }

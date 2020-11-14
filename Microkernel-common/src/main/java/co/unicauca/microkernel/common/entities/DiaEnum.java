@@ -10,5 +10,5 @@ package co.unicauca.microkernel.common.entities;
  * @author fallen
  */
 public enum DiaEnum {
-    Lunes,Martes,Miercoles,Jueves,Viernes,Sabado,Domingo
+    LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO
 }
