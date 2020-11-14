@@ -10,6 +10,7 @@
 
 CREATE TABLE `cliente` (
   `CLI_ID` int(11) AUTO_INCREMENT,
+  `RES_ID` int(11),
   `CLI_NOMBRE` varchar(100) NOT NULL,
   `CLI_CARRERA` int(11) NOT NULL,
   `CLI_CALLE` int(11) NOT NULL,
@@ -176,6 +177,13 @@ ALTER TABLE `platoespecialpedido`
 --
 ALTER TABLE `raciondia`
   ADD CONSTRAINT `FK_RACIONDI_TIENE3_MENUDIA` FOREIGN KEY (`MEND_ID`) REFERENCES `menudia` (`MEND_ID`);
+
+--
+-- Filtros para la tabla `cliente`
+--
+ALTER TABLE `cliente`
+  ADD CONSTRAINT `FK_RES_TIENE10_CLIENTE` FOREIGN KEY (`RES_ID`) REFERENCES `restaurante` (`RES_ID`);
+
 
 --
 -- Filtros para la tabla `racionpedido`
