@@ -18,10 +18,11 @@ public class test_edynson {
     /**
      * @param args the command line arguments
      */
+    /*
     public static void main(String[] args) throws Exception {
         EdynsonModificarRacion ed = new EdynsonModificarRacion();
         ed.setVisible(true); 
         EdynsonModificarPlato mod = new EdynsonModificarPlato();
         mod.setVisible(true);
-    }   
+    }   */
 }

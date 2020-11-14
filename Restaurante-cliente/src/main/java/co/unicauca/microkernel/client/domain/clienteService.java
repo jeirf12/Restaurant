@@ -78,4 +78,7 @@ public class clienteService {
         return service.saveRacionDia(racion);
 
     }
+    public String validarAcceso (Cliente cliente)throws Exception{
+         return service.validarAcceso(cliente);
+    }
 }

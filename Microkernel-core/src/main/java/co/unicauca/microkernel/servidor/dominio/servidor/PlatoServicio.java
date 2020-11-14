@@ -94,8 +94,12 @@ public class PlatoServicio {
 
     
     public String saveRacionDia(RacionDia racion){
-        //hacer validaciones aqui
+    
         return repositorio.saveRacionDia(racion);
     }
 
+
+   public String validarAcceso(Cliente cliente){
+       return repositorio.validarAcceso(cliente);
+   }
 }

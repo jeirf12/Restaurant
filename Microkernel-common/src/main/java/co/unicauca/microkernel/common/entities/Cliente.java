@@ -12,15 +12,65 @@ package co.unicauca.microkernel.common.entities;
 public class Cliente {
     private int idCliente;
     private String nombre;
-    private String direccion;
+    private int carrera;
+    private int calle;
+    private TipoClien tipo;
+    private String contrasenia;
     private byte [] imagen;
 
-    public Cliente(int idCliente, String nombre, String direccion,byte [] imagen) {
+
+
+    public Cliente() {};
+
+    public Cliente(int idCliente, String nombre, int carrera, int calle, TipoClien tipo, String contrasenia, byte[] imagen) {
         this.idCliente = idCliente;
         this.nombre = nombre;
-        this.direccion = direccion;
-        this.imagen=imagen;
+        this.carrera = carrera;
+        this.calle = calle;
+        this.tipo = tipo;
+        this.contrasenia = contrasenia;
+        this.imagen = imagen;
     }
+    public Cliente(String nombre, String contrasenia) {
+       this.nombre = nombre;
+       this.contrasenia = contrasenia;
+    }
+
+
+    public int getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
+    }
+
+    public int getCalle() {
+        return calle;
+    }
+
+    public void setCalle(int calle) {
+        this.calle = calle;
+    }
+
+    public TipoClien getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoClien tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+  
+  
 
     public int getIdCliente() {
         return idCliente;
@@ -36,14 +86,6 @@ public class Cliente {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
     }
 
     public byte[] getImagen() {

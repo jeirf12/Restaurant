@@ -71,5 +71,6 @@ public interface IClienteAccess {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
 
     public String saveRacionDia(RacionDia racion) throws Exception;
+     public String validarAcceso (Cliente cliente)throws Exception;
 
 }
