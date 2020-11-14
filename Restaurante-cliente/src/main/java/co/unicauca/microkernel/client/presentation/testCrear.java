@@ -49,7 +49,7 @@ public class testCrear {
             JOptionPane.showMessageDialog(null, "El restaurante ya esta registrado" + ex.getMessage());
         }
 
-        MenuDia menuDia = new MenuDia(123,DiaEnum.Domingo,1);
+        MenuDia menuDia = new MenuDia(123,DiaEnum.DOMINGO,1);
         RacionDia racion = new RacionDia(44,CategoriaEnum.BEBIDA,55,"cocacola",menuDia.getIdMenu(),photoRestaurant);
         
         try{

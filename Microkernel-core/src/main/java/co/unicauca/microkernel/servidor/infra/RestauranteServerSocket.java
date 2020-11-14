@@ -184,10 +184,10 @@ public class RestauranteServerSocket implements Runnable{
                     administradordeletePlatoEspecial(protocolRequest);               
                 }
                 
-                if (protocolRequest.getAction().equals("listarMenuDia")) {
+                if (protocolRequest.getAction().equals("listMenuDay")) {
                     this.listarMenuDia(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("listarMenuEspecial")) {
+                if (protocolRequest.getAction().equals("listMenuSpecial")) {
                     this.listarMenuEspecial(protocolRequest);
                 }
                 if (protocolRequest.getAction().equals("postRestaurant")) {

@@ -76,6 +76,11 @@ public class clienteService {
     }
     public String saveRacionDia(RacionDia racion) throws Exception{
         return service.saveRacionDia(racion);
-
+    }
+    public List<RacionDia> listMenuDay(int idRes,String diaSem,String resource)throws Exception{
+        return service.listMenuDay(idRes, diaSem, resource);
+    }
+    public List<PlatoEspecial> listMenuSpecial(int idRes,String resource)throws Exception{
+        return service.listMenuSpecial(idRes, resource);
     }
 }
