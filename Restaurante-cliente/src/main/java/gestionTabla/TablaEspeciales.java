@@ -7,6 +7,7 @@ package gestionTabla;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author EdynsonMJ
  */
 public class TablaEspeciales {
-    public void ver_tabla(JTable tabla, ArrayList<PlatoEspecial> especiales) {
+    public void ver_tabla(JTable tabla, List<PlatoEspecial> especiales) {
         tabla.setDefaultRenderer(Object.class, new Render());
 
         //lista de titulos
@@ -50,7 +51,7 @@ public class TablaEspeciales {
 
     }
 
-    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, ArrayList<PlatoEspecial> especiales) {
+    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<PlatoEspecial> especiales) {
 
         /*se crea la matriz donde las filas son dinamicas pues corresponde
 		 * a todos los usuarios, mientras que las columnas son estaticas

@@ -12,8 +12,6 @@ import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import java.awt.Image;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -225,7 +223,6 @@ public class AgregarRacion extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         RacionDia racion = new RacionDia();
-        racion.setRacId(Integer.parseInt(this.txtId.getText()));
         racion.setNombre(this.txtNombre.getText());
         racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
         racion.setMenuId(this.cbxDia.getSelectedIndex());
@@ -235,11 +232,12 @@ public class AgregarRacion extends javax.swing.JFrame {
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
         
-        try {
+        //aqui usar servicio para agregar
+        /*try {
             servicioRestaurante.updateRacion(racion);
         } catch (Exception ex) {
             Logger.getLogger(AgregarRacion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

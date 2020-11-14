@@ -8,13 +8,14 @@ package gestionTabla;
 
 import co.unicauca.microkernel.common.entities.RacionDia;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class TablaRaciones {
 
-    public void ver_tabla(JTable tabla, ArrayList<RacionDia> raciones) {
+    public void ver_tabla(JTable tabla, List<RacionDia> raciones) {
         tabla.setDefaultRenderer(Object.class, new Render());
 
         //lista de titulos
@@ -49,7 +50,7 @@ public class TablaRaciones {
 
     }
 
-    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, ArrayList<RacionDia> raciones) {
+    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<RacionDia> raciones) {
 
         /*se crea la matriz donde las filas son dinamicas pues corresponde
 		 * a todos los usuarios, mientras que las columnas son estaticas

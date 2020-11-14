@@ -42,7 +42,6 @@ public class AgregarEspecial extends javax.swing.JFrame {
     private void initComponents() {
 
         pnlPrincipal = new javax.swing.JPanel();
-        lblPlatoId = new javax.swing.JLabel();
         lblTitulo1 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
@@ -50,7 +49,6 @@ public class AgregarEspecial extends javax.swing.JFrame {
         lblFoto = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtRuta = new javax.swing.JTextField();
-        txtId = new javax.swing.JTextField();
         btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
@@ -61,11 +59,8 @@ public class AgregarEspecial extends javax.swing.JFrame {
 
         pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
 
-        lblPlatoId.setForeground(new java.awt.Color(255, 255, 255));
-        lblPlatoId.setText("Id plato:");
-
         lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo1.setText("Modificar plato especial");
+        lblTitulo1.setText("Agregar plato especial");
 
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
@@ -87,10 +82,6 @@ public class AgregarEspecial extends javax.swing.JFrame {
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
         txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        txtId.setBackground(new java.awt.Color(0, 0, 0));
-        txtId.setForeground(new java.awt.Color(255, 255, 255));
-        txtId.setCaretColor(new java.awt.Color(255, 0, 0));
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,10 +121,6 @@ public class AgregarEspecial extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtDescripcion))
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblPlatoId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,7 +143,7 @@ public class AgregarEspecial extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(199, Short.MAX_VALUE)
+                    .addContainerGap(208, Short.MAX_VALUE)
                     .addComponent(lblTitulo1)
                     .addGap(229, 229, 229)))
         );
@@ -166,10 +153,7 @@ public class AgregarEspecial extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblPlatoId)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
+                        .addGap(43, 43, 43)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -219,7 +203,6 @@ public class AgregarEspecial extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         PlatoEspecial plato = new PlatoEspecial();
-        plato.setId_pe(Integer.parseInt(this.txtId.getText()));
         plato.setNombre(this.txtNombre.getText());
         plato.setDescripcion(this.txtDescripcion.getText());
         plato.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
@@ -228,12 +211,13 @@ public class AgregarEspecial extends javax.swing.JFrame {
         
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
-        
+        //aqui usar servicio para agregar
+        /*
         try {
             servicioRestaurante.updatePlatoEspecial(plato);
         } catch (Exception ex) {
             Logger.getLogger(AgregarEspecial.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -244,12 +228,10 @@ public class AgregarEspecial extends javax.swing.JFrame {
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblPlatoId;
     private javax.swing.JLabel lblPrecio;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JTextField txtDescripcion;
-    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtRuta;

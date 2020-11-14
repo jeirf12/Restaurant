@@ -11,13 +11,11 @@ package co.unicauca.microkernel.common.entities;
  */
 public class MenuDia {
     private int idMenu;
-    private String nombre;
     private DiaEnum diaSem;
     private int resId;
 
-    public MenuDia(int idMenu, String nombre, DiaEnum diaSem, int resId) {
+    public MenuDia(int idMenu, DiaEnum diaSem, int resId) {
         this.idMenu = idMenu;
-        this.nombre = nombre;
         this.diaSem = diaSem;
         this.resId = resId;
     }
@@ -30,13 +28,6 @@ public class MenuDia {
         this.idMenu = idMenu;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public DiaEnum getDiaSem() {
         return diaSem;
