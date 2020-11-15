@@ -278,13 +278,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             pstmt.setString(5, instancia.getTipo().toString());
             pstmt.setInt(6, instancia.getPrecio());
             //se ejecuta la sentencia sql
-            pstmt.executeUpdate();
+            pstmt.execute();
             //se cierra
             pstmt.close();
             //se termina la coneccion
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+            return "FALLO";
         }
         //lo ideal es retornor un id
         return instancia.getNombre();

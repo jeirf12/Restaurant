@@ -10,33 +10,20 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-import gestionTabla.StructEspeciales;
-import static gestionTabla.StructEspeciales.DESCRIPCION;
-import static gestionTabla.StructEspeciales.ID;
-import static gestionTabla.StructEspeciales.NOMBRE;
-import static gestionTabla.StructEspeciales.PRECIO;
-import static gestionTabla.StructRaciones.DIA;
-import static gestionTabla.StructRaciones.TIPO;
+import co.unicauca.microkernel.common.infra.Utilities;
 import gestionTabla.TablaEspeciales;
 import gestionTabla.TablaRaciones;
-import java.awt.Image;
-import static java.awt.Image.SCALE_SMOOTH;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -58,6 +45,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
      * Creates new form FramePrincipalAdmin
      */
     public FramePrincipalAdmin() {
+
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             service = getInstance().getClienteService();
@@ -76,6 +64,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
+        //this.setVisible(true);
     }
 
     /**
@@ -104,8 +93,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         pnlEspeciales = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEspeciales = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         lblImagenEspecial = new javax.swing.JLabel();
+        btnAddEspecial = new javax.swing.JButton();
         pnlPedidos = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -157,7 +146,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblImagenInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("INICIO", pnlInicio);
@@ -188,6 +177,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
 
         btnAgregarRacion.setText("AGREGAR");
+        btnAgregarRacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRacionesLayout = new javax.swing.GroupLayout(pnlRaciones);
         pnlRaciones.setLayout(pnlRacionesLayout);
@@ -249,7 +243,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             tblEspeciales.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
-        jButton1.setText("AGREGAR");
+        btnAddEspecial.setText("AGREGAR");
+        btnAddEspecial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEspecialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEspecialesLayout = new javax.swing.GroupLayout(pnlEspeciales);
         pnlEspeciales.setLayout(pnlEspecialesLayout);
@@ -257,14 +256,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(214, 214, 214))
+                .addComponent(btnAddEspecial)
+                .addGap(269, 269, 269))
         );
         pnlEspecialesLayout.setVerticalGroup(
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,9 +272,9 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(btnAddEspecial)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
@@ -296,7 +295,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jLabel4)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PEDIDOS", pnlPedidos);
@@ -321,8 +320,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int column = tblRaciones.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
+        if (imagen != null) {
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
+        } else {
+            this.lblImagenRacion.setIcon(null);
+            this.lblImagenRacion.setText("no hay imagen para mostrar");
+        }
         //INSTANCIAR IMAGEN
-        this.fijarImagenRacion(imagen);
 
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
@@ -330,13 +334,18 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("modificar")) {
-                    //es obtendra la informacion necesaria para construir un objeto que sera enviado a la interfaz modificar
-                    out.println("Click en el boton modificar");
-                    out.println(this.tblRaciones.getValueAt(row, ID));
-                    out.println(this.tblRaciones.getValueAt(row, NOMBRE));
-                    out.println(this.tblRaciones.getValueAt(row, PRECIO));
-                    out.println(this.tblRaciones.getValueAt(row, TIPO));
-                    out.println(this.tblRaciones.getValueAt(row, DIA));
+                    RacionDia aux = new RacionDia();
+                    aux.setRacId(this.raciones.get(row).getRacId());
+                    aux.setNombre(this.raciones.get(row).getNombre());
+                    aux.setPrecio(this.raciones.get(row).getPrecio());
+                    aux.setTipo(this.raciones.get(row).getTipo());
+                    aux.setMenuId(this.raciones.get(row).getMenuId());
+                    aux.setImagen(this.raciones.get(row).getImagen());
+                    try {
+                        ModificarRacion frameRacion = new ModificarRacion(aux, this.servicioRestaurante, this);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (boton.getName().equals("eliminar")) {
                     int fila = tblRaciones.getSelectedRow();
@@ -345,7 +354,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar la racion \""
                                 + this.raciones.get(fila).getNombre()
                                 + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            
+
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
@@ -353,7 +362,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
-                            
+
                         }
                     } catch (Exception ex) {
                         showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
@@ -378,7 +387,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int column = tblEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        fijarImagenEspecial(imagen);
+        if (imagen != null) {
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
+        } else {
+            this.lblImagenEspecial.setIcon(null);
+            this.lblImagenEspecial.setText("no hay imagen");
+        }
+        //fijarImagenEspecial(imagen);
 
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
@@ -386,51 +401,68 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("modificar")) {
-                    //es obtendra la informacion necesaria para construir un objeto que sera enviado a la interfaz modificar
-                    out.println("Click en el boton modificar");
-                    out.println(this.tblEspeciales.getValueAt(row, ID));
-                    out.println(this.tblEspeciales.getValueAt(row, NOMBRE));
-                    out.println(this.tblEspeciales.getValueAt(row, PRECIO));
-                    out.println(this.tblEspeciales.getValueAt(row, DESCRIPCION));
-                    //EVENTOS MODIFICAR
-                }
-                if (boton.getName().equals("eliminar")) {
-                    int fila = tblEspeciales.getSelectedRow();
-                    int clave = this.especiales.get(fila).getId_pe();
-                    try {
-                        if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
-                                + this.especiales.get(fila).getNombre()
-                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            
-                            if (this.servicioRestaurante.deletePlatoEspecial(clave) == "FALLO") {
-                                JOptionPane.showMessageDialog(rootPane, "El registro no existe");
-                            } else {
-                                this.lblImagenEspecial.setIcon(null);
-                                this.crearTablaEspeciales();
-                                JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
-                            }
-                            
+                    if (boton.getName().equals("modificar")) {
+                        PlatoEspecial aux = new PlatoEspecial();
+                        aux.setId_pe(this.especiales.get(row).getId_pe());
+                        aux.setNombre(this.especiales.get(row).getNombre());
+                        aux.setPrecio(this.especiales.get(row).getPrecio());
+                        aux.setDescripcion(this.especiales.get(row).getDescripcion());
+                        aux.setImagen(this.especiales.get(row).getImagen());
+                        try {
+                            ModificarEspecial frameEspecial = new ModificarEspecial(aux, this.servicioRestaurante, this);
+                        } catch (Exception ex) {
+                            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } catch (Exception ex) {
-                        showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                        if (boton.getName().equals("eliminar")) {
+                            int fila = tblEspeciales.getSelectedRow();
+                            int clave = this.especiales.get(fila).getId_pe();
+                            try {
+                                if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
+                                        + this.especiales.get(fila).getNombre()
+                                        + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
+
+                                    if (this.servicioRestaurante.deletePlatoEspecial(clave) == "FALLO") {
+                                        JOptionPane.showMessageDialog(rootPane, "El registro no existe");
+                                    } else {
+                                        this.lblImagenEspecial.setIcon(null);
+                                        this.crearTablaEspeciales();
+                                        JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
+                                    }
+
+                                }
+                            } catch (Exception ex) {
+                                showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                            }
+
+                            //EVENTOS ELIMINAR
+                        }
                     }
+                    if (value instanceof JCheckBox) {
+                        //((JCheckBox)value).doClick();
+                        var ch = (JCheckBox) value;
+                        if (ch.isSelected() == true) {
+                            ch.setSelected(false);
+                        }
+                        if (ch.isSelected() == false) {
+                            ch.setSelected(true);
+                        }
 
-                    //EVENTOS ELIMINAR
+                    }
                 }
-            }
-            if (value instanceof JCheckBox) {
-                //((JCheckBox)value).doClick();
-                var ch = (JCheckBox) value;
-                if (ch.isSelected() == true) {
-                    ch.setSelected(false);
-                }
-                if (ch.isSelected() == false) {
-                    ch.setSelected(true);
-                }
-
-            }
-        }
     }//GEN-LAST:event_tblEspecialesMouseClicked
+        } 
+    }
+
+    private void btnAgregarRacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRacionActionPerformed
+        // TODO add your handling code here:
+        AgregarRacion aux = new AgregarRacion(this.servicioRestaurante, this);
+        aux.setVisible(true);
+    }//GEN-LAST:event_btnAgregarRacionActionPerformed
+
+    private void btnAddEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEspecialActionPerformed
+        AgregarEspecial add = new AgregarEspecial(this.servicioRestaurante, this);
+        add.setVisible(true);
+    }//GEN-LAST:event_btnAddEspecialActionPerformed
 
     private void serviceListarRaciones() throws Exception {
         //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
@@ -442,43 +474,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
     }
 
-    private void fijarImagenRacion(byte[] imagen) {
-
-        if (imagen != null) {
-            var i = new ImageIcon(imagen);
-            Image imgEscalada = i.getImage().getScaledInstance(this.lblImagenRacion.getWidth(),
-                    this.lblImagenRacion.getHeight(), SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            this.lblImagenRacion.setIcon(iconoEscalado);
-        } else {
-            this.lblImagenRacion.setIcon(null);
-            this.lblImagenRacion.setText("no hay imagen");
-        }
-
-    }
-
-    private void fijarImagenEspecial(byte[] imagen) {
-
-        if (imagen != null) {
-            var i = new ImageIcon(imagen);
-            Image imgEscalada = i.getImage().getScaledInstance(this.lblImagenEspecial.getWidth(),
-                    this.lblImagenEspecial.getHeight(), SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            this.lblImagenEspecial.setIcon(iconoEscalado);
-        } else {
-            this.lblImagenEspecial.setIcon(null);
-            this.lblImagenEspecial.setText("no hay imagen");
-        }
-
-    }
-    
-    private void crearTablaRaciones() throws Exception{
+    public void crearTablaRaciones() throws Exception {
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
         tabRaciones.ver_tabla(tblRaciones, raciones);
-        
+
     }
-    private void crearTablaEspeciales() throws Exception{
+
+    public void crearTablaEspeciales() throws Exception {
         this.tblEspeciales.removeAll();
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
@@ -501,13 +504,33 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -521,9 +544,9 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddEspecial;
     private javax.swing.JButton btnAgregarRacion;
     private javax.swing.JComboBox<String> cbxDia;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
