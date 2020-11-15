@@ -128,6 +128,7 @@ CREATE TABLE `racionpedido` (
 
 CREATE TABLE `restaurante` (
   `RES_ID` int(11) AUTO_INCREMENT,
+  `CLI_ID` int(11),
   `RES_CODIGO` varchar(5) NOT NULL,
   `RES_NOMBRE` varchar(100) NOT NULL,
   `RES_FOTO` longblob DEFAULT NULL,
@@ -176,6 +177,13 @@ ALTER TABLE `platoespecialpedido`
 --
 ALTER TABLE `raciondia`
   ADD CONSTRAINT `FK_RACIONDI_TIENE3_MENUDIA` FOREIGN KEY (`MEND_ID`) REFERENCES `menudia` (`MEND_ID`);
+
+--
+-- Filtros para la tabla `cliente`
+--
+ALTER TABLE `restaurante`
+  ADD CONSTRAINT `FK_CLIENTE_TIENE10_RES` FOREIGN KEY (`CLI_ID`) REFERENCES `cliente` (`CLI_ID`);
+
 
 --
 -- Filtros para la tabla `racionpedido`

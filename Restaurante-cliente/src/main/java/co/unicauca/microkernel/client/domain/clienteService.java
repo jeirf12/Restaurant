@@ -87,4 +87,7 @@ public class clienteService {
     public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception{
         return service.listMenuDayAll(idRes,resource);
     }
+    public String validarAcceso (Cliente cliente)throws Exception{
+        return service.validarAcceso(cliente);
+    }
 }

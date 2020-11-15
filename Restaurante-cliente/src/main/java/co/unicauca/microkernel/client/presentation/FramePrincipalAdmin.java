@@ -54,12 +54,18 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     //servicio
     IClienteAccess service;
     clienteService servicioRestaurante;
+    //variables
+    private static List<String> idRestaurante;
+    private String varDia;
+    private int idSeleccionado;
 
     /**
      * Creates new form FramePrincipalAdmin
+     * @param idRestaurantes
      */
-    public FramePrincipalAdmin() {
+    public FramePrincipalAdmin(List<String> idRestaurantes) {
         try {
+            idRestaurante=idRestaurantes;
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             service = getInstance().getClienteService();
             servicioRestaurante = new clienteService(service);
@@ -71,8 +77,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             //INICIALIZANDO TABLAS Y LLENANDO LISTAS
             raciones = new ArrayList<>();
             especiales = new ArrayList<>();
-            this.crearTablaRaciones();
-            this.crearTablaEspeciales();
+            this.crearIndexRestaurante();
+            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
 
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
@@ -95,6 +101,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
+        cbxRestaurante = new javax.swing.JComboBox<>();
+        lblNomUsu = new javax.swing.JLabel();
         pnlRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
@@ -116,6 +124,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
         lblNombreRestaurante.setText("Restaurante:");
 
+        cbxRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxRestauranteActionPerformed(evt);
+            }
+        });
+
+        lblNomUsu.setText("---------------------");
+
         javax.swing.GroupLayout pnlInfoUsuarioLayout = new javax.swing.GroupLayout(pnlInfoUsuario);
         pnlInfoUsuario.setLayout(pnlInfoUsuarioLayout);
         pnlInfoUsuarioLayout.setHorizontalGroup(
@@ -123,9 +139,15 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxRestaurante, 0, 160, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
@@ -134,9 +156,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblNombreUsuario)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreUsuario)
+                    .addComponent(lblNomUsu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNombreRestaurante)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreRestaurante)
+                    .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(63, Short.MAX_VALUE))
         );
 
@@ -147,7 +173,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlInicioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                 .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -158,14 +184,19 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblImagenInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("INICIO", pnlInicio);
 
         lblFiltro.setText("Filtar por dia:");
 
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
+        cbxDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDiaActionPerformed(evt);
+            }
+        });
 
         tblRaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -354,7 +385,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
                                 this.lblImagenRacion.setIcon(null);
-                                this.crearTablaRaciones();
+                                this.crearTablaRaciones(varDia);
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
                         }
@@ -433,14 +464,37 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblEspecialesMouseClicked
 
-    private void serviceListarRaciones() throws Exception {
-        //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.raciones = servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
+    private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
+        varDia=cbxDia.getSelectedItem().toString();
+        try {
+            crearTablaRaciones(varDia);
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbxDiaActionPerformed
+
+    private void cbxRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxRestauranteActionPerformed
+        String [] sel=cbxRestaurante.getSelectedItem().toString().split("-");
+        this.idSeleccionado=Integer.parseInt(sel[0]);
+        try {
+            this.crearTablaRaciones("TODOS");
+            this.crearTablaEspeciales();
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_cbxRestauranteActionPerformed
+
+    private void serviceListarRaciones(String varDia) throws Exception {
+        if (varDia.equals("TODOS")) {
+            this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
+        }else{
+            this.raciones = servicioRestaurante.listMenuDay(idSeleccionado,varDia,"administrador");
+        }
     }
 
     private void serviceListarEspeciales() throws Exception {
-        //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
+        this.especiales = servicioRestaurante.listMenuSpecial(idSeleccionado, "administrador");
     }
 
     private Icon fijarImagen(byte[] imagen,int anchura,int altura) {
@@ -452,9 +506,9 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         return iconoEscalado;
     }
 
-    private void crearTablaRaciones() throws Exception {
+    private void crearTablaRaciones(String varDia) throws Exception{
         this.tblRaciones.removeAll();
-        this.serviceListarRaciones();
+        this.serviceListarRaciones(varDia);
         tabRaciones.ver_tabla(tblRaciones, raciones);
     }
 
@@ -463,7 +517,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
     }
-
+    private void crearIndexRestaurante(){
+        cbxRestaurante.removeAllItems();
+        for (int i = 0; i < idRestaurante.size()-1; i++) {
+            cbxRestaurante.addItem(idRestaurante.get(i));
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -489,12 +548,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold>x
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FramePrincipalAdmin().setVisible(true);
+                new FramePrincipalAdmin(idRestaurante).setVisible(true);
             }
         });
     }
@@ -503,6 +562,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarRacion;
     private javax.swing.JComboBox<String> cbxDia;
+    private javax.swing.JComboBox<String> cbxRestaurante;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -513,6 +573,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagenInicio;
     private javax.swing.JLabel lblImagenRacion;
     private javax.swing.JLabel lblImagenUsuario;
+    private javax.swing.JLabel lblNomUsu;
     private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JPanel pnlEspeciales;

@@ -101,6 +101,11 @@ public class ModificarRacion extends javax.swing.JFrame {
         txtId.setBackground(new java.awt.Color(0, 0, 0));
         txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
@@ -268,6 +273,10 @@ public class ModificarRacion extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
 
     
 
