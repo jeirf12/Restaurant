@@ -49,6 +49,7 @@ public class GUILogin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LOGIN IN");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -104,19 +105,19 @@ public class GUILogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
         Cliente us = new Cliente(String.valueOf(txtUsuario.getText()), String.valueOf(txtContraseña.getPassword()));
         String re = "";
-        String [] arrayResult =null;
-        List<String> datoRestaurante=new ArrayList<>();
+        String[] arrayResult = null;
+        List<String> datoRestaurante = new ArrayList<>();
         try {
             re = servicioRestaurante.validarAcceso(us);
-            arrayResult= re.split("-");
-            for (int i = 1; i < arrayResult.length; i=i+3) {
-                datoRestaurante.add(arrayResult[i]+"-"+arrayResult[i+1]);
+            arrayResult = re.split("-");
+            for (int i = 1; i < arrayResult.length; i = i + 3) {
+                datoRestaurante.add(arrayResult[i] + "-" + arrayResult[i + 1]);
             }
             datoRestaurante.add(txtUsuario.getText());
             if (arrayResult[0].equals("ADMINISTRADOR")) {
@@ -124,7 +125,7 @@ public class GUILogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
-                FramePrincipalAdmin ingreso=new FramePrincipalAdmin(datoRestaurante);
+                FramePrincipalAdmin ingreso = new FramePrincipalAdmin(datoRestaurante);
                 ingreso.setVisible(true);
                 ingreso.pack();
             }
@@ -133,10 +134,10 @@ public class GUILogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
-                
-               // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
+
+                // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
                 //ingresos.setVisible(true);
-               // ingresos.pack();
+                // ingresos.pack();
             }
             if ((!arrayResult[0].equals("ADMINISTRADOR")) && (!arrayResult[0].equals("COMPRADOR"))) {
                 JOptionPane.showMessageDialog(this, "No existe sus datos");
