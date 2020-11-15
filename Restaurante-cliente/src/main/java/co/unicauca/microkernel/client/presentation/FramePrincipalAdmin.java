@@ -10,6 +10,7 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
+import co.unicauca.microkernel.common.infra.Utilities;
 import gestionTabla.StructEspeciales;
 import static gestionTabla.StructEspeciales.DESCRIPCION;
 import static gestionTabla.StructEspeciales.ID;
@@ -201,7 +202,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -257,9 +258,9 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -272,10 +273,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
@@ -322,8 +323,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
-        this.fijarImagenRacion(imagen);
-
+        if (imagen != null) {
+            this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+        } else {
+            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setText("no hay imagen");
+        }
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -345,18 +350,16 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar la racion \""
                                 + this.raciones.get(fila).getNombre()
                                 + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            
-                            if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
+                            if (this.servicioRestaurante.deleteRacionDia(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
                                 this.lblImagenRacion.setIcon(null);
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
-                            
                         }
                     } catch (Exception ex) {
-                        showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                        JOptionPane.showMessageDialog(rootPane, "operacion fallida");
                     }
                 }
             }
@@ -369,7 +372,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 if (ch.isSelected() == false) {
                     ch.setSelected(true);
                 }
-
             }
         }
     }//GEN-LAST:event_tblRacionesMouseClicked
@@ -378,8 +380,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int column = tblEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        fijarImagenEspecial(imagen);
-
+        if (imagen != null) {
+            this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+        } else {
+            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"), lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setText("no hay imagen");
+        }
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -401,21 +407,17 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
                                 + this.especiales.get(fila).getNombre()
                                 + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            
-                            if (this.servicioRestaurante.deletePlatoEspecial(clave) == "FALLO") {
+                            if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
                                 this.lblImagenEspecial.setIcon(null);
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
-                            
                         }
                     } catch (Exception ex) {
-                        showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                        JOptionPane.showMessageDialog(rootPane, "operacion fallida");
                     }
-
-                    //EVENTOS ELIMINAR
                 }
             }
             if (value instanceof JCheckBox) {
@@ -427,7 +429,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 if (ch.isSelected() == false) {
                     ch.setSelected(true);
                 }
-
             }
         }
     }//GEN-LAST:event_tblEspecialesMouseClicked
@@ -442,43 +443,22 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
     }
 
-    private void fijarImagenRacion(byte[] imagen) {
-
-        if (imagen != null) {
-            var i = new ImageIcon(imagen);
-            Image imgEscalada = i.getImage().getScaledInstance(this.lblImagenRacion.getWidth(),
-                    this.lblImagenRacion.getHeight(), SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            this.lblImagenRacion.setIcon(iconoEscalado);
-        } else {
-            this.lblImagenRacion.setIcon(null);
-            this.lblImagenRacion.setText("no hay imagen");
-        }
-
+    private Icon fijarImagen(byte[] imagen,int anchura,int altura) {
+        Icon iconoEscalado;
+        var i = new ImageIcon(imagen);
+        Image imgEscalada = i.getImage().getScaledInstance(anchura, altura, SCALE_SMOOTH);
+        iconoEscalado = new ImageIcon(imgEscalada);
+        
+        return iconoEscalado;
     }
 
-    private void fijarImagenEspecial(byte[] imagen) {
-
-        if (imagen != null) {
-            var i = new ImageIcon(imagen);
-            Image imgEscalada = i.getImage().getScaledInstance(this.lblImagenEspecial.getWidth(),
-                    this.lblImagenEspecial.getHeight(), SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            this.lblImagenEspecial.setIcon(iconoEscalado);
-        } else {
-            this.lblImagenEspecial.setIcon(null);
-            this.lblImagenEspecial.setText("no hay imagen");
-        }
-
-    }
-    
-    private void crearTablaRaciones() throws Exception{
+    private void crearTablaRaciones() throws Exception {
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
         tabRaciones.ver_tabla(tblRaciones, raciones);
-        
     }
-    private void crearTablaEspeciales() throws Exception{
+
+    private void crearTablaEspeciales() throws Exception {
         this.tblEspeciales.removeAll();
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
