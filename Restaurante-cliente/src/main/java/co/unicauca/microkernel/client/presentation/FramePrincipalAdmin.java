@@ -10,9 +10,21 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
+
 import co.unicauca.microkernel.common.infra.Utilities;
 import gestionTabla.TablaEspeciales;
 import gestionTabla.TablaRaciones;
+
+/*import static gestionTabla.StructEspeciales.DESCRIPCION;
+import static gestionTabla.StructEspeciales.ID;
+import static gestionTabla.StructEspeciales.NOMBRE;
+import static gestionTabla.StructEspeciales.PRECIO;
+import static gestionTabla.StructRaciones.DIA;
+import static gestionTabla.StructRaciones.TIPO;
+import gestionTabla.TablaEspeciales;
+import gestionTabla.TablaRaciones;
+import static java.lang.System.out;*/
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -323,8 +335,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(null);
-            this.lblImagenRacion.setText("no hay imagen para mostrar");
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto("Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         }
         //INSTANCIAR IMAGEN
 
@@ -358,8 +369,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(null);
                                 this.crearTablaRaciones();
+                                //verificar fijacion de imagen aqui------------------------------------------
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
 
@@ -390,8 +401,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(null);
-            this.lblImagenEspecial.setText("no hay imagen");
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto("Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"),this.lblImagenEspecial.getWidth(),this.lblImagenEspecial.getHeight()));
         }
         //fijarImagenEspecial(imagen);
 
@@ -400,7 +410,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
-                if (boton.getName().equals("modificar")) {
                     if (boton.getName().equals("modificar")) {
                         PlatoEspecial aux = new PlatoEspecial();
                         aux.setId_pe(this.especiales.get(row).getId_pe());
@@ -451,7 +460,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 }
     }//GEN-LAST:event_tblEspecialesMouseClicked
         } 
-    }
+    
 
     private void btnAgregarRacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRacionActionPerformed
         // TODO add your handling code here:
@@ -474,7 +483,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
     }
 
-    public void crearTablaRaciones() throws Exception {
+    public void crearTablaRaciones() throws Exception{
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
         tabRaciones.ver_tabla(tblRaciones, raciones);
