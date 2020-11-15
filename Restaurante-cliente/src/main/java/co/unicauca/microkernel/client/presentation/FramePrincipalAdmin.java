@@ -357,8 +357,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
-            this.lblImagenRacion.setText("no hay imagen");
+            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg")
+                    ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         }
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
@@ -384,7 +384,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(null);
+                                this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg")
+                                        ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
                                 this.crearTablaRaciones(varDia);
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -414,8 +415,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"), lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
-            this.lblImagenEspecial.setText("no hay imagen");
+            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg")
+                    ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
         }
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
@@ -441,7 +442,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenEspecial.setIcon(null);
+                                this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg")
+                                        ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
