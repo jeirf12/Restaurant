@@ -17,8 +17,7 @@ public class Cliente {
     private TipoClien tipo;
     private String contrasenia;
     private byte [] imagen;
-
-
+    private int idrestaurante;
 
     public Cliente() {};
 
@@ -69,9 +68,6 @@ public class Cliente {
         this.contrasenia = contrasenia;
     }
 
-  
-  
-
     public int getIdCliente() {
         return idCliente;
     }
@@ -95,4 +91,13 @@ public class Cliente {
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
+
+    public int getIdrestaurante() {
+        return idrestaurante;
+    }
+
+    public void setIdrestaurante(int idrestaurante) {
+        this.idrestaurante = idrestaurante;
+    }
+    
 }

@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -654,15 +655,13 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         String resultado = "";
         try {
             this.connect();
-            String sql = "Select CLI_TIPO  from cliente where CLI_NOMBRE = '" + cliente.getNombre() + "' and CLI_CONTRASENIA = '"
+            String sql = "Select c.CLI_TIPO,r.RES_ID,r.RES_NOMBRE from cliente c inner join restaurante r"
+                    + " on c.CLI_ID=r.CLI_ID where c.CLI_NOMBRE = '" + cliente.getNombre() + "' and c.CLI_CONTRASENIA = '"
                     + cliente.getContrasenia() + "'";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs1 = pstmt.executeQuery();
-
             while (rs1.next()) {
-
-                resultado = rs1.getString(1);
-
+                resultado +=rs1.getString(1)+"-"+rs1.getInt(2)+"-"+rs1.getString(3)+"-";
             }
 
             pstmt.close();

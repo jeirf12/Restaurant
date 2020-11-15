@@ -88,6 +88,6 @@ public class clienteService {
         return service.listMenuDayAll(idRes,resource);
     }
     public String validarAcceso (Cliente cliente)throws Exception{
-         return service.validarAcceso(cliente);
+        return service.validarAcceso(cliente);
     }
 }

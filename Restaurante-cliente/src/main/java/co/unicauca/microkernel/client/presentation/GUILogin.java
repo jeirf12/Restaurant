@@ -15,6 +15,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -122,32 +125,40 @@ public class GUILogin extends javax.swing.JFrame {
         clienteService servicioRestaurante = new clienteService(service);
         Cliente us = new Cliente(String.valueOf(txtUsuario.getText()), String.valueOf(txtContraseña.getPassword()));
         String re = "";
+        String [] arrayResult =null;
+        List<String> datoRestaurante=new ArrayList<>();
         try {
             re = servicioRestaurante.validarAcceso(us);
-
-            if (re.equals("ADMINISTRADOR")) {
+            arrayResult= re.split("-");
+            for (int i = 1; i < arrayResult.length; i=i+3) {
+                datoRestaurante.add(arrayResult[i]+"-"+arrayResult[i+1]);
+            }
+            datoRestaurante.add(txtUsuario.getText());
+            
+            if (arrayResult[0].equals("ADMINISTRADOR")) {
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
-               // GUIMenuAdmin ingreso = new GUIMenuAdmin();
-               // ingreso.setVisible(true);
-              //  ingreso.pack();
+                FramePrincipalAdmin ingreso=new FramePrincipalAdmin(datoRestaurante);
+                ingreso.setVisible(true);
+                ingreso.pack();
 
             }
             
-            if (re.equals("COMPRADOR")) {
+            if (arrayResult[0].equals("COMPRADOR")) {
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 txtUsuario.setText("");
                 txtContraseña.setText("");
+                
                // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
                 //ingresos.setVisible(true);
                // ingresos.pack();
 
             }
           
-            if ((!re.equals("ADMINISTRADOR")) && (!re.equals("COMPRADOR"))) {
+            if ((!arrayResult[0].equals("ADMINISTRADOR")) && (!arrayResult[0].equals("COMPRADOR"))) {
                 JOptionPane.showMessageDialog(this, "No existe sus datos");
             }
            

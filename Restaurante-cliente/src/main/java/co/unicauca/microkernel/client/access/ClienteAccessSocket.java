@@ -547,7 +547,6 @@ public class ClienteAccessSocket implements IClienteAccess {
         }
        return valor;
     }
-
     
     private String validardorAcceso(Cliente cliente) {
         Protocol protocol = new Protocol();
@@ -581,5 +580,6 @@ public class ClienteAccessSocket implements IClienteAccess {
         String response=procesarConexion(requestJson);
         return jsonListMenuDay(response);
     }
+    
 
 }
