@@ -10,7 +10,6 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-import co.unicauca.microkernel.common.infra.Utilities;
 import static gestionTabla.StructEspeciales.DESCRIPCION;
 import static gestionTabla.StructEspeciales.ID;
 import static gestionTabla.StructEspeciales.NOMBRE;
@@ -19,8 +18,6 @@ import static gestionTabla.StructRaciones.DIA;
 import static gestionTabla.StructRaciones.TIPO;
 import gestionTabla.TablaEspeciales;
 import gestionTabla.TablaRaciones;
-import java.awt.Image;
-import static java.awt.Image.SCALE_SMOOTH;
 import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +25,6 @@ import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
@@ -350,10 +345,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
         if (imagen != null) {
-            this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+           // this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                    ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+           // this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
+            //        ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         }
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
@@ -379,8 +374,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                                        ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+                              //  this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
+                               //         ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
                                 this.crearTablaRaciones(varDia);
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -408,10 +403,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
         if (imagen != null) {
-            this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+           // this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                    ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+           // this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
+               //     ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
         }
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
@@ -437,8 +432,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                                        ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+                                //this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
+                                      //  ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -499,15 +494,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
     private void serviceListarEspeciales() throws Exception {
         this.especiales = servicioRestaurante.listMenuSpecial(idSeleccionado, "administrador");
-    }
-
-    private Icon fijarImagen(byte[] imagen,int anchura,int altura) {
-        Icon iconoEscalado;
-        var i = new ImageIcon(imagen);
-        Image imgEscalada = i.getImage().getScaledInstance(anchura, altura, SCALE_SMOOTH);
-        iconoEscalado = new ImageIcon(imgEscalada);
-        
-        return iconoEscalado;
     }
 
     private void crearTablaRaciones(String varDia) throws Exception{
