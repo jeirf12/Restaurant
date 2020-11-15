@@ -30,7 +30,7 @@ import static javax.swing.JOptionPane.showConfirmDialog;
  * @author EdynsonMJ
  */
 public class FramePrincipalAdmin extends javax.swing.JFrame {
-
+    //borrar este comentario luego
     //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
