@@ -11,7 +11,6 @@ import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
-import gestionTabla.StructEspeciales;
 import static gestionTabla.StructEspeciales.DESCRIPCION;
 import static gestionTabla.StructEspeciales.ID;
 import static gestionTabla.StructEspeciales.NOMBRE;
@@ -33,11 +32,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
-import static javax.swing.JOptionPane.showConfirmDialog;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -79,7 +74,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             especiales = new ArrayList<>();
             this.crearIndexRestaurante();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
-
+            varDia="TODOS";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -357,7 +352,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
             this.lblImagenRacion.setText("no hay imagen");
         }
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
@@ -390,7 +385,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             }
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(rootPane, "operacion fallida");
+                        JOptionPane.showMessageDialog(rootPane, "operacion fallida "+ex.getMessage());
                     }
                 }
             }
@@ -414,7 +409,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg"), lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"), lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
             this.lblImagenEspecial.setText("no hay imagen");
         }
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
