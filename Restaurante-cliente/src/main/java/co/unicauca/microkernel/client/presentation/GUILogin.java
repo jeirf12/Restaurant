@@ -8,15 +8,9 @@ package co.unicauca.microkernel.client.presentation;
 import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
-import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.Cliente;
-import co.unicauca.microkernel.common.infra.Utilities;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,11 +80,6 @@ public class GUILogin extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
         jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 156, 178, 45));
 
-        txtContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContraseñaActionPerformed(evt);
-            }
-        });
         jPanel1.add(txtContraseña, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 271, 178, 46));
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -115,11 +104,7 @@ public class GUILogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtContraseñaActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         IClienteAccess service = Factory.getInstance().getClienteService();
         clienteService servicioRestaurante = new clienteService(service);
@@ -134,7 +119,6 @@ public class GUILogin extends javax.swing.JFrame {
                 datoRestaurante.add(arrayResult[i]+"-"+arrayResult[i+1]);
             }
             datoRestaurante.add(txtUsuario.getText());
-            
             if (arrayResult[0].equals("ADMINISTRADOR")) {
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido");
@@ -143,9 +127,7 @@ public class GUILogin extends javax.swing.JFrame {
                 FramePrincipalAdmin ingreso=new FramePrincipalAdmin(datoRestaurante);
                 ingreso.setVisible(true);
                 ingreso.pack();
-
             }
-            
             if (arrayResult[0].equals("COMPRADOR")) {
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido");
@@ -155,18 +137,13 @@ public class GUILogin extends javax.swing.JFrame {
                // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
                 //ingresos.setVisible(true);
                // ingresos.pack();
-
             }
-          
             if ((!arrayResult[0].equals("ADMINISTRADOR")) && (!arrayResult[0].equals("COMPRADOR"))) {
                 JOptionPane.showMessageDialog(this, "No existe sus datos");
             }
-           
-   
         } catch (Exception ex) {
             Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-           
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
