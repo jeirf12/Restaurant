@@ -105,6 +105,12 @@ public class AgregarEspecial extends javax.swing.JFrame {
             }
         });
 
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRutaKeyReleased(evt);
+            }
+        });
+
         btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +251,10 @@ public class AgregarEspecial extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtRutaKeyReleased
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

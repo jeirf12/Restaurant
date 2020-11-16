@@ -5,9 +5,7 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.access.Factory;
-import static co.unicauca.microkernel.client.access.Factory.getInstance;
-import co.unicauca.microkernel.client.access.IClienteAccess;
+
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
@@ -51,6 +49,9 @@ public class ModificarEspecial extends javax.swing.JFrame {
         this.llenarDatos();
         this.txtId.setEditable(false);
         this.btnActualizar.setEnabled(false);
+        if(especial.getImagen()==null){
+            this.btnQuitar.setEnabled(false);
+        }
     }
 
     private void llenarDatos() {
@@ -59,7 +60,9 @@ public class ModificarEspecial extends javax.swing.JFrame {
         this.txtNombre.setText(especial.getNombre());
         this.txtPrecio.setText(especial.getPrecio() + "");
         this.txtDescripcion.setText(especial.getDescripcion());
-        this.lblImagen.setIcon(Utilities.crearIcono(especial.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
+        if(especial.getImagen()!=null){
+            this.lblImagen.setIcon(Utilities.crearIcono(especial.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,6 +89,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         txtDescripcion = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,7 +133,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
-        btnFoto.setText("upload");
+        btnFoto.setText("nueva foto");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFotoActionPerformed(evt);
@@ -165,6 +169,18 @@ public class ModificarEspecial extends javax.swing.JFrame {
         });
 
         btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        btnQuitar.setText("Quitar foto");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -174,27 +190,30 @@ public class ModificarEspecial extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDescripcion))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblPlatoId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                    .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtDescripcion))
+                                .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                    .addComponent(lblPlatoId, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                    .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnFoto)))
+                                .addComponent(btnFoto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnQuitar)))
                         .addGap(18, 18, 18)
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -205,10 +224,10 @@ public class ModificarEspecial extends javax.swing.JFrame {
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(199, Short.MAX_VALUE)
+                    .addContainerGap(226, Short.MAX_VALUE)
                     .addComponent(lblTitulo1)
                     .addGap(229, 229, 229)))
         );
@@ -236,7 +255,8 @@ public class ModificarEspecial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFoto)
-                            .addComponent(btnFoto)))
+                            .addComponent(btnFoto)
+                            .addComponent(btnQuitar)))
                     .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,6 +288,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
             txtRuta.setText(ruta);
             var imagen = new ImageIcon(ruta);
             this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), SCALE_SMOOTH)));
+            this.habilitarBtnActualizar();
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
@@ -303,14 +324,14 @@ public class ModificarEspecial extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreKeyReleased
 
     private void habilitarBtnActualizar() {
-        if (txtNombre.getText().isEmpty()
-                || this.txtPrecio.getText().isEmpty()
-                || this.txtDescripcion.getText().isEmpty()) {
+        if (txtNombre.getText().isBlank()
+                || this.txtPrecio.getText().isBlank()
+                || this.txtDescripcion.getText().isBlank()) {
             this.btnActualizar.setEnabled(false);
         } else if (this.txtNombre.getText().equals(especial.getNombre())
                 && this.txtDescripcion.getText().equals(especial.getDescripcion())
                 && this.txtPrecio.getText().equals(especial.getPrecio() + "")
-                && this.txtRuta.getText().isEmpty()) {
+                && this.txtRuta.getText().isBlank()) {
             this.btnActualizar.setEnabled(false);
         } else {
             this.btnActualizar.setEnabled(true);
@@ -332,11 +353,22 @@ public class ModificarEspecial extends javax.swing.JFrame {
         this.habilitarBtnActualizar();
     }//GEN-LAST:event_txtDescripcionKeyReleased
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        this.txtRuta.setText("imagen retirada");
+        this.especial.setImagen(null);
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;

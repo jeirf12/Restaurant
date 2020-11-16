@@ -14,6 +14,8 @@ import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
+import java.io.File;
+import java.io.IOException;
 
 /*import static gestionTabla.StructEspeciales.DESCRIPCION;
 import static gestionTabla.StructEspeciales.ID;
@@ -24,7 +26,6 @@ import static gestionTabla.StructRaciones.TIPO;
 import gestionTabla.TablaEspeciales;
 import gestionTabla.TablaRaciones;
 import static java.lang.System.out;*/
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -42,6 +43,7 @@ import static javax.swing.JOptionPane.showConfirmDialog;
  * @author EdynsonMJ
  */
 public class FramePrincipalAdmin extends javax.swing.JFrame {
+
     //borrar este comentario luego
     //listas
     List<RacionDia> raciones;
@@ -66,7 +68,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             this.estilo();
-            idRestaurante= idRestaurantes;
+            idRestaurante = idRestaurantes;
             service = getInstance().getClienteService();
             servicioRestaurante = new clienteService(service);
             //INICIALIZANDO TABLAS
@@ -77,11 +79,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             //INICIALIZANDO TABLAS Y LLENANDO LISTAS
             raciones = new ArrayList<>();
             especiales = new ArrayList<>();
-            varDia="TODOS";
+            varDia = "TODOS";
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
-            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
-            photoNull="\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
+            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
+            photoNull = "F:\\UNIVERSIDAD\\LAB SOFTWARE 2\\proyecto corte 2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
             //this.crearTablaRaciones();
             //this.crearTablaEspeciales();
         } catch (Exception ex) {
@@ -89,8 +92,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
         //this.setVisible(true);
     }
-    
-    private void estilo(){
+
+    private void estilo() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -104,33 +107,17 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -414,12 +401,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int column = tblRaciones.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
+        //INSTANCIAR IMAGEN
         if (imagen != null) {
             this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
         }
-        //INSTANCIAR IMAGEN
 
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
@@ -453,7 +440,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             } else {
                                 this.crearTablaRaciones();
                                 //verificar fijacion de imagen aqui------------------------------------------
-                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+                                //this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                /*if (imagen != null) {
+                                    this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
+                                } else {
+                                    this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                }*/
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -485,7 +477,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),this.lblImagenEspecial.getWidth(),this.lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
 
         }
         //fijarImagenEspecial(imagen);
@@ -495,57 +487,57 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
-                    if (boton.getName().equals("modificar")) {
-                        PlatoEspecial aux = new PlatoEspecial();
-                        aux.setId_pe(this.especiales.get(row).getId_pe());
-                        aux.setNombre(this.especiales.get(row).getNombre());
-                        aux.setPrecio(this.especiales.get(row).getPrecio());
-                        aux.setDescripcion(this.especiales.get(row).getDescripcion());
-                        aux.setImagen(this.especiales.get(row).getImagen());
-                        try {
-                            ModificarEspecial frameEspecial = new ModificarEspecial(aux, this.servicioRestaurante, this);
-                        } catch (Exception ex) {
-                            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        if (boton.getName().equals("eliminar")) {
-                            int fila = tblEspeciales.getSelectedRow();
-                            int clave = this.especiales.get(fila).getId_pe();
-                            try {
-                                if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
-                                        + this.especiales.get(fila).getNombre()
-                                        + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-
-                                    if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
-                                        JOptionPane.showMessageDialog(rootPane, "El registro no existe");
-                                    } else {
-                                        this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
-                                        this.crearTablaEspeciales();
-                                        JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
-                                    }
-
-                                }
-                            } catch (Exception ex) {
-                                showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
-                            }
-
-                            //EVENTOS ELIMINAR
-                        }
-                    }
-                    if (value instanceof JCheckBox) {
-                        //((JCheckBox)value).doClick();
-                        var ch = (JCheckBox) value;
-                        if (ch.isSelected() == true) {
-                            ch.setSelected(false);
-                        }
-                        if (ch.isSelected() == false) {
-                            ch.setSelected(true);
-                        }
-
+                if (boton.getName().equals("modificar")) {
+                    PlatoEspecial aux = new PlatoEspecial();
+                    aux.setId_pe(this.especiales.get(row).getId_pe());
+                    aux.setNombre(this.especiales.get(row).getNombre());
+                    aux.setPrecio(this.especiales.get(row).getPrecio());
+                    aux.setDescripcion(this.especiales.get(row).getDescripcion());
+                    aux.setImagen(this.especiales.get(row).getImagen());
+                    try {
+                        ModificarEspecial frameEspecial = new ModificarEspecial(aux, this.servicioRestaurante, this);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+                if (boton.getName().equals("eliminar")) {
+                    int fila = tblEspeciales.getSelectedRow();
+                    int clave = this.especiales.get(fila).getId_pe();
+                    try {
+                        if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
+                                + this.especiales.get(fila).getNombre()
+                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
+
+                            if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
+                                JOptionPane.showMessageDialog(rootPane, "El registro no existe");
+                            } else {
+                                this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), lblImagenEspecial.getWidth(), lblImagenEspecial.getHeight()));
+                                this.crearTablaEspeciales();
+                                JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
+                            }
+
+                        }
+                    } catch (Exception ex) {
+                        showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                    }
+
+                    //EVENTOS ELIMINAR
+                }
+            if (value instanceof JCheckBox) {
+                //((JCheckBox)value).doClick();
+                var ch = (JCheckBox) value;
+                if (ch.isSelected() == true) {
+                    ch.setSelected(false);
+                }
+                if (ch.isSelected() == false) {
+                    ch.setSelected(true);
+                }
+
+            }
+        }
     }//GEN-LAST:event_tblEspecialesMouseClicked
-        } 
-    
+}
+
 
     private void btnAgregarRacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRacionActionPerformed
         // TODO add your handling code here:
@@ -559,37 +551,47 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddEspecialActionPerformed
 
     private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
-        varDia=cbxDia.getSelectedItem().toString();
+        varDia = cbxDia.getSelectedItem().toString();
         try {
             crearTablaRaciones();
         } catch (Exception ex) {
-            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxDiaActionPerformed
 
     private void cbxRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxRestauranteActionPerformed
-        String sel=cbxRestaurante.getSelectedItem().toString();
-        for (int i = 0; i < idRestaurante.size()-1; i++) {
-            String [] dat =idRestaurante.get(i).split("-");
+        String sel = cbxRestaurante.getSelectedItem().toString();
+        for (int i = 0; i < idRestaurante.size() - 1; i++) {
+            String[] dat = idRestaurante.get(i).split("-");
             if (dat[1].equals(sel)) {
-                this.idSeleccionado=Integer.parseInt(dat[0]);
+                this.idSeleccionado = Integer.parseInt(dat[0]);
                 break;
             }
         }
-        
+
         try {
             this.crearTablaRaciones();
             this.crearTablaEspeciales();
         } catch (Exception ex) {
-            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 
     private void serviceListarRaciones() throws Exception {
         if (varDia.equals("TODOS")) {
             this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
-        }else{
-            this.raciones = servicioRestaurante.listMenuDay(idSeleccionado,varDia,"administrador");
+        } else {
+            this.raciones = servicioRestaurante.listMenuDay(idSeleccionado, varDia, "administrador");
         }
     }
 
@@ -598,10 +600,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
     }
 
-    public void crearTablaRaciones() throws Exception{
+    public void crearTablaRaciones() throws Exception {
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
-        System.out.println("tamañp:"+this.raciones.size());
+        System.out.println("tamañp:" + this.raciones.size());
         tabRaciones.ver_tabla(tblRaciones, raciones);
     }
 
@@ -610,10 +612,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
     }
-    private void crearIndexRestaurante(){
+
+    private void crearIndexRestaurante() {
         cbxRestaurante.removeAllItems();
-        for (int i = 0; i < idRestaurante.size()-1; i++) {
-            String [] datos=idRestaurante.get(i).split("-");
+        for (int i = 0; i < idRestaurante.size() - 1; i++) {
+            String[] datos = idRestaurante.get(i).split("-");
             cbxRestaurante.addItem(datos[1]);
         }
     }

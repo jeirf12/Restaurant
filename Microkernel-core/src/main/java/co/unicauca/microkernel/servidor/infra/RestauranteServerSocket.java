@@ -6,6 +6,7 @@ import co.unicauca.microkernel.common.entities.*;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
+import co.unicauca.microkernel.common.prueba.prueba;
 import co.unicauca.microkernel.servidor.acceso.FabricaRepositorio;
 import co.unicauca.microkernel.servidor.dominio.servidor.PlatoServicio;
 import com.google.gson.Gson;
@@ -246,7 +247,7 @@ public class RestauranteServerSocket implements Runnable{
         racion.setPrecio(Integer.parseInt(protocol.getParameters().get(2).getValue()));
         racion.setTipo(CategoriaEnum.valueOf(protocol.getParameters().get(3).getValue()));
         racion.setMenuId(Integer.parseInt(protocol.getParameters().get(4).getValue()));
-        racion.setImagen(protocol.getParameters().get(5).getValue().getBytes());
+        racion.setImagen(protocol.getBytes());
 
         
         String response = null;
@@ -266,7 +267,7 @@ public class RestauranteServerSocket implements Runnable{
         plato.setPrecio(Integer.parseInt(protocol.getParameters().get(2).getValue()));
         plato.setDescripcion(protocol.getParameters().get(3).getValue());
         plato.setMenuEsp(Integer.parseInt(protocol.getParameters().get(4).getValue()));
-        plato.setImagen(protocol.getParameters().get(5).getValue().getBytes());
+        plato.setImagen(protocol.getBytes());
         String response = null;
         response = service.updatePlatoEspecial(plato);
         output.println(response);
@@ -324,9 +325,9 @@ public class RestauranteServerSocket implements Runnable{
         //el orden debe ser exacto
         platoE.setMenuEsp(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         platoE.setNombre(protocolRequest.getParameters().get(1).getValue());
-        platoE.setImagen(protocolRequest.getParameters().get(2).getValue().getBytes());
-        platoE.setDescripcion(protocolRequest.getParameters().get(3).getValue());
-        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
+        platoE.setDescripcion(protocolRequest.getParameters().get(2).getValue());
+        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
+        platoE.setImagen(protocolRequest.getBytes());
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response;
         //el servicio comunicara con la base de datos,
@@ -391,10 +392,9 @@ public class RestauranteServerSocket implements Runnable{
         //el orden debe ser exacto
         racionD.setMenuId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         racionD.setNombre(protocolRequest.getParameters().get(1).getValue());
-        racionD.setImagen(protocolRequest.getParameters().get(2).getValue().getBytes());
-        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(3).getValue()));
-        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
-        //hacer validacion para esta, es decir sobre el parseo del dato
+        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(2).getValue()));
+        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
+        racionD.setImagen(protocolRequest.getBytes());
         String response;
         //el servicio comunicara con la base de datos,
         //se pasa el plato creado, y servicio llamara al repositorio
