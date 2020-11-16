@@ -232,7 +232,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setInt(1, 1);
+            pstmt.setInt(1, instancia.getMenuEsp());
             pstmt.setString(2, instancia.getNombre());
             pstmt.setBytes(3, instancia.getImagen());
             pstmt.setString(4, instancia.getDescripcion());
@@ -508,13 +508,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         System.out.println("Entered the save restaurant");
         try{
             this.connect();
-            String sql = "INSERT INTO restaurante (RES_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_DIRECCION) values (?,?,?,?,?)";
+            String sql = "INSERT INTO restaurante (CLI_ID,RES_CODIGO,RES_NOMBRE,RES_FOTO,RES_CARRERA,RES_CALLE) values (?,?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, res.getId());
+            pstmt.setInt(1, res.getIdCliente());
             pstmt.setString(2, res.getCodigo());
             pstmt.setString(3, res.getNombre());
             pstmt.setBytes(4, res.getImagen());
-            pstmt.setString(5, res.getDireccion());
+            pstmt.setInt(5, res.getCarrera());
+            pstmt.setInt(6, res.getCalle());
             pstmt.executeUpdate();
             pstmt.close();
             this.disconnect();

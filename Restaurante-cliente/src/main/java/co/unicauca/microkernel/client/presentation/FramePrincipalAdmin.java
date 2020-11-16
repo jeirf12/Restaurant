@@ -10,11 +10,9 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -390,9 +388,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
         if (imagen != null) {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth()
+                    , this.lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull)
+                    , lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
         }
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
@@ -419,12 +419,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                     try {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar la racion \""
                                 + this.raciones.get(fila).getNombre()
-                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
+                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION
+                                , JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
 
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
+                                        , lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -454,9 +456,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
         if (imagen != null) {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth()
+                    , this.lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
+                    , this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
 
         }
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
@@ -483,12 +487,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                     try {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
                                 + this.especiales.get(fila).getNombre()
-                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
+                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION
+                                , JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
 
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), lblImagenEspecial.getWidth(), lblImagenEspecial.getHeight()));
+                                this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
+                                        , lblImagenEspecial.getWidth(), lblImagenEspecial.getHeight()));
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -551,8 +557,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             this.crearTablaRaciones();
             this.crearTablaEspeciales();
         } catch (Exception ex) {
-            Logger.getLogger(FramePrincipalAdmin.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 
@@ -616,5 +621,4 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tblEspeciales;
     private javax.swing.JTable tblRaciones;
     // End of variables declaration//GEN-END:variables
-
 }

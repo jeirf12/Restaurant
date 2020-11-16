@@ -7,8 +7,6 @@ package co.unicauca.microkernel.client.presentation;
 
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
-//borrar esta imprtacion despues de la prueba
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static java.awt.Image.SCALE_SMOOTH;
@@ -32,6 +30,8 @@ public class AgregarRacion extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameEdynson
+     * @param cliente
+     * @param frame
      */
     public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame) {
         this.cliente = cliente;

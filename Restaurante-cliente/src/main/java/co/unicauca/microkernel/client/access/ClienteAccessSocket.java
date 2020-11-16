@@ -9,7 +9,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import static java.lang.String.valueOf;
 import static java.lang.System.out;
-import java.util.Arrays;
 import java.util.List;
 /**
  *
@@ -468,11 +467,12 @@ public class ClienteAccessSocket implements IClienteAccess {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRestaurant");
-        protocol.addParameter("res_id", valueOf(restaurante.getId()));
-        protocol.addParameter("res_codigo", valueOf(restaurante.getCodigo()));
+        protocol.addParameter("cli_id", ""+restaurante.getIdCliente());
+        protocol.addParameter("res_codigo", restaurante.getCodigo());
         protocol.addParameter("res_nombre", restaurante.getNombre());
-        protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
-        protocol.addParameter("res_direccion", restaurante.getDireccion());
+        protocol.addParameter("res_carrera", ""+restaurante.getCarrera());
+        protocol.addParameter("res_calle", ""+restaurante.getCalle());
+        protocol.setBytes(restaurante.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);

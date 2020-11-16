@@ -379,10 +379,7 @@ public class RestauranteServerSocket implements Runnable{
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.addPlatoEspecialPedido(platoEspecialPed);
         output.println(response);
-    }     
-
-   
-    
+    }        
     
      private void administradorRegistrarRacionDia(Protocol protocolRequest) {
         //crea la instancia
@@ -477,11 +474,12 @@ public class RestauranteServerSocket implements Runnable{
         Restaurante res = new Restaurante();
         //se asignan los atributos de la instancia, segun los valores de los parametros
         //el orden debe ser exacto
-        res.setId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        res.setIdCliente(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         res.setCodigo(protocolRequest.getParameters().get(1).getValue());
         res.setNombre(protocolRequest.getParameters().get(2).getValue());
-        res.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
-        res.setDireccion(protocolRequest.getParameters().get(4).getValue());
+        res.setCarrera(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
+        res.setCalle(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
+        res.setImagen(protocolRequest.getBytes());
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response=null;
         //el servicio comunicara con la base de datos,
