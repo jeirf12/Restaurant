@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.netbeans.external</groupId>
             <artifactId>AbsoluteLayout</artifactId>
-            <version>RELEASE120-u1</version>
+            <version>RELEASE120</version>
         </dependency>
         <dependency>
             <groupId>unknown.binary</groupId>
