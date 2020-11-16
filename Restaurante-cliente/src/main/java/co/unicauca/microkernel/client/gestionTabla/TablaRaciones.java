@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionTabla;
+package co.unicauca.microkernel.client.gestionTabla;
 
 import co.unicauca.microkernel.common.entities.RacionDia;
-import static gestionTabla.StructRaciones.DIA;
-import static gestionTabla.StructRaciones.ELIMINAR;
-import static gestionTabla.StructRaciones.ID;
-import static gestionTabla.StructRaciones.MODIFICAR;
-import static gestionTabla.StructRaciones.NOMBRE;
-import static gestionTabla.StructRaciones.PRECIO;
-import static gestionTabla.StructRaciones.TIPO;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.DIA;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.ELIMINAR;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.ID;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.MODIFICAR;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.NOMBRE;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.PRECIO;
+import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.TIPO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
