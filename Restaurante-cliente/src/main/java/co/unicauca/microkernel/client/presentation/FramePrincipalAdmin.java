@@ -52,14 +52,20 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     //servicio
     IClienteAccess service;
     clienteService servicioRestaurante;
+    //variables
+    private static List<String> idRestaurante;
+    private String varDia;
+    private int idSeleccionado;
+    private String photoNull;
 
     /**
      * Creates new form FramePrincipalAdmin
      */
-    public FramePrincipalAdmin() {
+    public FramePrincipalAdmin(List<String> idRestaurantes) {
 
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
+            this.estilo();
             service = getInstance().getClienteService();
             servicioRestaurante = new clienteService(service);
             //INICIALIZANDO TABLAS
@@ -72,11 +78,61 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             especiales = new ArrayList<>();
             this.crearTablaRaciones();
             this.crearTablaEspeciales();
-
+            this.crearIndexRestaurante();
+            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
+            varDia="TODOS";
+            photoNull="\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
         //this.setVisible(true);
+    }
+    
+    private void estilo(){
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
     }
 
     /**
@@ -95,6 +151,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
+        lblNomUsu = new javax.swing.JLabel();
+        cbxRestaurante = new javax.swing.JComboBox<>();
         pnlRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
@@ -124,8 +182,15 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblImagenUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
+                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNomUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
@@ -134,10 +199,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lblNombreUsuario)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreUsuario)
+                    .addComponent(lblNomUsu))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblNombreRestaurante)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreRestaurante)
+                    .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -166,6 +235,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         lblFiltro.setText("Filtar por dia:");
 
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+        cbxDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxDiaActionPerformed(evt);
+            }
+        });
 
         tblRaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -335,7 +409,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
         } else {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto("Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         }
         //INSTANCIAR IMAGEN
 
@@ -371,6 +445,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             } else {
                                 this.crearTablaRaciones();
                                 //verificar fijacion de imagen aqui------------------------------------------
+                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+                                this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
 
@@ -401,7 +477,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         if (imagen != null) {
             this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
         } else {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto("Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg"),this.lblImagenEspecial.getWidth(),this.lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),this.lblImagenEspecial.getWidth(),this.lblImagenEspecial.getHeight()));
+
         }
         //fijarImagenEspecial(imagen);
 
@@ -430,10 +507,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                                         + this.especiales.get(fila).getNombre()
                                         + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
 
-                                    if (this.servicioRestaurante.deletePlatoEspecial(clave) == "FALLO") {
+                                    if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                         JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                                     } else {
-                                        this.lblImagenEspecial.setIcon(null);
+                                        this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
                                         this.crearTablaEspeciales();
                                         JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                                     }
@@ -473,9 +550,21 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         add.setVisible(true);
     }//GEN-LAST:event_btnAddEspecialActionPerformed
 
+    private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
+        varDia=cbxDia.getSelectedItem().toString();
+        try {
+            crearTablaRaciones();
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbxDiaActionPerformed
+
     private void serviceListarRaciones() throws Exception {
-        //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.raciones = servicioRestaurante.listMenuDay(1, "LUNES", "administrador");
+        if (varDia.equals("TODOS")) {
+            this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
+        }else{
+            this.raciones = servicioRestaurante.listMenuDay(idSeleccionado,varDia,"administrador");
+        }
     }
 
     private void serviceListarEspeciales() throws Exception {
@@ -487,7 +576,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
         tabRaciones.ver_tabla(tblRaciones, raciones);
-
     }
 
     public void crearTablaEspeciales() throws Exception {
@@ -495,60 +583,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin
-
-.class  
-
-
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void crearIndexRestaurante(){
+        cbxRestaurante.removeAllItems();
+        for (int i = 0; i < idRestaurante.size()-1; i++) {
+            String [] datos=idRestaurante.get(i).split("-");
+            cbxRestaurante.addItem(datos[1]);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FramePrincipalAdmin().setVisible(true);
-            }
-        });
     }
 
 
@@ -556,6 +596,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnAddEspecial;
     private javax.swing.JButton btnAgregarRacion;
     private javax.swing.JComboBox<String> cbxDia;
+    private javax.swing.JComboBox<String> cbxRestaurante;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -565,6 +606,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel lblImagenInicio;
     private javax.swing.JLabel lblImagenRacion;
     private javax.swing.JLabel lblImagenUsuario;
+    private javax.swing.JLabel lblNomUsu;
     private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JPanel pnlEspeciales;

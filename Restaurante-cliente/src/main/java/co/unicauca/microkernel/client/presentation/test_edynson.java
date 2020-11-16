@@ -8,6 +8,8 @@ package co.unicauca.microkernel.client.presentation;
 import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,6 +25,9 @@ public class test_edynson {
         ed.setVisible(true); 
         EdynsonModificarPlato mod = new EdynsonModificarPlato();
         mod.setVisible(true);*/
-        FramePrincipalAdmin f = new FramePrincipalAdmin();
+        List<String> l = new ArrayList<String>();
+        l.add("1");
+        FramePrincipalAdmin f = new FramePrincipalAdmin(l);
+        f.setVisible(true);
     }   
 }
