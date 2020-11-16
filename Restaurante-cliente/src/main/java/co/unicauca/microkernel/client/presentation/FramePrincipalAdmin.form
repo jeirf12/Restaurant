@@ -69,7 +69,7 @@
                           <Component id="pnlInfoUsuario" max="32767" attributes="0"/>
                           <Component id="lblImagenInicio" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="105" max="32767" attributes="0"/>
+                      <EmptySpace pref="135" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -144,6 +144,9 @@
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxRestauranteActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -216,14 +219,14 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="8">
-                    <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="Lunes"/>
-                    <StringItem index="2" value="Martes"/>
-                    <StringItem index="3" value="Miercoles"/>
-                    <StringItem index="4" value="Jueves"/>
-                    <StringItem index="5" value="Viernes"/>
-                    <StringItem index="6" value="Sabado"/>
-                    <StringItem index="7" value="Domingo"/>
+                    <StringItem index="0" value="TODOS"/>
+                    <StringItem index="1" value="LUNES"/>
+                    <StringItem index="2" value="MARTES"/>
+                    <StringItem index="3" value="MIERCOLES"/>
+                    <StringItem index="4" value="JUEVES"/>
+                    <StringItem index="5" value="VIERNES"/>
+                    <StringItem index="6" value="SABADO"/>
+                    <StringItem index="7" value="DOMINGO"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -351,7 +354,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Component id="btnAddEspecial" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="59" max="32767" attributes="0"/>
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -456,7 +459,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="252" max="32767" attributes="0"/>
+                      <EmptySpace pref="282" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

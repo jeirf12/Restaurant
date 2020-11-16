@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.client.access;
-
 
 import java.util.List;
 import co.unicauca.microkernel.common.entities.*;
@@ -14,7 +8,6 @@ import co.unicauca.microkernel.common.entities.*;
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
-
 public interface IClienteAccess {
     
     public String saveRestaurant(Restaurante restaurant) throws Exception;
@@ -71,7 +64,9 @@ public interface IClienteAccess {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
 
     public String saveRacionDia(RacionDia racion) throws Exception;
-    
+
+    public String validarAcceso (Cliente cliente)throws Exception;
+
     /**
      * Implementacion que se hara en clienteAccessSocket para el recibimiento 
      * de este tipo por parte del servidor que esta devolviendo una respuesta

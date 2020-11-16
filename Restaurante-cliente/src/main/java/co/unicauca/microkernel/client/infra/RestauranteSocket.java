@@ -1,20 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.client.infra;
 
-import co.unicauca.microkernel.common.infra.Utilities;
 import static co.unicauca.microkernel.common.infra.Utilities.loadProperty;
 import java.io.IOException;
 import java.io.PrintStream;
 import static java.lang.Integer.parseInt;
 import java.util.Scanner;
-import java.util.logging.Level;
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.SEVERE;
-import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 
 /**

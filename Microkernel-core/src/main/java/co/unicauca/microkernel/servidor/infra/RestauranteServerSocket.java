@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.infra;
 
 
@@ -231,8 +226,12 @@ public class RestauranteServerSocket implements Runnable{
                 }
                 
                 break;
-
-            }
+            case "sistema":
+                if (protocolRequest.getAction().equals("validarAcceso")) {
+                    this.validarAcceso(protocolRequest);
+                }
+                break;
+        }
 
     }
     
@@ -323,12 +322,11 @@ public class RestauranteServerSocket implements Runnable{
         PlatoEspecial platoE = new PlatoEspecial();
         //se asignan los atributos de la instancia, segun los valores de los parametros
         //el orden debe ser exacto
-        platoE.setId_pe(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
-        platoE.setMenuEsp(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
-        platoE.setNombre(protocolRequest.getParameters().get(2).getValue());
-        platoE.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
-        platoE.setDescripcion(protocolRequest.getParameters().get(4).getValue());
-        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
+        platoE.setMenuEsp(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        platoE.setNombre(protocolRequest.getParameters().get(1).getValue());
+        platoE.setImagen(protocolRequest.getParameters().get(2).getValue().getBytes());
+        platoE.setDescripcion(protocolRequest.getParameters().get(3).getValue());
+        platoE.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response;
         //el servicio comunicara con la base de datos,
@@ -391,12 +389,11 @@ public class RestauranteServerSocket implements Runnable{
         RacionDia racionD = new RacionDia();
         //se asignan los atributos de la instancia, segun los valores de los parametros
         //el orden debe ser exacto
-        racionD.setRacId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
-        racionD.setMenuId(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
-        racionD.setNombre(protocolRequest.getParameters().get(2).getValue());
-        racionD.setImagen(protocolRequest.getParameters().get(3).getValue().getBytes());
-        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(4).getValue()));
-        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
+        racionD.setMenuId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        racionD.setNombre(protocolRequest.getParameters().get(1).getValue());
+        racionD.setImagen(protocolRequest.getParameters().get(2).getValue().getBytes());
+        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(3).getValue()));
+        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
         //hacer validacion para esta, es decir sobre el parseo del dato
         String response;
         //el servicio comunicara con la base de datos,
@@ -491,7 +488,18 @@ public class RestauranteServerSocket implements Runnable{
         //el servicio comunicara con la base de datos,
         response = service.saveRestaurant(res);
         output.println(response);
-    } 
+    }
+    
+    private void validarAcceso(Protocol protocolRequest) {
+        Cliente cli = new Cliente();
+        cli.setNombre(protocolRequest.getParameters().get(0).getValue());
+        cli.setContrasenia(protocolRequest.getParameters().get(1).getValue());
+        String response;
+        response = service.validarAcceso(cli);
+        output.println(response);
+
+    }
+      
     /**
      * Recibe la peticion del cliente, manda el id del restaurante
      * y manda esta peticion procesada al repositorio del servidor

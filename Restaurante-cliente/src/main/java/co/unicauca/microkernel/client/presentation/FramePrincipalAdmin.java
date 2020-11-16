@@ -12,8 +12,8 @@ import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
 
 import co.unicauca.microkernel.common.infra.Utilities;
-import gestionTabla.TablaEspeciales;
-import gestionTabla.TablaRaciones;
+import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
+import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
 
 /*import static gestionTabla.StructEspeciales.DESCRIPCION;
 import static gestionTabla.StructEspeciales.ID;
@@ -54,7 +54,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     clienteService servicioRestaurante;
     //variables
     private static List<String> idRestaurante;
-    private String varDia;
+    private static String varDia;
     private int idSeleccionado;
     private String photoNull;
 
@@ -66,6 +66,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             this.estilo();
+            idRestaurante= idRestaurantes;
             service = getInstance().getClienteService();
             servicioRestaurante = new clienteService(service);
             //INICIALIZANDO TABLAS
@@ -76,12 +77,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             //INICIALIZANDO TABLAS Y LLENANDO LISTAS
             raciones = new ArrayList<>();
             especiales = new ArrayList<>();
-            this.crearTablaRaciones();
-            this.crearTablaEspeciales();
+            varDia="TODOS";
+            //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
-            varDia="TODOS";
             photoNull="\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            //this.crearTablaRaciones();
+            //this.crearTablaEspeciales();
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -174,6 +176,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
         lblNombreRestaurante.setText("Restaurante:");
 
+        cbxRestaurante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxRestauranteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlInfoUsuarioLayout = new javax.swing.GroupLayout(pnlInfoUsuario);
         pnlInfoUsuario.setLayout(pnlInfoUsuarioLayout);
         pnlInfoUsuarioLayout.setHorizontalGroup(
@@ -227,14 +235,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblImagenInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("INICIO", pnlInicio);
 
         lblFiltro.setText("Filtar por dia:");
 
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
         cbxDia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxDiaActionPerformed(evt);
@@ -360,7 +368,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                     .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addComponent(btnAddEspecial)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
@@ -381,7 +389,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jLabel4)
-                .addContainerGap(252, Short.MAX_VALUE))
+                .addContainerGap(282, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PEDIDOS", pnlPedidos);
@@ -559,6 +567,24 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbxDiaActionPerformed
 
+    private void cbxRestauranteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxRestauranteActionPerformed
+        String sel=cbxRestaurante.getSelectedItem().toString();
+        for (int i = 0; i < idRestaurante.size()-1; i++) {
+            String [] dat =idRestaurante.get(i).split("-");
+            if (dat[1].equals(sel)) {
+                this.idSeleccionado=Integer.parseInt(dat[0]);
+                break;
+            }
+        }
+        
+        try {
+            this.crearTablaRaciones();
+            this.crearTablaEspeciales();
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbxRestauranteActionPerformed
+
     private void serviceListarRaciones() throws Exception {
         if (varDia.equals("TODOS")) {
             this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
@@ -575,6 +601,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     public void crearTablaRaciones() throws Exception{
         this.tblRaciones.removeAll();
         this.serviceListarRaciones();
+        System.out.println("tamañp:"+this.raciones.size());
         tabRaciones.ver_tabla(tblRaciones, raciones);
     }
 
@@ -590,44 +617,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             cbxRestaurante.addItem(datos[1]);
         }
     }
-<<<<<<< HEAD
-=======
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>x
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                List<String> lista=new ArrayList<>();
-                new FramePrincipalAdmin(lista).setVisible(true);
-            }
-        });
-    }
->>>>>>> f02afe5d78c35bff283161cbd31a4fb4d0a1ac91
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

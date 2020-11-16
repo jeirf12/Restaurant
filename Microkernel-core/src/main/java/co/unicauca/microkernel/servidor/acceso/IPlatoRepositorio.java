@@ -1,17 +1,6 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.acceso;
 
-
-
 import co.unicauca.microkernel.common.entities.*;
-
-
-
-
 
 /**
  *interface del repositorio de platos, usarla mediante inyeccion de dependencias
@@ -38,8 +27,6 @@ public interface IPlatoRepositorio {
      */
     public String updateRacion(RacionDia racion);
 
-
-
     /**
      * 
      * @param rac_id
@@ -63,5 +50,5 @@ public interface IPlatoRepositorio {
     public String addRacionPedido(RacionPed racionPed);
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
     public String saveRacionDia(RacionDia racion);
-
+    public String validarAcceso(Cliente cliente);
 }
