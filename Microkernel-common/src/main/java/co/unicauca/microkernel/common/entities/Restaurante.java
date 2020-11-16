@@ -7,20 +7,24 @@ package co.unicauca.microkernel.common.entities;
 public class Restaurante {
 
     private int id;
+    private int idCliente;
     private String codigo;
     private String nombre;
     private byte[] imagen;
-    private String direccion;
+    private int carrera;
+    private int calle;
 
     public Restaurante() {
     }
 
-    public Restaurante(int id, String codigo, String nombre, byte[] imagen, String direccion) {
+    public Restaurante(int id,int idcliente, String codigo, String nombre, byte[] imagen, int carrera,int calle) {
         this.id = id;
+        this.idCliente=idcliente;
         this.codigo = codigo;
         this.nombre = nombre;
         this.imagen = imagen;
-        this.direccion = direccion;
+        this.carrera = carrera;
+        this.calle = calle;
     }
 
     public String getNombre() {
@@ -55,11 +59,28 @@ public class Restaurante {
         this.codigo = codigo;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public int getCarrera() {
+        return carrera;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
     }
+
+    public int getCalle() {
+        return calle;
+    }
+
+    public void setCalle(int calle) {
+        this.calle = calle;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    
 }
