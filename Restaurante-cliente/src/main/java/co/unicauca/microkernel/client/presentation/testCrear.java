@@ -1,21 +1,28 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package co.unicauca.microkernel.client.presentation;
 
+import co.unicauca.microkernel.client.access.Factory;
 import static co.unicauca.microkernel.client.access.Factory.getInstance;
+import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.Restaurante;
+import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.common.entities.*;
 import static co.unicauca.microkernel.common.entities.CategoriaEnum.BEBIDA;
 import static co.unicauca.microkernel.common.entities.DiaEnum.DOMINGO;
 import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
 import static java.lang.System.out;
+import java.time.Clock;
+import java.time.LocalDateTime;
+import java.time.Month;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
@@ -27,7 +34,6 @@ public class testCrear {
     /**
      * @param args the command line arguments
      */
-    /*
    public static void main(String[] args) {
         var service = getInstance().getClienteService();
         var servicioRestaurante = new clienteService(service);
@@ -58,5 +64,5 @@ public class testCrear {
         }
 
     }
-    */
+    
 }
