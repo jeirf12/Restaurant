@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.app.Application;
@@ -19,11 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  * objeto concreto de un repositorio, en este caso un repositorio de mysql
@@ -649,7 +642,6 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         return response;
     }
     
-
     @Override
     public String validarAcceso(Cliente cliente) {
         String resultado = "";
@@ -669,9 +661,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         } catch (SQLException ex) {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al validar usuario", ex);
         }
-
         return resultado;
-
     }
 
 }

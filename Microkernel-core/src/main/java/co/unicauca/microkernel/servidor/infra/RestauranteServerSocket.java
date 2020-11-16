@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.infra;
 
 import co.unicauca.microkernel.common.entities.*;
@@ -245,11 +240,10 @@ public class RestauranteServerSocket implements Runnable {
                 break;
                 
             case "sistema":
-             if (protocolRequest.getAction().equals("validarAcceso")) {
+                if (protocolRequest.getAction().equals("validarAcceso")) {
                     this.validarAcceso(protocolRequest);
                 }
-             break;
-
+                break;
         }
 
     }
