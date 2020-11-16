@@ -29,6 +29,8 @@ public class AgregarRacion extends javax.swing.JFrame {
     private RacionDia racion;
     /**
      * Creates new form FrameEdynson
+     * @param cliente
+     * @param frame
      */
     public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame) {
         this.cliente = cliente;
@@ -97,6 +99,11 @@ public class AgregarRacion extends javax.swing.JFrame {
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
         txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRutaKeyReleased(evt);
+            }
+        });
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,7 +128,7 @@ public class AgregarRacion extends javax.swing.JFrame {
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
-        btnFoto.setText("upload");
+        btnFoto.setText("Subir");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFotoActionPerformed(evt);
@@ -187,7 +194,7 @@ public class AgregarRacion extends javax.swing.JFrame {
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(28, 28, 28)))
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 32, Short.MAX_VALUE))
+                        .addGap(17, 25, Short.MAX_VALUE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -199,7 +206,7 @@ public class AgregarRacion extends javax.swing.JFrame {
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 24, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCancelar)
@@ -276,6 +283,7 @@ public class AgregarRacion extends javax.swing.JFrame {
         this.racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
         if(!(this.txtRuta.getText().isBlank())){
             this.racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
+            //prueba p = new prueba(racion, new PlatoEspecial());
         }else{
             this.racion.setImagen(null);
         }
@@ -326,6 +334,10 @@ public class AgregarRacion extends javax.swing.JFrame {
     private void cbxDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxDiaItemStateChanged
         this.habilitarBtnAgregar();
     }//GEN-LAST:event_cbxDiaItemStateChanged
+
+    private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtRutaKeyReleased
 
     
 

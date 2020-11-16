@@ -9,7 +9,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import static java.lang.String.valueOf;
 import static java.lang.System.out;
-import java.util.Arrays;
 import java.util.List;
 /**
  *
@@ -164,7 +163,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("precio", ""+plato.getPrecio());
         protocol.addParameter("descripcion", plato.getDescripcion());
         protocol.addParameter("menu", ""+plato.getMenuEsp());
-        protocol.addParameter("imagen", Arrays.toString(plato.getImagen()));
+        protocol.setBytes(plato.getImagen());
         
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -200,7 +199,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("precio", ""+racion.getPrecio());
         protocol.addParameter("tipo", ""+racion.getTipo());
         protocol.addParameter("dia", ""+racion.getMenuId());
-        protocol.addParameter("imagen", Arrays.toString(racion.getImagen()));
+        protocol.setBytes(racion.getImagen());
         
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -214,9 +213,9 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.setAction("postPlatoEspecial");
         protocol.addParameter("mene_id", valueOf(instancia.getMenuEsp()));
         protocol.addParameter("plae_nombre", instancia.getNombre());
-        protocol.addParameter("plae_foto", Arrays.toString(instancia.getImagen()));
         protocol.addParameter("plae_descripcion", instancia.getDescripcion());
         protocol.addParameter("plae_precio", valueOf(instancia.getPrecio()));
+        protocol.setBytes(instancia.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -245,12 +244,11 @@ public class ClienteAccessSocket implements IClienteAccess {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRacionDia");
-        //protocol.addParameter("rac_id", valueOf(instancia.getRacId()));
         protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
         protocol.addParameter("rac_nombre", instancia.getNombre());
-        protocol.addParameter("rac_foto", Arrays.toString(instancia.getImagen()));
         protocol.addParameter("rac_tipo", instancia.getTipo().toString());
         protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
+        protocol.setBytes(instancia.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -472,9 +470,9 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("cli_id", ""+restaurante.getIdCliente());
         protocol.addParameter("res_codigo", restaurante.getCodigo());
         protocol.addParameter("res_nombre", restaurante.getNombre());
-        protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
         protocol.addParameter("res_carrera", ""+restaurante.getCarrera());
         protocol.addParameter("res_calle", ""+restaurante.getCalle());
+        protocol.setBytes(restaurante.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
