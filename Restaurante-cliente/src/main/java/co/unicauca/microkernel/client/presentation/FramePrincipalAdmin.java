@@ -544,7 +544,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FramePrincipalAdmin(idRestaurante).setVisible(true);
+                List<String> lista=new ArrayList<>();
+                new FramePrincipalAdmin(lista).setVisible(true);
             }
         });
     }
