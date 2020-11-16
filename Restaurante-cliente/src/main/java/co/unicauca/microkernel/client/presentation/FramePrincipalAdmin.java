@@ -424,7 +424,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.crearTablaRaciones();
                                 this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
