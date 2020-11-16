@@ -52,7 +52,9 @@ public class ModificarRacion extends javax.swing.JFrame {
         this.txtPrecio.setText(racion.getPrecio() + "");
         this.cbxDia.setSelectedIndex(racion.getMenuId());
         this.cbxTipo.setSelectedItem(racion.getTipo().name());
-        this.lblImagen.setIcon(Utilities.crearIcono(racion.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
+        if(racion.getImagen()!=null){
+            this.lblImagen.setIcon(Utilities.crearIcono(racion.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
+        }
     }
 
     /**
@@ -82,6 +84,7 @@ public class ModificarRacion extends javax.swing.JFrame {
         lblImagen = new javax.swing.JLabel();
         btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -152,7 +155,7 @@ public class ModificarRacion extends javax.swing.JFrame {
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
-        btnFoto.setText("upload");
+        btnFoto.setText("Nueva");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFotoActionPerformed(evt);
@@ -185,6 +188,13 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
+        btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
@@ -192,6 +202,16 @@ public class ModificarRacion extends javax.swing.JFrame {
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addComponent(btnFoto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnQuitar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtRuta)))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -203,9 +223,9 @@ public class ModificarRacion extends javax.swing.JFrame {
                                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                         .addComponent(lblTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cbxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbxTipo, 0, 180, Short.MAX_VALUE)
                                         .addGap(2, 2, 2)))
-                                .addGap(30, 30, 30))
+                                .addGap(13, 13, 13))
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -220,26 +240,18 @@ public class ModificarRacion extends javax.swing.JFrame {
                                         .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(28, 28, 28)))
-                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFoto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(0, 15, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(17, 17, 17))
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(162, 162, 162)
+                .addGap(163, 163, 163)
                 .addComponent(btnActualizar)
-                .addGap(73, 73, 73)
+                .addGap(71, 71, 71)
                 .addComponent(btnCancelar)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(238, Short.MAX_VALUE)
+                    .addContainerGap(295, Short.MAX_VALUE)
                     .addComponent(lblTitulo1)
                     .addGap(229, 229, 229)))
         );
@@ -267,14 +279,16 @@ public class ModificarRacion extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDia)
-                            .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFoto)
-                    .addComponent(btnFoto)
-                    .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnQuitar)
+                            .addComponent(btnFoto)
+                            .addComponent(lblFoto)))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar)
                     .addComponent(btnCancelar))
@@ -283,7 +297,7 @@ public class ModificarRacion extends javax.swing.JFrame {
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(lblTitulo1)
-                    .addContainerGap(284, Short.MAX_VALUE)))
+                    .addContainerGap(304, Short.MAX_VALUE)))
         );
 
         getContentPane().add(pnlPrincipal, java.awt.BorderLayout.CENTER);
@@ -302,6 +316,7 @@ public class ModificarRacion extends javax.swing.JFrame {
             txtRuta.setText(ruta);
             var imagen = new ImageIcon(ruta);
             this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), SCALE_SMOOTH)));
+            this.habilitarBtnActualizar();
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
@@ -362,11 +377,17 @@ public class ModificarRacion extends javax.swing.JFrame {
         this.habilitarBtnActualizar();
     }//GEN-LAST:event_txtRutaKeyReleased
 
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        this.racion.setImagen(null);
+        this.txtRuta.setText("sin imagen");
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
     //VERIFICAR ESTE METODO
     private void habilitarBtnActualizar() {
 
-        if (txtNombre.getText().isEmpty()
-                || this.txtPrecio.getText().isEmpty()
+        if (txtNombre.getText().isBlank()
+                || this.txtPrecio.getText().isBlank()
                 || this.cbxTipo.getSelectedIndex() == 0
                 || this.cbxDia.getSelectedIndex() == 0) {
             this.btnActualizar.setEnabled(false);
@@ -374,7 +395,7 @@ public class ModificarRacion extends javax.swing.JFrame {
                 && this.txtPrecio.getText().equals(racion.getPrecio()+"")
                 && this.cbxTipo.getSelectedItem().toString().equals(racion.getTipo().toString())
                 && this.cbxDia.getSelectedItem().toString().equals(racion.getTipo().toString())
-                && this.txtRuta.getText().isEmpty()) {
+                && this.txtRuta.getText().isBlank()) {
             this.btnActualizar.setEnabled(false);
         } else {
             this.btnActualizar.setEnabled(true);
@@ -386,6 +407,7 @@ public class ModificarRacion extends javax.swing.JFrame {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxTipo;
     private javax.swing.JLabel lblDia;

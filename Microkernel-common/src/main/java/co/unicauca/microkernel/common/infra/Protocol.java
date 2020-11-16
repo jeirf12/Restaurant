@@ -13,6 +13,7 @@ public class Protocol {
     private String resource;
     private String action;
     private List<Parameter> parameters;
+    private byte[] bytes;
 
     public Protocol() {
         parameters = new ArrayList<>();
@@ -32,6 +33,14 @@ public class Protocol {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
     }
 
     public List<Parameter> getParameters() {
