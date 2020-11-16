@@ -30,8 +30,6 @@ public class clienteService {
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
     }
-
-    
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
      * @param plato informacion del plato a actualizar

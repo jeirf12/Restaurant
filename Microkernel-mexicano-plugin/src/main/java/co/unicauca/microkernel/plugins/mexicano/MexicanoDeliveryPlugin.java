@@ -3,28 +3,33 @@ package co.unicauca.microkernel.plugins.mexicano;
 import co.unicauca.microkernel.common.entities.Delivery;
 import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
 /**
- * Plugin para envios a Mexico
- * @author Libardo, Julio
+ * Plugin para restaurantes mexicanos
+ * @author Jafes
  */
 public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
 
     
     @Override
     public double calculateCostDomicile(Delivery delivery) {
-
-        int total = delivery.getPrecio();
         
         int distancia = (int)(delivery.getDistance());
 
         double cost;
         
-        cost = (distancia)+(total*1000);
+        cost = (distancia*100);
         
 
         return cost;
     }
     @Override
     public double impuestoRestaurante(Delivery delivery){
-        return 0;
+        int sumaOrder = delivery.getPrecio();
+        
+        double cost;
+        
+        cost = sumaOrder+(sumaOrder*0.19);
+        
+
+        return cost;
     }
 }
