@@ -56,8 +56,6 @@ public interface IPlatoRepositorio {
     public String listMenuDay(int idRes,String dia);
     public String listMenuSpecial(int idRes);
     public String listMenuDayAll(int idRes);
-
-    public String calcularCosto(int idCliente,int idPedido);
     
     public String addPedido(Pedido pedido);
     public String addRacionPedido(RacionPed racionPed);
@@ -74,4 +72,8 @@ public interface IPlatoRepositorio {
     public String listCarritoPlatoEspecial(int idCliente, int idPedido);
     public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual);
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual);
+    public String sumOrder(int idCliente, int idPedido);
+    public String priceDomicileOrder(int idCliente, int idPedido);    
+    public String impuestoRestaurante(int idCliente, int idPedido);    
+    public String total(int idCliente, int idPedido);
 }

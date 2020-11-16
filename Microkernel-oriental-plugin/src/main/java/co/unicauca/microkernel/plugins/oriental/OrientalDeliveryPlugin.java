@@ -1,19 +1,12 @@
 package co.unicauca.microkernel.plugins.oriental;
 
 import co.unicauca.microkernel.common.entities.Delivery;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
 
 public class OrientalDeliveryPlugin implements IDeliveryPlugin {
 
-    /**
-     * El cálculo de Colombia es una mezcla de peso y distancia.
-     *
-     * @param delivery envío
-     * @return costo del envío
-     */
-    public double calculateCost(Delivery delivery) {
+    @Override
+    public double calculateCostDomicile(Delivery delivery) {
         
         int total = delivery.getPrecio();
         
@@ -26,5 +19,9 @@ public class OrientalDeliveryPlugin implements IDeliveryPlugin {
 
         return cost;
 
+    }
+    @Override
+    public double impuestoRestaurante(Delivery delivery){
+        return 0;
     }
 }

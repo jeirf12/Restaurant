@@ -24,10 +24,6 @@ public class clienteService {
     public clienteService(IClienteAccess service) {
         this.service = service;
     }
-    public String calcularCosto(int idCliente, int idPedido)throws Exception{
-        
-        return service.calcularCosto(idCliente,idPedido);
-    }
     public String saveRestaurant(Restaurante restaurant) throws Exception{
         return service.saveRestaurant(restaurant);
     }
@@ -117,4 +113,17 @@ public class clienteService {
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
         return service.disminuirCantidad(typeOrden, idOrden, cantidadActual);
     }
+    public String sumOrder(int idCliente, int idPedido)throws Exception{
+        return service.sumOrder(idCliente, idPedido);
+    }
+    public String priceDomicileOrder(int idCliente, int idPedido)throws Exception{
+        return service.priceDomicileOrder(idCliente, idPedido);
+    }
+    public String impuestoRestaurante(int idCliente, int idPedido)throws Exception{
+        return service.impuestoRestaurante(idCliente, idPedido);
+    }
+    public String total(int idCliente, int idPedido)throws Exception{
+        return service.total(idCliente, idPedido);
+    }
+    
 }

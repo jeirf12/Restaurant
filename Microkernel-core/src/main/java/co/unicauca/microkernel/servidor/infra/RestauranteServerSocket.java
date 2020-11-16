@@ -224,8 +224,17 @@ public class RestauranteServerSocket implements Runnable {
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
             case "comprador":
 
-                if (protocolRequest.getAction().equals("calcularCosto")) {
-                    this.administrarCalcularCosto(protocolRequest);
+                if (protocolRequest.getAction().equals("sumarOrden")) {
+                    this.administrarSumaOrder(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("precioDomicilio")) {
+                    this.administrarPrecioDomicilio(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("impuestoRestaurante")) {
+                    this.administrarImpuestoRestaurante(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("TOTAL")) {
+                    this.administrarTotal(protocolRequest);
                 }
 
                 if (protocolRequest.getAction().equals("listarMenuDia")) {
@@ -365,14 +374,6 @@ public class RestauranteServerSocket implements Runnable {
         return errorsJson;
     }
 
-    private void administrarCalcularCosto(Protocol protocolRequest) {
-        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
-        String response = null;
-        response = service.calcularCosto(idCliente,idPedido);
-        output.println(response);
-        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response + " idCliente:" + idCliente);
-    }
 
     private void administradorRegistrarPlatoEspecial(Protocol protocolRequest) {
         //crea la instancia
@@ -663,5 +664,38 @@ public class RestauranteServerSocket implements Runnable {
         output.println(response);
     }
     
+    private void administrarSumaOrder(Protocol protocolRequest) {
+        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        String response = null;
+        response = service.sumOrder(idCliente, idPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response + " idCliente:" + idCliente);
+    }
+    private void administrarPrecioDomicilio(Protocol protocolRequest) {
+        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        String response = null;
+        response = service.priceDomicileOrder(idCliente, idPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response + " idCliente:" + idCliente);
+    }
+    private void administrarImpuestoRestaurante(Protocol protocolRequest) {
+        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        String response = null;
+        response = service.impuestoRestaurante(idCliente, idPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response + " idCliente:" + idCliente);
+    }
+    private void administrarTotal(Protocol protocolRequest) {
+        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        String response = null;
+        response = service.total(idCliente, idPedido);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response + " idCliente:" + idCliente);
+    }
+
     
 }

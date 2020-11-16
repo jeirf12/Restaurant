@@ -200,12 +200,9 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             return null;
         }
     }
-
+    
     @Override
-    public String calcularCosto(int idCliente,int idPedido) {
-        double cost = 0;
-        String codigo = "";
-        double distancia = 0;
+    public String sumOrder(int idCliente, int idPedido){
         int total =0;
         int sumaRaciones = 0;
         int sumaPlatosE = 0;
@@ -214,27 +211,67 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             sumaPlatosE = this.sumaPlatos(idCliente,idPedido);
             
             total = sumaRaciones+sumaPlatosE;
-            
-            codigo = this.codigoRestaurante(idCliente);
-            
-            distancia = this.calcularDistancia(idCliente);
-            
-            
+        return "FALLO";
+    }
+    
+    @Override
+    public String priceDomicileOrder(int idCliente, int idPedido){
+        int sumaOrder = Integer.parseInt(this.sumOrder(idCliente, idPedido));
+        double distancia = 0;
+        distancia = this.calcularDistancia(idCliente,idPedido);
+        String codigo = "";
+        codigo = this.codigoRestaurante(idCliente, idPedido);
+        double cost = 0;
         try {    
             String basePath = getBaseFilePath();
             DeliveryService deliveryService = new DeliveryService();
 
             DeliveryPluginManager.init(basePath);
-            Delivery deliveryEntity = new Delivery(total, distancia, codigo);
-            cost = deliveryService.calculateDeliveryCost(deliveryEntity);
+            Delivery deliveryEntity = new Delivery(sumaOrder, distancia, codigo);
+            cost = deliveryService.calculateDeliveryCostDomicile(deliveryEntity);
 
             return "" + cost;
         } catch (Exception ex) {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
+            return "FALLO";
         }
-    }
+    }    
+    @Override
+    public String impuestoRestaurante(int idCliente, int idPedido){
+        int sumaOrder = Integer.parseInt(this.sumOrder(idCliente, idPedido));
+        double distancia = 0;
+        distancia = this.calcularDistancia(idCliente,idPedido);
+        String codigo = "";
+        codigo = this.codigoRestaurante(idCliente, idPedido);
+        double cost = 0;
+        try {    
+            String basePath = getBaseFilePath();
+            DeliveryService deliveryService = new DeliveryService();
 
+            DeliveryPluginManager.init(basePath);
+            Delivery deliveryEntity = new Delivery(sumaOrder, distancia, codigo);
+            cost = deliveryService.calculateImpuestoRestaurante(deliveryEntity);
+
+            return "" + cost;
+        } catch (Exception ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, null, ex);
+            return "FALLO";
+        }
+    }     
+    @Override
+    public String total(int idCliente, int idPedido){
+        try{
+            int total = (Integer.parseInt(this.sumOrder(idCliente, idPedido)))+
+                    (Integer.parseInt(this.priceDomicileOrder(idCliente, idPedido)))+
+                    (Integer.parseInt(this.impuestoRestaurante(idCliente, idPedido)));
+        
+        return ""+total;
+        } catch (Exception ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, null, ex);
+            return "FALLO";
+        }
+        
+    }
     @Override
     public String savePlatoEspecial(PlatoEspecial instancia) {
         try {
@@ -706,7 +743,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Las platos especiales dan = "+sumaPlatos);
         return sumaPlatos;
     }
-    public double calcularDistancia(int idCliente){
+    public double calcularDistancia(int idCliente, int idPedido){
         int x1 = 0;
         int y1 = 0;
         int x2 = 0;
@@ -718,7 +755,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             "SELECT res.RES_CALLE,res.RES_CARRERA,cli.CLI_CALLE,cli.CLI_CARRERA"
             + " FROM pedido ped INNER JOIN restaurante res on ped.RES_ID=res.RES_ID"
             + " INNER JOIN cliente cli on cli.CLI_ID=ped.CLI_ID"
-            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ESTADO LIKE 'CREADO'";
+            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ID = "+idPedido+"";
 
             PreparedStatement ps1 = conn.prepareStatement(sqlRacion);
             ResultSet rs1 = ps1.executeQuery();
@@ -748,7 +785,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         double distancia = Math.sqrt(a+b);
         return distancia;
     }
-    public String codigoRestaurante (int idCliente){
+    public String codigoRestaurante (int idCliente, int idPedido){
         String codigo = "";
         
         try{
@@ -756,7 +793,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             String sqlRacion = 
             "SELECT res.RES_CODIGO"
             + " FROM pedido ped INNER JOIN restaurante res on ped.RES_ID=res.RES_ID"
-            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ESTADO LIKE 'CREADO'";
+            + " WHERE ped.CLI_ID = "+idCliente+" AND ped.PED_ID = "+idPedido+"";
 
             PreparedStatement ps1 = conn.prepareStatement(sqlRacion);
             ResultSet rs1 = ps1.executeQuery();

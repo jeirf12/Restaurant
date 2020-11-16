@@ -24,7 +24,7 @@ public class testJames {
         clienteService servicioRestaurante = new clienteService(service);    
         String rac_id = "";
         try{
-            rac_id = servicioRestaurante.calcularCosto(3,3);
+            //rac_id = servicioRestaurante.calcularCosto(3,3);
             System.out.println(rac_id);
             
         }catch(Exception ex) {

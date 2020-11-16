@@ -65,7 +65,6 @@ public interface IClienteAccess {
     public List<PlatoEspecial> listMenuSpecial(int idRes,String resource)throws Exception;
 
 
-    public String calcularCosto(int idCliente, int idPedido)throws Exception;
     public String addPedido(Pedido pedido) throws Exception;
     public String addRacionPedido(RacionPed racionPed) throws Exception;
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception;
@@ -100,5 +99,12 @@ public interface IClienteAccess {
     
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception;
     
+    public String sumOrder(int idCliente, int idPedido)throws Exception;
+    
+    public String priceDomicileOrder(int idCliente, int idPedido)throws Exception;
+    
+    public String impuestoRestaurante(int idCliente, int idPedido)throws Exception;
+    
+    public String total(int idCliente, int idPedido)throws Exception;
 
 }

@@ -105,10 +105,43 @@ public class ClienteAccessSocket implements IClienteAccess {
         var error = gson.fromJson(jsonError, JsonError[].class);
         return error;
     }
-
     @Override
-    public String calcularCosto(int idCliente, int idPedido)throws Exception{
-        var requestJson = calcularCostoJson(idCliente,idPedido);
+    public String sumOrder(int idCliente, int idPedido)throws Exception{
+        var action = "sumarOrden";
+        var requestJson = pluginJson(idCliente,idPedido,action);
+        var valor = this.procesarConexion(requestJson);
+        if (valor.equals("FALLO")) {
+            return null;
+        }
+        return valor;
+    }
+    
+    @Override
+    public String priceDomicileOrder(int idCliente, int idPedido)throws Exception{
+        var action = "precioDomicilio";
+        var requestJson = pluginJson(idCliente,idPedido,action);
+        var valor = this.procesarConexion(requestJson);
+        if (valor.equals("FALLO")) {
+            return null;
+        }
+        return valor;
+    }
+    
+    @Override
+    public String impuestoRestaurante(int idCliente, int idPedido)throws Exception{
+        var action = "impuestoRestaurante";
+        var requestJson = pluginJson(idCliente,idPedido,action);
+        var valor = this.procesarConexion(requestJson);
+        if (valor.equals("FALLO")) {
+            return null;
+        }
+        return valor;
+    }
+    
+    @Override
+    public String total(int idCliente, int idPedido)throws Exception{
+        var action = "TOTAL";
+        var requestJson = pluginJson(idCliente,idPedido,action);
         var valor = this.procesarConexion(requestJson);
         if (valor.equals("FALLO")) {
             return null;
@@ -118,11 +151,11 @@ public class ClienteAccessSocket implements IClienteAccess {
 
 
 
-    private String calcularCostoJson(int idCliente, int idPedido){
+    private String pluginJson(int idCliente, int idPedido, String action){
         var protocol = new Protocol();
         //el orden debe ser respetado
         protocol.setResource("comprador");
-        protocol.setAction("calcularCosto");
+        protocol.setAction(action);
         protocol.addParameter("idCliente", ""+idCliente);
         protocol.addParameter("idPedido", ""+idPedido);
         var gson = new Gson();

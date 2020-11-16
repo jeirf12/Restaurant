@@ -26,9 +26,6 @@ public class PlatoServicio {
         this.repositorio = repositorio;
     }
 
-    public String calcularCosto(int idCliente, int idPedido){
-        return repositorio.calcularCosto(idCliente,idPedido);
-    }
     public String savePlatoEspecial(PlatoEspecial plato){
         //hacer validaciones aqui
         return repositorio.savePlatoEspecial(plato);
@@ -135,6 +132,18 @@ public class PlatoServicio {
     }
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual){
         return repositorio.disminuirCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String sumOrder(int idCliente, int idPedido){
+        return repositorio.sumOrder(idCliente, idPedido);
+    }
+    public String priceDomicileOrder(int idCliente, int idPedido){
+        return repositorio.priceDomicileOrder(idCliente, idPedido);
+    }
+    public String impuestoRestaurante(int idCliente, int idPedido){
+        return repositorio.impuestoRestaurante(idCliente, idPedido);
+    }   
+    public String total(int idCliente, int idPedido){
+        return repositorio.total(idCliente, idPedido);
     }
 
 }

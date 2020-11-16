@@ -1,8 +1,6 @@
 package co.unicauca.microkernel.plugins.mexicano;
 
 import co.unicauca.microkernel.common.entities.Delivery;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
 /**
  * Plugin para envios a Mexico
@@ -10,12 +8,9 @@ import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
  */
 public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
 
-    /**
-     * Calcular el costo de envío de un producto de la tienda enviado dentro de
-     * México.
-     *
-     */
-    public double calculateCost(Delivery delivery) {
+    
+    @Override
+    public double calculateCostDomicile(Delivery delivery) {
 
         int total = delivery.getPrecio();
         
@@ -27,5 +22,9 @@ public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
         
 
         return cost;
+    }
+    @Override
+    public double impuestoRestaurante(Delivery delivery){
+        return 0;
     }
 }
