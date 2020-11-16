@@ -26,8 +26,8 @@ public class PlatoServicio {
         this.repositorio = repositorio;
     }
 
-    public String calcularCosto(int idCliente){
-        return repositorio.calcularCosto(idCliente);
+    public String calcularCosto(int idCliente, int idPedido){
+        return repositorio.calcularCosto(idCliente,idPedido);
     }
     public String savePlatoEspecial(PlatoEspecial plato){
         //hacer validaciones aqui
@@ -94,14 +94,10 @@ public class PlatoServicio {
 
     
     public String saveRacionDia(RacionDia racion){
-        //hacer validaciones aqui
+    
         return repositorio.saveRacionDia(racion);
     }
- 
-    
-    public String deletePedido(int pedidoId){
-        return repositorio.deletePedido(pedidoId);
-    }
+
     public String payedPedido(Pedido pedido){
         return repositorio.payedPedido(pedido);
     }
@@ -113,6 +109,32 @@ public class PlatoServicio {
     }
     public String deletePlatoEspecialPedido(int idPlatoEspecialPedido){
         return repositorio.deletePlatoEspecialPedido(idPlatoEspecialPedido);
+    }
+
+
+
+   public String validarAcceso(Cliente cliente){
+       return repositorio.validarAcceso(cliente);
+   }
+
+    
+    public String listMenuDayAll(int resId){
+        return repositorio.listMenuDayAll(resId);
+    }
+    public String listRestaurante(String typeRestaurante){
+        return repositorio.listRestaurante(typeRestaurante);
+    }
+    public String listCarritoRacion(int idCliente, int idPedido){
+        return repositorio.listCarritoRacion(idCliente, idPedido);
+    } 
+    public String listCarritoPlatoEspecial(int idCliente, int idPedido){
+        return repositorio.listCarritoPlatoEspecial(idCliente, idPedido);
+    }
+    public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual){
+        return repositorio.aumentarCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual){
+        return repositorio.disminuirCantidad(typeOrden, idOrden, cantidadActual);
     }
 
 }

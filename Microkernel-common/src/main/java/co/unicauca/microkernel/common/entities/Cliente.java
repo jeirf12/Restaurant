@@ -12,18 +12,65 @@ package co.unicauca.microkernel.common.entities;
 public class Cliente {
     private int idCliente;
     private String nombre;
-    private int calle;
     private int carrera;
-    //private String direccion;
+    private int calle;
+    private TipoClien tipo;
+    private String contrasenia;
     private byte [] imagen;
 
-    public Cliente(int idCliente, String nombre, int calle, int carrera,byte [] imagen) {
+
+
+    public Cliente() {};
+
+    public Cliente(int idCliente, String nombre, int carrera, int calle, TipoClien tipo, String contrasenia, byte[] imagen) {
         this.idCliente = idCliente;
         this.nombre = nombre;
-        this.calle = calle;
         this.carrera = carrera;
-        this.imagen=imagen;
+        this.calle = calle;
+        this.tipo = tipo;
+        this.contrasenia = contrasenia;
+        this.imagen = imagen;
     }
+    public Cliente(String nombre, String contrasenia) {
+       this.nombre = nombre;
+       this.contrasenia = contrasenia;
+    }
+
+
+    public int getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
+    }
+
+    public int getCalle() {
+        return calle;
+    }
+
+    public void setCalle(int calle) {
+        this.calle = calle;
+    }
+
+    public TipoClien getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoClien tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+  
+  
 
     public int getIdCliente() {
         return idCliente;
@@ -47,21 +94,5 @@ public class Cliente {
 
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
-    }
-
-    public int getCalle() {
-        return calle;
-    }
-
-    public void setCalle(int calle) {
-        this.calle = calle;
-    }
-
-    public int getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(int carrera) {
-        this.carrera = carrera;
     }
 }

@@ -7,8 +7,8 @@ package co.unicauca.microkernel.common.entities;
 
 /**
  *
- * @author fallen
+ * @author Camilo Gonzalez
  */
-public enum DiaEnum {
-    LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO
+public enum TipoClien {
+  ADMINISTRADOR, COMPRADOR  
 }

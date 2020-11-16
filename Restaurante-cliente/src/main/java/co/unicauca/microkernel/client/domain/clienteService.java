@@ -24,9 +24,9 @@ public class clienteService {
     public clienteService(IClienteAccess service) {
         this.service = service;
     }
-    public String calcularCosto(int idCliente)throws Exception{
+    public String calcularCosto(int idCliente, int idPedido)throws Exception{
         
-        return service.calcularCosto(idCliente);
+        return service.calcularCosto(idCliente,idPedido);
     }
     public String saveRestaurant(Restaurante restaurant) throws Exception{
         return service.saveRestaurant(restaurant);
@@ -74,12 +74,10 @@ public class clienteService {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
     }
+
     public String saveRacionDia(RacionDia racion) throws Exception{
         return service.saveRacionDia(racion);
-    }    
-    public String deletePedido(int pedidoId) throws Exception{
-        return service.deletePedido(pedidoId);
-    }    
+    }       
     public String payedPedido(Pedido pedido) throws Exception{
         return service.payedPedido(pedido);
     }
@@ -91,5 +89,32 @@ public class clienteService {
     }
     public String deletePlatoEspecialPedido(int idPlatoEspecialPedido) throws Exception{
         return service.deletePlatoEspecialPedido(idPlatoEspecialPedido);
+    }
+    public List<RacionDia> listMenuDay(int idRes,String diaSem,String resource)throws Exception{
+        return service.listMenuDay(idRes, diaSem, resource);
+    }
+    public List<PlatoEspecial> listMenuSpecial(int idRes,String resource)throws Exception{
+        return service.listMenuSpecial(idRes, resource);
+    }
+    public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception{
+        return service.listMenuDayAll(idRes,resource);
+    }
+    public String validarAcceso (Cliente cliente)throws Exception{
+         return service.validarAcceso(cliente);
+    }
+    public List<Restaurante> listRestaurante(String typeRestaurante)throws Exception{
+        return service.listRestaurante(typeRestaurante);
+    }
+    public List<CarritoG> listCarritoRacion(int idCliente, int idPedido,String resource)throws Exception{
+        return service.listCarritoRacion(idCliente, idPedido, resource);
+    }
+    public List<CarritoG> listCarritoPlatoEspecial(int idCliente, int idPedido,String resource)throws Exception{
+        return service.listCarritoPlatoEspecial(idCliente, idPedido, resource);
+    }
+    public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
+        return service.aumentarCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
+        return service.disminuirCantidad(typeOrden, idOrden, cantidadActual);
     }
 }
