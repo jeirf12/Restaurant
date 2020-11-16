@@ -94,4 +94,5 @@ public class Cliente {
     public void setIdrestaurante(int idrestaurante) {
         this.idrestaurante = idrestaurante;
     }
+    
 }

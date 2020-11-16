@@ -1,10 +1,14 @@
 package co.unicauca.microkernel.common.infra;
 
+import java.awt.Image;
+import static java.awt.Image.SCALE_SMOOTH;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  * Utilidades varias utilizadas por otras clases
@@ -62,5 +66,13 @@ public class Utilities {
             return null;
         }
         return icono;
+    }
+    
+     public static Icon crearIcono(byte[] imagen,int anchura,int altura) {
+        Icon iconoEscalado;
+        ImageIcon i = new ImageIcon(imagen);
+        Image imgEscalada = i.getImage().getScaledInstance(anchura, altura, SCALE_SMOOTH);
+        iconoEscalado = new ImageIcon(imgEscalada);
+        return iconoEscalado;
     }
 }

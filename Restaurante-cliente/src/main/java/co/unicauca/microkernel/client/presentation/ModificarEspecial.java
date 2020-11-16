@@ -22,9 +22,11 @@ import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
 import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -33,13 +35,32 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ModificarEspecial extends javax.swing.JFrame {
 
+    private PlatoEspecial especial;
+    private clienteService cliente;
+    private FramePrincipalAdmin frame;
+
     /**
      * Creates new form FrameEdynson
      */
-    public ModificarEspecial() {
+    public ModificarEspecial(PlatoEspecial plato, clienteService cliente, FramePrincipalAdmin frame) {
+        this.setVisible(true);
+        this.cliente = cliente;
+        this.frame = frame;
+        this.especial = plato;
         initComponents();
+        this.llenarDatos();
+        this.txtId.setEditable(false);
+        this.btnActualizar.setEnabled(false);
     }
 
+    private void llenarDatos() {
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.txtId.setText(especial.getId_pe() + "");
+        this.txtNombre.setText(especial.getNombre());
+        this.txtPrecio.setText(especial.getPrecio() + "");
+        this.txtDescripcion.setText(especial.getDescripcion());
+        this.lblImagen.setIcon(Utilities.crearIcono(especial.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,8 +83,9 @@ public class ModificarEspecial extends javax.swing.JFrame {
         btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         txtDescripcion = new javax.swing.JTextField();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +112,11 @@ public class ModificarEspecial extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(0, 0, 0));
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         txtRuta.setEditable(false);
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
@@ -112,17 +139,32 @@ public class ModificarEspecial extends javax.swing.JFrame {
         txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
         txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
-        jButton1.setText("UPDATE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
         txtDescripcion.setBackground(new java.awt.Color(0, 0, 0));
         txtDescripcion.setForeground(new java.awt.Color(255, 255, 255));
         txtDescripcion.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyReleased(evt);
+            }
+        });
+
+        btnCancelar.setText("CANCELAR");
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -156,8 +198,10 @@ public class ModificarEspecial extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(jButton1))
+                        .addGap(140, 140, 140)
+                        .addComponent(btnActualizar)
+                        .addGap(59, 59, 59)
+                        .addComponent(btnCancelar))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -197,7 +241,9 @@ public class ModificarEspecial extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -213,11 +259,11 @@ public class ModificarEspecial extends javax.swing.JFrame {
 
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         var j = new JFileChooser();
-        var fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        var fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         j.setFileFilter(fil);
-        
+
         var s = j.showOpenDialog(this);
-        if(s == APPROVE_OPTION){
+        if (s == APPROVE_OPTION) {
             var ruta = j.getSelectedFile().getAbsolutePath();
             txtRuta.setText(ruta);
             var imagen = new ImageIcon(ruta);
@@ -225,29 +271,72 @@ public class ModificarEspecial extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         var plato = new PlatoEspecial();
         plato.setId_pe(parseInt(this.txtId.getText()));
         plato.setNombre(this.txtNombre.getText());
         plato.setDescripcion(this.txtDescripcion.getText());
         plato.setPrecio(parseInt(this.txtPrecio.getText()));
-        plato.setImagen(convertirFoto(this.txtRuta.getText()));
-        plato.setMenuEsp(1);
-        
-        var service = getInstance().getClienteService();
-        var servicioRestaurante = new clienteService(service);
-        
-        try {
-            servicioRestaurante.updatePlatoEspecial(plato);
-        } catch (Exception ex) {
-            getLogger(ModificarEspecial.class.getName()).log(SEVERE, null, ex);
+        if(!(this.txtRuta.getText().isBlank())){
+            plato.setImagen(convertirFoto(this.txtRuta.getText()));
+        }else{
+            plato.setImagen(null);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        plato.setMenuEsp(1);
+        try {
+            if (cliente.updatePlatoEspecial(plato)) {
+                JOptionPane.showConfirmDialog(rootPane, "PLATO ACTUALIZADO", "OK", JOptionPane.CLOSED_OPTION);
+                frame.crearTablaEspeciales();
+                this.dispose();
+            } else {
+                JOptionPane.showConfirmDialog(rootPane, "PLATO NO ACTUALIZADO VERIFICA", "FALLO!!!!", JOptionPane.OK_OPTION);
+            }
+        } catch (Exception ex) {
+            getLogger(ModificarRacion.class.getName()).log(SEVERE, null, ex);
+            JOptionPane.showConfirmDialog(rootPane, "NO SE PUDO COMPLETAR LA OPERACION", "FATAL!!!!", JOptionPane.OK_OPTION);
+        }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void habilitarBtnActualizar() {
+        if (txtNombre.getText().isEmpty()
+                || this.txtPrecio.getText().isEmpty()
+                || this.txtDescripcion.getText().isEmpty()) {
+            this.btnActualizar.setEnabled(false);
+        } else if (this.txtNombre.getText().equals(especial.getNombre())
+                && this.txtDescripcion.getText().equals(especial.getDescripcion())
+                && this.txtPrecio.getText().equals(especial.getPrecio() + "")
+                && this.txtRuta.getText().isEmpty()) {
+            this.btnActualizar.setEnabled(false);
+        } else {
+            this.btnActualizar.setEnabled(true);
+        }
+    }
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9')
+            evt.consume();
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyReleased
+
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtPrecioKeyReleased
+
+    private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtDescripcionKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;

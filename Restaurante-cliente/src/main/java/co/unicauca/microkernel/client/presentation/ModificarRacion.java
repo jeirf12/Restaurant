@@ -5,11 +5,8 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.access.Factory;
 import static co.unicauca.microkernel.client.access.Factory.getInstance;
-import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
-import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import static co.unicauca.microkernel.common.entities.CategoriaEnum.valueOf;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -17,14 +14,13 @@ import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
 import java.awt.Image;
 import static java.awt.Image.SCALE_SMOOTH;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
-import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -33,11 +29,30 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class ModificarRacion extends javax.swing.JFrame {
 
+    private RacionDia racion;
+    private clienteService cliente;
+    private FramePrincipalAdmin frame;
     /**
      * Creates new form FrameEdynson
      */
-    public ModificarRacion() {
+    public ModificarRacion(RacionDia racion, clienteService cliente, FramePrincipalAdmin frame) {
+        this.cliente = cliente;
+        this.frame = frame;
+        this.setVisible(true);
+        this.racion = racion;
         initComponents();
+        this.llenarDatos();
+        this.btnActualizar.setEnabled(false);
+    }
+
+    private void llenarDatos() {
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.txtId.setText(racion.getRacId() + "");
+        this.txtNombre.setText(racion.getNombre());
+        this.txtPrecio.setText(racion.getPrecio() + "");
+        this.cbxDia.setSelectedIndex(racion.getMenuId());
+        this.cbxTipo.setSelectedItem(racion.getTipo().name());
+        this.lblImagen.setIcon(Utilities.crearIcono(racion.getImagen(), this.lblImagen.getWidth(), this.lblImagen.getHeight()));
     }
 
     /**
@@ -65,7 +80,8 @@ public class ModificarRacion extends javax.swing.JFrame {
         btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,31 +108,47 @@ public class ModificarRacion extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(0, 0, 0));
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         txtRuta.setEditable(false);
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
         txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRutaKeyReleased(evt);
+            }
+        });
 
+        txtId.setEditable(false);
         txtId.setBackground(new java.awt.Color(0, 0, 0));
         txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setCaretColor(new java.awt.Color(255, 0, 0));
-        txtId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdActionPerformed(evt);
-            }
-        });
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "ENTRADA", "BASE", "BEBIDA", "CARNE" }));
+        cbxTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxTipoItemStateChanged(evt);
+            }
+        });
 
         lblDia.setForeground(new java.awt.Color(255, 255, 255));
         lblDia.setText("Dia:");
 
         cbxDia.setBackground(new java.awt.Color(0, 0, 0));
         cbxDia.setForeground(new java.awt.Color(255, 255, 255));
-        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+        cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
+        cbxDia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxDiaItemStateChanged(evt);
+            }
+        });
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,11 +162,26 @@ public class ModificarRacion extends javax.swing.JFrame {
         txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
         txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
-        jButton1.setText("UPDATE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -181,13 +228,15 @@ public class ModificarRacion extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnFoto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jButton1))
-                            .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(0, 15, Short.MAX_VALUE))
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGap(162, 162, 162)
+                .addComponent(btnActualizar)
+                .addGap(73, 73, 73)
+                .addComponent(btnCancelar)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                     .addContainerGap(238, Short.MAX_VALUE)
@@ -226,7 +275,9 @@ public class ModificarRacion extends javax.swing.JFrame {
                     .addComponent(btnFoto)
                     .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -242,11 +293,11 @@ public class ModificarRacion extends javax.swing.JFrame {
 
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         var j = new JFileChooser();
-        var fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        var fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         j.setFileFilter(fil);
-        
+
         var s = j.showOpenDialog(this);
-        if(s == APPROVE_OPTION){
+        if (s == APPROVE_OPTION) {
             var ruta = j.getSelectedFile().getAbsolutePath();
             txtRuta.setText(ruta);
             var imagen = new ImageIcon(ruta);
@@ -254,37 +305,89 @@ public class ModificarRacion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         var racion = new RacionDia();
         racion.setRacId(parseInt(this.txtId.getText()));
         racion.setNombre(this.txtNombre.getText());
         racion.setPrecio(parseInt(this.txtPrecio.getText()));
         racion.setMenuId(this.cbxDia.getSelectedIndex());
-        racion.setImagen(convertirFoto(this.txtRuta.getText()));
+        if(!(this.txtRuta.getText().isBlank())){
+            racion.setImagen(convertirFoto(this.txtRuta.getText()));
+        }else{
+            racion.setImagen(null);
+        }
         racion.setTipo(valueOf(this.cbxTipo.getSelectedItem().toString()));
-        
-        var service = getInstance().getClienteService();
-        var servicioRestaurante = new clienteService(service);
-        
         try {
-            servicioRestaurante.updateRacion(racion);
+            if(cliente.updateRacion(racion)){
+                JOptionPane.showConfirmDialog(rootPane, "PLATO ACTUALIZADO", "OK", JOptionPane.CLOSED_OPTION);
+                this.frame.crearTablaRaciones();
+                this.dispose();
+            }else{
+                JOptionPane.showConfirmDialog(rootPane, "PLATO NO ACTUALIZADO VERIFICA", "FALLO!!!!", JOptionPane.OK_OPTION);
+            }
         } catch (Exception ex) {
             getLogger(ModificarRacion.class.getName()).log(SEVERE, null, ex);
         }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
-    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9')
+            evt.consume();
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyReleased
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtPrecioKeyReleased
+
+    private void cbxTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTipoItemStateChanged
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_cbxTipoItemStateChanged
+
+    private void cbxDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxDiaItemStateChanged
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_cbxDiaItemStateChanged
+
+    private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
+        this.habilitarBtnActualizar();
+    }//GEN-LAST:event_txtRutaKeyReleased
+
+    //VERIFICAR ESTE METODO
+    private void habilitarBtnActualizar() {
+
+        if (txtNombre.getText().isEmpty()
+                || this.txtPrecio.getText().isEmpty()
+                || this.cbxTipo.getSelectedIndex() == 0
+                || this.cbxDia.getSelectedIndex() == 0) {
+            this.btnActualizar.setEnabled(false);
+        } else if (txtNombre.getText().equals(racion.getNombre())
+                && this.txtPrecio.getText().equals(racion.getPrecio()+"")
+                && this.cbxTipo.getSelectedItem().toString().equals(racion.getTipo().toString())
+                && this.cbxDia.getSelectedItem().toString().equals(racion.getTipo().toString())
+                && this.txtRuta.getText().isEmpty()) {
+            this.btnActualizar.setEnabled(false);
+        } else {
+            this.btnActualizar.setEnabled(true);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxTipo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;

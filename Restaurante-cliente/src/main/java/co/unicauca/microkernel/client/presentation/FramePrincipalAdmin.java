@@ -10,15 +10,9 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.DESCRIPCION;
-import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.ID;
-import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.NOMBRE;
-import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.PRECIO;
-import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.DIA;
-import static co.unicauca.microkernel.client.gestionTabla.StructRaciones.TIPO;
+import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
-import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,13 +22,15 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+import static javax.swing.JOptionPane.showConfirmDialog;
 
 /**
  *
  * @author EdynsonMJ
  */
 public class FramePrincipalAdmin extends javax.swing.JFrame {
-
+    //borrar este comentario luego
     //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
@@ -46,17 +42,19 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     clienteService servicioRestaurante;
     //variables
     private static List<String> idRestaurante;
-    private String varDia;
+    private static String varDia;
     private int idSeleccionado;
+    private String photoNull;
 
     /**
      * Creates new form FramePrincipalAdmin
-     * @param idRestaurantes
      */
     public FramePrincipalAdmin(List<String> idRestaurantes) {
+
         try {
-            idRestaurante=idRestaurantes;
             //INSTANCIANDO EL SERVICIO, POR FABRICA
+            this.estilo();
+            idRestaurante= idRestaurantes;
             service = getInstance().getClienteService();
             servicioRestaurante = new clienteService(service);
             //INICIALIZANDO TABLAS
@@ -67,12 +65,64 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             //INICIALIZANDO TABLAS Y LLENANDO LISTAS
             raciones = new ArrayList<>();
             especiales = new ArrayList<>();
+            varDia="TODOS";
+            //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size()-1));
-            varDia="TODOS";
+            photoNull="\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            //this.crearTablaRaciones();
+            //this.crearTablaEspeciales();
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
+        //this.setVisible(true);
+    }
+    
+    private void estilo(){
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FramePrincipalAdmin
+
+.class  
+
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
     }
 
     /**
@@ -91,8 +141,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
-        cbxRestaurante = new javax.swing.JComboBox<>();
         lblNomUsu = new javax.swing.JLabel();
+        cbxRestaurante = new javax.swing.JComboBox<>();
         pnlRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
@@ -103,8 +153,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         pnlEspeciales = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEspeciales = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
         lblImagenEspecial = new javax.swing.JLabel();
+        btnAddEspecial = new javax.swing.JButton();
         pnlPedidos = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -120,8 +170,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
-        lblNomUsu.setText("---------------------");
-
         javax.swing.GroupLayout pnlInfoUsuarioLayout = new javax.swing.GroupLayout(pnlInfoUsuario);
         pnlInfoUsuario.setLayout(pnlInfoUsuarioLayout);
         pnlInfoUsuarioLayout.setHorizontalGroup(
@@ -129,15 +177,16 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxRestaurante, 0, 160, Short.MAX_VALUE))))
+                            .addComponent(lblNomUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 15, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
@@ -153,7 +202,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreRestaurante)
                     .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -163,7 +212,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlInicioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
@@ -174,7 +223,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblImagenInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("INICIO", pnlInicio);
@@ -210,6 +259,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
 
         btnAgregarRacion.setText("AGREGAR");
+        btnAgregarRacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarRacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRacionesLayout = new javax.swing.GroupLayout(pnlRaciones);
         pnlRaciones.setLayout(pnlRacionesLayout);
@@ -223,7 +277,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -271,7 +325,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             tblEspeciales.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
-        jButton1.setText("AGREGAR");
+        btnAddEspecial.setText("AGREGAR");
+        btnAddEspecial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEspecialActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlEspecialesLayout = new javax.swing.GroupLayout(pnlEspeciales);
         pnlEspeciales.setLayout(pnlEspecialesLayout);
@@ -279,14 +338,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEspecialesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(214, 214, 214))
+                .addComponent(btnAddEspecial)
+                .addGap(269, 269, 269))
         );
         pnlEspecialesLayout.setVerticalGroup(
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,10 +353,10 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addComponent(btnAddEspecial)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
@@ -318,7 +377,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jLabel4)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(282, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PEDIDOS", pnlPedidos);
@@ -343,26 +402,31 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int column = tblRaciones.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
-        //INSTANCIAR IMAGEN
         if (imagen != null) {
-           // this.lblImagenRacion.setIcon(this.fijarImagen(imagen,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth(), this.lblImagenRacion.getHeight()));
         } else {
-           // this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-            //        ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
         }
+        //INSTANCIAR IMAGEN
+
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("modificar")) {
-                    //es obtendra la informacion necesaria para construir un objeto que sera enviado a la interfaz modificar
-                    out.println("Click en el boton modificar");
-                    out.println(this.tblRaciones.getValueAt(row, ID));
-                    out.println(this.tblRaciones.getValueAt(row, NOMBRE));
-                    out.println(this.tblRaciones.getValueAt(row, PRECIO));
-                    out.println(this.tblRaciones.getValueAt(row, TIPO));
-                    out.println(this.tblRaciones.getValueAt(row, DIA));
+                    RacionDia aux = new RacionDia();
+                    aux.setRacId(this.raciones.get(row).getRacId());
+                    aux.setNombre(this.raciones.get(row).getNombre());
+                    aux.setPrecio(this.raciones.get(row).getPrecio());
+                    aux.setTipo(this.raciones.get(row).getTipo());
+                    aux.setMenuId(this.raciones.get(row).getMenuId());
+                    aux.setImagen(this.raciones.get(row).getImagen());
+                    try {
+                        ModificarRacion frameRacion = new ModificarRacion(aux, this.servicioRestaurante, this);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (boton.getName().equals("eliminar")) {
                     int fila = tblRaciones.getSelectedRow();
@@ -371,17 +435,20 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                         if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar la racion \""
                                 + this.raciones.get(fila).getNombre()
                                 + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            if (this.servicioRestaurante.deleteRacionDia(clave).equals("FALLO")) {
+
+                            if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                              //  this.lblImagenRacion.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                               //         ,lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
-                                this.crearTablaRaciones(varDia);
+                                this.crearTablaRaciones();
+                                //verificar fijacion de imagen aqui------------------------------------------
+                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenRacion.getWidth(),lblImagenRacion.getHeight()));
+                                this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
+
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(rootPane, "operacion fallida "+ex.getMessage());
+                        showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
                     }
                 }
             }
@@ -394,6 +461,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 if (ch.isSelected() == false) {
                     ch.setSelected(true);
                 }
+
             }
         }
     }//GEN-LAST:event_tblRacionesMouseClicked
@@ -403,63 +471,85 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
         if (imagen != null) {
-           // this.lblImagenEspecial.setIcon(this.fijarImagen(imagen,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
         } else {
-           // this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-               //     ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),this.lblImagenEspecial.getWidth(),this.lblImagenEspecial.getHeight()));
+
         }
+        //fijarImagenEspecial(imagen);
+
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
-                if (boton.getName().equals("modificar")) {
-                    //es obtendra la informacion necesaria para construir un objeto que sera enviado a la interfaz modificar
-                    out.println("Click en el boton modificar");
-                    out.println(this.tblEspeciales.getValueAt(row, ID));
-                    out.println(this.tblEspeciales.getValueAt(row, NOMBRE));
-                    out.println(this.tblEspeciales.getValueAt(row, PRECIO));
-                    out.println(this.tblEspeciales.getValueAt(row, DESCRIPCION));
-                    //EVENTOS MODIFICAR
-                }
-                if (boton.getName().equals("eliminar")) {
-                    int fila = tblEspeciales.getSelectedRow();
-                    int clave = this.especiales.get(fila).getId_pe();
-                    try {
-                        if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
-                                + this.especiales.get(fila).getNombre()
-                                + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
-                            if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
-                                JOptionPane.showMessageDialog(rootPane, "El registro no existe");
-                            } else {
-                                //this.lblImagenEspecial.setIcon(this.fijarImagen(Utilities.convertirFoto("/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg")
-                                      //  ,lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
-                                this.crearTablaEspeciales();
-                                JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
-                            }
+                    if (boton.getName().equals("modificar")) {
+                        PlatoEspecial aux = new PlatoEspecial();
+                        aux.setId_pe(this.especiales.get(row).getId_pe());
+                        aux.setNombre(this.especiales.get(row).getNombre());
+                        aux.setPrecio(this.especiales.get(row).getPrecio());
+                        aux.setDescripcion(this.especiales.get(row).getDescripcion());
+                        aux.setImagen(this.especiales.get(row).getImagen());
+                        try {
+                            ModificarEspecial frameEspecial = new ModificarEspecial(aux, this.servicioRestaurante, this);
+                        } catch (Exception ex) {
+                            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(rootPane, "operacion fallida");
+                        if (boton.getName().equals("eliminar")) {
+                            int fila = tblEspeciales.getSelectedRow();
+                            int clave = this.especiales.get(fila).getId_pe();
+                            try {
+                                if ((JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que quiere eliminar el plato \""
+                                        + this.especiales.get(fila).getNombre()
+                                        + "\"?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)) == JOptionPane.YES_OPTION) {
+
+                                    if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
+                                        JOptionPane.showMessageDialog(rootPane, "El registro no existe");
+                                    } else {
+                                        this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull),lblImagenEspecial.getWidth(),lblImagenEspecial.getHeight()));
+                                        this.crearTablaEspeciales();
+                                        JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
+                                    }
+
+                                }
+                            } catch (Exception ex) {
+                                showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
+                            }
+
+                            //EVENTOS ELIMINAR
+                        }
+                    }
+                    if (value instanceof JCheckBox) {
+                        //((JCheckBox)value).doClick();
+                        var ch = (JCheckBox) value;
+                        if (ch.isSelected() == true) {
+                            ch.setSelected(false);
+                        }
+                        if (ch.isSelected() == false) {
+                            ch.setSelected(true);
+                        }
+
                     }
                 }
-            }
-            if (value instanceof JCheckBox) {
-                //((JCheckBox)value).doClick();
-                var ch = (JCheckBox) value;
-                if (ch.isSelected() == true) {
-                    ch.setSelected(false);
-                }
-                if (ch.isSelected() == false) {
-                    ch.setSelected(true);
-                }
-            }
-        }
     }//GEN-LAST:event_tblEspecialesMouseClicked
+        } 
+    
+
+    private void btnAgregarRacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRacionActionPerformed
+        // TODO add your handling code here:
+        AgregarRacion aux = new AgregarRacion(this.servicioRestaurante, this);
+        aux.setVisible(true);
+    }//GEN-LAST:event_btnAgregarRacionActionPerformed
+
+    private void btnAddEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEspecialActionPerformed
+        AgregarEspecial add = new AgregarEspecial(this.servicioRestaurante, this);
+        add.setVisible(true);
+    }//GEN-LAST:event_btnAddEspecialActionPerformed
 
     private void cbxDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDiaActionPerformed
         varDia=cbxDia.getSelectedItem().toString();
         try {
-            crearTablaRaciones(varDia);
+            crearTablaRaciones();
         } catch (Exception ex) {
             Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -476,15 +566,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
         
         try {
-            this.crearTablaRaciones("TODOS");
+            this.crearTablaRaciones();
             this.crearTablaEspeciales();
         } catch (Exception ex) {
             Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 
-    private void serviceListarRaciones(String varDia) throws Exception {
+    private void serviceListarRaciones() throws Exception {
         if (varDia.equals("TODOS")) {
             this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
         }else{
@@ -493,16 +582,18 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     }
 
     private void serviceListarEspeciales() throws Exception {
-        this.especiales = servicioRestaurante.listMenuSpecial(idSeleccionado, "administrador");
+        //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
+        this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
     }
 
-    private void crearTablaRaciones(String varDia) throws Exception{
+    public void crearTablaRaciones() throws Exception{
         this.tblRaciones.removeAll();
-        this.serviceListarRaciones(varDia);
+        this.serviceListarRaciones();
+        System.out.println("tamañp:"+this.raciones.size());
         tabRaciones.ver_tabla(tblRaciones, raciones);
     }
 
-    private void crearTablaEspeciales() throws Exception {
+    public void crearTablaEspeciales() throws Exception {
         this.tblEspeciales.removeAll();
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
@@ -514,48 +605,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             cbxRestaurante.addItem(datos[1]);
         }
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FramePrincipalAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>x
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                List<String> lista=new ArrayList<>();
-                new FramePrincipalAdmin(lista).setVisible(true);
-            }
-        });
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddEspecial;
     private javax.swing.JButton btnAgregarRacion;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxRestaurante;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
