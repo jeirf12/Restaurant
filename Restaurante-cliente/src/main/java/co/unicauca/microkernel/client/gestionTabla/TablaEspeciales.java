@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionTabla;
+package co.unicauca.microkernel.client.gestionTabla;
 
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import static gestionTabla.StructEspeciales.DESCRIPCION;
-import static gestionTabla.StructEspeciales.ELIMINAR;
-import static gestionTabla.StructEspeciales.ID;
-import static gestionTabla.StructEspeciales.MODIFICAR;
-import static gestionTabla.StructEspeciales.NOMBRE;
-import static gestionTabla.StructEspeciales.PRECIO;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.DESCRIPCION;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.ELIMINAR;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.ID;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.MODIFICAR;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.NOMBRE;
+import static co.unicauca.microkernel.client.gestionTabla.StructEspeciales.PRECIO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;

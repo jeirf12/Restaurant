@@ -1,4 +1,4 @@
-package gestionTabla;
+package co.unicauca.microkernel.client.gestionTabla;
 
 import java.awt.Component;
 import javax.swing.JButton;
