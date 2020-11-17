@@ -88,28 +88,32 @@ public class ModificarRacion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        pnlPrincipal.setBackground(new java.awt.Color(30, 100, 85));
 
+        lblRacion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblRacion.setForeground(new java.awt.Color(255, 255, 255));
         lblRacion.setText("Id racion:");
 
+        lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo1.setText("Modificar racion");
+        lblTitulo1.setText("MODIFICAR RACION");
 
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
 
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
         lblPrecio.setText("Precio:");
 
+        lblTipo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTipo.setForeground(new java.awt.Color(255, 255, 255));
         lblTipo.setText("Tipo:");
 
+        lblFoto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFoto.setForeground(new java.awt.Color(255, 255, 255));
         lblFoto.setText("Foto:");
 
-        txtNombre.setBackground(new java.awt.Color(0, 0, 0));
-        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -118,8 +122,6 @@ public class ModificarRacion extends javax.swing.JFrame {
         });
 
         txtRuta.setEditable(false);
-        txtRuta.setBackground(new java.awt.Color(0, 0, 0));
-        txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
         txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -128,12 +130,8 @@ public class ModificarRacion extends javax.swing.JFrame {
         });
 
         txtId.setEditable(false);
-        txtId.setBackground(new java.awt.Color(0, 0, 0));
-        txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setCaretColor(new java.awt.Color(255, 0, 0));
 
-        cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
-        cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "ENTRADA", "BASE", "BEBIDA", "CARNE" }));
         cbxTipo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -141,11 +139,10 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
+        lblDia.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDia.setForeground(new java.awt.Color(255, 255, 255));
         lblDia.setText("Dia:");
 
-        cbxDia.setBackground(new java.awt.Color(0, 0, 0));
-        cbxDia.setForeground(new java.awt.Color(255, 255, 255));
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
         cbxDia.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -153,8 +150,6 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
-        btnFoto.setBackground(new java.awt.Color(0, 0, 0));
-        btnFoto.setForeground(new java.awt.Color(255, 255, 255));
         btnFoto.setText("Nueva");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,8 +157,6 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
-        txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
-        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -174,6 +167,7 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnActualizar.setText("ACTUALIZAR");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,6 +175,7 @@ public class ModificarRacion extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,16 +244,17 @@ public class ModificarRacion extends javax.swing.JFrame {
                 .addGap(71, 71, 71)
                 .addComponent(btnCancelar)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(295, Short.MAX_VALUE)
-                    .addComponent(lblTitulo1)
-                    .addGap(229, 229, 229)))
+            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addGap(224, 224, 224)
+                .addComponent(lblTitulo1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(15, 15, 15)
+                .addComponent(lblTitulo1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -288,16 +284,11 @@ public class ModificarRacion extends javax.swing.JFrame {
                     .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnActualizar)
                     .addComponent(btnCancelar))
                 .addContainerGap())
-            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lblTitulo1)
-                    .addContainerGap(304, Short.MAX_VALUE)))
         );
 
         getContentPane().add(pnlPrincipal, java.awt.BorderLayout.CENTER);

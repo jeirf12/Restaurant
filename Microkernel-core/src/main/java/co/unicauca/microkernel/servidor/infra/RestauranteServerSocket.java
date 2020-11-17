@@ -6,7 +6,6 @@ import co.unicauca.microkernel.common.entities.*;
 import co.unicauca.microkernel.common.infra.JsonError;
 import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
-import co.unicauca.microkernel.common.prueba.prueba;
 import co.unicauca.microkernel.servidor.acceso.FabricaRepositorio;
 import co.unicauca.microkernel.servidor.dominio.servidor.PlatoServicio;
 import com.google.gson.Gson;
