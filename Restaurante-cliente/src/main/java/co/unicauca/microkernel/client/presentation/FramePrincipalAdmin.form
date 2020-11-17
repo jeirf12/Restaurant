@@ -69,7 +69,7 @@
                           <Component id="pnlInfoUsuario" max="32767" attributes="0"/>
                           <Component id="lblImagenInicio" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="69" max="32767" attributes="0"/>
+                      <EmptySpace pref="135" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -86,8 +86,18 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="lblImagenUsuario" alignment="1" max="32767" attributes="0"/>
-                              <Component id="lblNombreUsuario" max="32767" attributes="0"/>
-                              <Component id="lblNombreRestaurante" alignment="0" pref="222" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="lblNombreRestaurante" alignment="0" pref="68" max="32767" attributes="0"/>
+                                      <Component id="lblNombreUsuario" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lblNomUsu" min="-2" pref="121" max="-2" attributes="0"/>
+                                      <Component id="cbxRestaurante" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -99,10 +109,16 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="lblImagenUsuario" min="-2" pref="140" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="lblNombreUsuario" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblNombreUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblNomUsu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblNombreRestaurante" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="63" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblNombreRestaurante" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbxRestaurante" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="57" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -119,6 +135,21 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Restaurante:"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblNomUsu">
+                </Component>
+                <Component class="javax.swing.JComboBox" name="cbxRestaurante">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxRestauranteActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -145,7 +176,7 @@
                               <Component id="cbxDia" min="-2" pref="132" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane1" pref="540" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="550" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lblImagenRacion" min="-2" pref="199" max="-2" attributes="0"/>
@@ -188,17 +219,20 @@
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="8">
-                    <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="Lunes"/>
-                    <StringItem index="2" value="Martes"/>
-                    <StringItem index="3" value="Miercoles"/>
-                    <StringItem index="4" value="Jueves"/>
-                    <StringItem index="5" value="Viernes"/>
-                    <StringItem index="6" value="Sabado"/>
-                    <StringItem index="7" value="Domingo"/>
+                    <StringItem index="0" value="TODOS"/>
+                    <StringItem index="1" value="LUNES"/>
+                    <StringItem index="2" value="MARTES"/>
+                    <StringItem index="3" value="MIERCOLES"/>
+                    <StringItem index="4" value="JUEVES"/>
+                    <StringItem index="5" value="VIERNES"/>
+                    <StringItem index="6" value="SABADO"/>
+                    <StringItem index="7" value="DOMINGO"/>
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxDiaActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -278,6 +312,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="AGREGAR"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarRacionActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -295,15 +332,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" pref="535" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="529" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="lblImagenEspecial" min="-2" pref="206" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="111" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="214" max="-2" attributes="0"/>
+                      <Component id="btnAddEspecial" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="269" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -315,9 +352,9 @@
                           <Component id="jScrollPane2" min="-2" pref="264" max="-2" attributes="0"/>
                           <Component id="lblImagenEspecial" min="-2" pref="203" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="40" max="-2" attributes="0"/>
-                      <EmptySpace pref="26" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Component id="btnAddEspecial" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="89" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -386,12 +423,15 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jButton1">
+            <Component class="javax.swing.JLabel" name="lblImagenEspecial">
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAddEspecial">
               <Properties>
                 <Property name="text" type="java.lang.String" value="AGREGAR"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblImagenEspecial">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddEspecialActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -419,7 +459,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="216" max="32767" attributes="0"/>
+                      <EmptySpace pref="282" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

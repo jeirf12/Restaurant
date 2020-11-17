@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.dominio.servidor;
-
 
 import co.unicauca.microkernel.common.entities.*;
 
@@ -78,7 +72,6 @@ public class PlatoServicio {
     public String listMenuSpecial(int resId){
         return repositorio.listMenuSpecial(resId);
     }
-
     public String addPedido(Pedido pedido){
         return repositorio.addPedido(pedido);
     }
@@ -88,10 +81,7 @@ public class PlatoServicio {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed){
         return repositorio.addPlatoEspecialPedido(platoEspecialPed);
     }
-
-    
     public String saveRacionDia(RacionDia racion){
-    
         return repositorio.saveRacionDia(racion);
     }
 

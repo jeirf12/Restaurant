@@ -5,18 +5,10 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.access.Factory;
-import static co.unicauca.microkernel.client.access.Factory.getInstance;
-import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
-import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
-import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
-import java.awt.Image;
 import static java.awt.Image.SCALE_SMOOTH;
-import static java.lang.Integer.parseInt;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -30,13 +22,29 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class AgregarEspecial extends javax.swing.JFrame {
 
+    private clienteService cliente;
+    private FramePrincipalAdmin frame;
+    private PlatoEspecial especial;
     /**
-     * Creates new form FrameEdynson
+     * Creates new form AgregarEspecial
      */
-    public AgregarEspecial() {
+    public AgregarEspecial(clienteService cliente, FramePrincipalAdmin frame) {
+        this.cliente = cliente;
+        this.frame = frame;
+        this.especial = new PlatoEspecial();
         initComponents();
+        this.btnAgregar.setEnabled(false);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
+    private void habilitarBtnAgregar() {
+        if(this.txtNombre.getText().isBlank() || this.txtPrecio.getText().isBlank() || this.txtDescripcion.getText().isBlank()){
+            this.btnAgregar.setEnabled(false);    
+        }else{
+            this.btnAgregar.setEnabled(true);
+        }
+    } 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,151 +54,167 @@ public class AgregarEspecial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlPrincipal = new javax.swing.JPanel();
-        lblTitulo1 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         lblDescripcion = new javax.swing.JLabel();
-        lblFoto = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtRuta = new javax.swing.JTextField();
-        btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
-        lblImagen = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         txtDescripcion = new javax.swing.JTextField();
+        btnFoto = new javax.swing.JButton();
+        txtRuta = new javax.swing.JTextField();
+        btnAgregar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        lblImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        lblNombre.setText("Nombre");
 
-        lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo1.setText("Agregar plato especial");
+        lblPrecio.setText("Precio");
 
-        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
-        lblNombre.setText("Nombre:");
+        lblDescripcion.setText("Descripcion");
 
-        lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        lblPrecio.setText("Precio:");
+        jLabel1.setText("Foto");
 
-        lblDescripcion.setForeground(new java.awt.Color(255, 255, 255));
-        lblDescripcion.setText("descripcion:");
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
-        lblFoto.setForeground(new java.awt.Color(255, 255, 255));
-        lblFoto.setText("Foto:");
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
-        txtNombre.setBackground(new java.awt.Color(0, 0, 0));
-        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
-        txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyReleased(evt);
+            }
+        });
 
-        txtRuta.setEditable(false);
-        txtRuta.setBackground(new java.awt.Color(0, 0, 0));
-        txtRuta.setForeground(new java.awt.Color(255, 255, 255));
-        txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        btnFoto.setBackground(new java.awt.Color(0, 0, 0));
-        btnFoto.setForeground(new java.awt.Color(255, 255, 255));
-        btnFoto.setText("upload");
+        btnFoto.setText("subir foto");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFotoActionPerformed(evt);
             }
         });
 
-        txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
-        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
-        txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
-
-        jButton1.setText("UPDATE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRutaKeyReleased(evt);
             }
         });
 
-        txtDescripcion.setBackground(new java.awt.Color(0, 0, 0));
-        txtDescripcion.setForeground(new java.awt.Color(255, 255, 255));
-        txtDescripcion.setCaretColor(new java.awt.Color(255, 0, 0));
+        btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
-        pnlPrincipal.setLayout(pnlPrincipalLayout);
-        pnlPrincipalLayout.setHorizontalGroup(
-            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDescripcion))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnFoto)))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(194, 194, 194)
-                        .addComponent(jButton1))
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 42, Short.MAX_VALUE))
-            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(208, Short.MAX_VALUE)
-                    .addComponent(lblTitulo1)
-                    .addGap(229, 229, 229)))
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombre)
+                            .addComponent(lblPrecio))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(txtNombre))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDescripcion)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtDescripcion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnFoto)
+                                    .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)))
+                        .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(194, 194, 194)
+                .addComponent(btnAgregar)
+                .addGap(59, 59, 59)
+                .addComponent(btnCancelar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-        pnlPrincipalLayout.setVerticalGroup(
-            pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblPrecio)
                             .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDescripcion)
                             .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFoto)
-                            .addComponent(btnFoto)))
-                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addContainerGap())
-            .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                    .addGap(16, 16, 16)
-                    .addComponent(lblTitulo1)
-                    .addContainerGap(284, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(btnFoto))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnCancelar))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
-
-        getContentPane().add(pnlPrincipal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9')
+            evt.consume();
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtPrecioKeyReleased
+
+    private void txtDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtDescripcionKeyReleased
 
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         var j = new JFileChooser();
@@ -206,36 +230,42 @@ public class AgregarEspecial extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        var plato = new PlatoEspecial();
-        plato.setNombre(this.txtNombre.getText());
-        plato.setDescripcion(this.txtDescripcion.getText());
-        plato.setPrecio(parseInt(this.txtPrecio.getText()));
-        plato.setImagen(convertirFoto(this.txtRuta.getText()));
-        plato.setMenuEsp(1);
-        
-        var service = getInstance().getClienteService();
-        var servicioRestaurante = new clienteService(service);
-        //aqui usar servicio para agregar
-        /*
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        especial.setNombre(this.txtNombre.getText());
+        especial.setDescripcion(this.txtDescripcion.getText());
+        especial.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
+        if(!(this.txtRuta.getText().isBlank())){
+            especial.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
+        }else{
+            especial.setImagen(null);
+        }
         try {
-            servicioRestaurante.updatePlatoEspecial(plato);
+            this.cliente.savePlatoEspecial(especial);
+            this.frame.crearTablaEspeciales();
+            this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(AgregarEspecial.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtRutaKeyReleased
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblDescripcion;
-    private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
-    private javax.swing.JLabel lblTitulo1;
-    private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;

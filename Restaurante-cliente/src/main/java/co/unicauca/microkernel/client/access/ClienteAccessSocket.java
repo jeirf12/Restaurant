@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.client.access;
 
 import co.unicauca.microkernel.client.infra.RestauranteSocket;
@@ -13,12 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
-import static java.lang.String.valueOf;
 import static java.lang.System.out;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
@@ -188,7 +178,6 @@ public class ClienteAccessSocket implements IClienteAccess {
         var requestJson = updateEspecialJson(plato);
          if(procesarConexion(requestJson).equals("FALLO")){
             out.println("devolvio fallo");
-
             return false;
         }
         out.println("devolvio ");
@@ -203,9 +192,8 @@ public class ClienteAccessSocket implements IClienteAccess {
      * @param valor
      * @return
      */
-
-    private String updateEspecialJson(PlatoEspecial plato) {
-      var protocol = new Protocol();
+    private String updateEspecialJson(PlatoEspecial plato){
+        var protocol = new Protocol();
         //el orden debe ser respetado
         protocol.setResource("administrador");
         protocol.setAction("updateEspecial");
@@ -213,8 +201,8 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.addParameter("nombre", plato.getNombre());
         protocol.addParameter("precio", "" + plato.getPrecio());
         protocol.addParameter("descripcion", plato.getDescripcion());
-        protocol.addParameter("menu", "" + plato.getMenuEsp());
-        protocol.addParameter("imagen", Arrays.toString(plato.getImagen()));
+        protocol.addParameter("menu", ""+plato.getMenuEsp());
+        protocol.setBytes(plato.getImagen());
         
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -253,10 +241,10 @@ public class ClienteAccessSocket implements IClienteAccess {
         protocol.setAction("updateRacion");
         protocol.addParameter("clave", "" + racion.getRacId());
         protocol.addParameter("nombre", racion.getNombre());
-        protocol.addParameter("precio", "" + racion.getPrecio());
-        protocol.addParameter("tipo", "" + racion.getTipo());
-        protocol.addParameter("dia", "" + racion.getMenuId());
-        protocol.addParameter("imagen", Arrays.toString(racion.getImagen()));
+        protocol.addParameter("precio", ""+racion.getPrecio());
+        protocol.addParameter("tipo", ""+racion.getTipo());
+        protocol.addParameter("dia", ""+racion.getMenuId());
+        protocol.setBytes(racion.getImagen());
         
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -268,12 +256,11 @@ public class ClienteAccessSocket implements IClienteAccess {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postPlatoEspecial");
-        protocol.addParameter("plae_id", valueOf(instancia.getId_pe()));
         protocol.addParameter("mene_id", valueOf(instancia.getMenuEsp()));
         protocol.addParameter("plae_nombre", instancia.getNombre());
-        protocol.addParameter("plae_foto", Arrays.toString(instancia.getImagen()));
         protocol.addParameter("plae_descripcion", instancia.getDescripcion());
         protocol.addParameter("plae_precio", valueOf(instancia.getPrecio()));
+        protocol.setBytes(instancia.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -302,12 +289,11 @@ public class ClienteAccessSocket implements IClienteAccess {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRacionDia");
-        protocol.addParameter("rac_id", valueOf(instancia.getRacId()));
         protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
         protocol.addParameter("rac_nombre", instancia.getNombre());
-        protocol.addParameter("rac_foto", Arrays.toString(instancia.getImagen()));
         protocol.addParameter("rac_tipo", instancia.getTipo().toString());
         protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
+        protocol.setBytes(instancia.getImagen());
 
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
@@ -457,92 +443,9 @@ public class ClienteAccessSocket implements IClienteAccess {
         if (accion.equals("listMenuDay")) {
             protocol.addParameter("DiaSemana", parameters[1]);
         }
-
         var gson = new Gson();
         var requestJson = gson.toJson(protocol);
         out.println("json: "+requestJson);
-
-        return requestJson;
-    }
-
-    @Override
-    public String addRacionPedido(RacionPed instancia) throws Exception {
-        String jsonResponse = null;
-        //devuelve un string en formato Json que lo que se enviara
-        var requestJson = crearRacionPedido(instancia);
-        if((this.procesarConexion(requestJson).equals("FALLO"))){
-            return null;
-        }
-        return valueOf(instancia.getRacpId());
-
-    }
-    private String crearRacionPedido(RacionPed instancia){
-        var protocol = new Protocol();
-        protocol.setResource("comprador");
-        protocol.setAction("agregarRacionPedido");
-        protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
-        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
-        protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
-        protocol.addParameter("cantidad", String.valueOf(instancia.getCantidad()));
-        
-
-        var gson = new Gson();
-        var requestJson = gson.toJson(protocol);
-        out.println("json: "+requestJson);
-        return requestJson;
-    }
-
-    /**
-     * Convierte un json en una lista de tipo plato dia
-     *
-     * @param jsonListarMenu
-     * @return
-     */
-    private List<RacionDia> jsonListMenuDay(String jsonListarMenu){
-        var gson=new Gson();
-        var list = new TypeToken<List<RacionDia>>(){}.getType();
-        return gson.fromJson(jsonListarMenu, list);
-    }
-
-    /**
-     * Convierte un json en una lista de tipo plato especial
-     *
-     * @param jsonListarMenu
-     * @return
-     */
-
-    private List<PlatoEspecial> jsonListMenuSpecial(String jsonListMenu){
-        var gson=new Gson();
-        var list = new TypeToken<List<PlatoEspecial>>(){}.getType();
-        return gson.fromJson(jsonListMenu, list);
-    }
-
-    @Override
-    public String saveRestaurant(Restaurante restaurant) throws Exception {
-        String jsonResponse = null;
-        //devuelve un string en formato Json que lo que se enviara
-        var requestJson = createRestaurantJson(restaurant);
-        if((this.procesarConexion(requestJson).equals("FALLO"))){
-            return null;
-        }
-        return restaurant.getNombre();
-    }
-
-    private String createRestaurantJson(Restaurante restaurante){
-        var protocol = new Protocol();
-        protocol.setResource("administrador");
-        protocol.setAction("postRestaurant");
-        protocol.addParameter("res_id", valueOf(restaurante.getId()));
-        protocol.addParameter("res_codigo", valueOf(restaurante.getCodigo()));
-        protocol.addParameter("res_nombre", restaurante.getNombre());
-        protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
-        protocol.addParameter("res_calle", String.valueOf(restaurante.getCalle()));
-        protocol.addParameter("res_carrera", String.valueOf(restaurante.getCarrera()));
-
-
-        Gson gson = new Gson();
-        String requestJson = gson.toJson(protocol);
-        System.out.println("json: "+requestJson);
 
         return requestJson;
     }
@@ -658,100 +561,60 @@ public class ClienteAccessSocket implements IClienteAccess {
 
         return requestJson;
     }
-    /*
     
+    /**
+     * Convierte un json en una lista de tipo plato dia
+     * 
+     * @param jsonListarMenu
+     * @return 
+     */
+    private List<RacionDia> jsonListMenuDay(String jsonListarMenu){
+        var gson=new Gson();
+        var list = new TypeToken<List<RacionDia>>(){}.getType();
+        return gson.fromJson(jsonListarMenu, list);
+    }
+    
+    /**
+     * Convierte un json en una lista de tipo plato especial
+     * 
+     * @param jsonListarMenu
+     * @return 
+     */
+    private List<PlatoEspecial> jsonListMenuSpecial(String jsonListMenu){
+        var gson=new Gson();
+        var list = new TypeToken<List<PlatoEspecial>>(){}.getType();
+        return gson.fromJson(jsonListMenu, list);
+    }
+
     @Override
-    public boolean updatePedido(Pedido pedido) throws Exception{
-        String requestJson = updatePedidoJson(pedido);
-        if(procesarConexion(requestJson).equals("FALLO")){
-            return false;
+    public String saveRestaurant(Restaurante restaurant) throws Exception {
+        String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        var requestJson = createRestaurantJson(restaurant);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
+            return null;
         }
-        return true;
+        return restaurant.getNombre();
     }
-
-    public String updatePedidoJson(Pedido instancia){
-        Protocol protocol = new Protocol();
-        //el orden debe ser respetado
-        protocol.setResource("comprador");
-        protocol.setAction("updatePedido");
-        protocol.addParameter("ped_id", String.valueOf(instancia.getIdPedido()));
-        protocol.addParameter("cli_id", String.valueOf(instancia.getCliente()));
-        protocol.addParameter("res_id", String.valueOf(instancia.getResId()));
-        protocol.addParameter("ped_estado", String.valueOf(instancia.getEstado()));
-        protocol.addParameter("ped_fecha_creado", String.valueOf(instancia.getFechaCreado()));
-        protocol.addParameter("ped_fecha_pagado", String.valueOf(instancia.getFechaPagado()));
-        
-        Gson gson = new Gson();
-        String requestJson = gson.toJson(protocol);
-        System.out.println("json: "+requestJson);
-
-        return requestJson;
-    }
-    @Override
-    public boolean updateRacionPedido(RacionPed racionPed) throws Exception{
-        String requestJson = updateRacionPedidoJson(racionPed);
-        if(procesarConexion(requestJson).equals("FALLO")){
-            return false;
-        }
-        return true;
-    }
-
-    public String updateRacionPedidoJson(RacionPed instancia){
-        Protocol protocol = new Protocol();
-        protocol.setResource("comprador");
-        protocol.setAction("updateRacionPedido");
-        protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
-        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
-        protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
-        
-
-        Gson gson = new Gson();
-        String requestJson = gson.toJson(protocol);
-        System.out.println("json: "+requestJson);
-        return requestJson;
-    }
-    @Override
-    public boolean updatePlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
-        String requestJson = updatePlatoEspecialPedidoJson(platoEspecialPed);
-        if(procesarConexion(requestJson).equals("FALLO")){
-            return false;
-        }
-        return true;
-    }
-
-    public String updatePlatoEspecialPedidoJson(PlatoEspecialPed instancia){
-        Protocol protocol = new Protocol();
-        protocol.setResource("comprador");
-        protocol.setAction("updatePlatoEspecialPedido");
-        protocol.addParameter("plaep_id", String.valueOf(instancia.getPlaepId()));
-        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
-        protocol.addParameter("plae_id", String.valueOf(instancia.getPlaeId()));
-
-        Gson gson = new Gson();
-        String requestJson = gson.toJson(protocol);
-        System.out.println("json: " + requestJson);
-        return requestJson;
-    }
-    @Override
-    public String deletePedido(int pedidoId) throws Exception{
-        String respJson = deletePedidoJson(pedidoId);
-        if(this.procesarConexion(respJson).equals("FALLO")){
-            return "FALLO";
-        }
-        return ""+pedidoId;
-    }
-    private String deletePedidoJson(int pedidoId){
-        Protocol protocol = new Protocol();
+    private String createRestaurantJson(Restaurante restaurante){
+        var protocol = new Protocol();
         protocol.setResource("administrador");
-        protocol.setAction("deletePedido");
-        protocol.addParameter("ped_id", ""+pedidoId);
-        
+        protocol.setAction("postRestaurant");
+        protocol.addParameter("res_id", valueOf(restaurante.getId()));
+        protocol.addParameter("res_codigo", valueOf(restaurante.getCodigo()));
+        protocol.addParameter("res_nombre", restaurante.getNombre());
+        protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
+        protocol.addParameter("res_calle", String.valueOf(restaurante.getCalle()));
+        protocol.addParameter("res_carrera", String.valueOf(restaurante.getCarrera()));
+
+
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
         System.out.println("json: "+requestJson);
-    
-    
 
+        return requestJson;
+    }
+    
     @Override
     public String validarAcceso(Cliente cliente) throws Exception {
         //devuelve un string en formato Json que lo que se enviara
@@ -762,7 +625,6 @@ public class ClienteAccessSocket implements IClienteAccess {
         }
        return valor;
     }
-
     
     private String validardorAcceso(Cliente cliente) {
         Protocol protocol = new Protocol();
@@ -776,10 +638,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         return  requestJson;
     }
     
-  
-    
-     
-    /**
+     /**
      * Envia el id de un restaurante y devuelve la lista llegada desde el servidor 
      * el cual transforma el json recibido desde este
      * en una lista de todos los Plato dia que conforma el menu de la semana
@@ -799,30 +658,32 @@ public class ClienteAccessSocket implements IClienteAccess {
     }
 
     @Override
-    public String validarAcceso(Cliente cliente) throws Exception {
+    public String addRacionPedido(RacionPed instancia) throws Exception {
+        String jsonResponse = null;
         //devuelve un string en formato Json que lo que se enviara
-        String requestJson = validardorAcceso(cliente);
-        String valor = this.procesarConexion(requestJson);
-        if (valor.equals("FALLO")) {
+        var requestJson = crearRacionPedido(instancia);
+        if((this.procesarConexion(requestJson).equals("FALLO"))){
             return null;
         }
-       return valor;
+        return valueOf(instancia.getRacpId());
+
+    }
+    private String crearRacionPedido(RacionPed instancia){
+        var protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("agregarRacionPedido");
+        protocol.addParameter("racp_id", String.valueOf(instancia.getRacpId()));
+        protocol.addParameter("ped_id", String.valueOf(instancia.getPedId()));
+        protocol.addParameter("rac_id", String.valueOf(instancia.getRacId()));
+        protocol.addParameter("cantidad", String.valueOf(instancia.getCantidad()));
+        
+
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json: "+requestJson);
+        return requestJson;
     }
 
-    
-    private String validardorAcceso(Cliente cliente) {
-        Protocol protocol = new Protocol();
-        protocol.setResource("sistema");
-        protocol.setAction("validarAcceso");
-        protocol.addParameter("CLI_NOMBRE", String.valueOf(cliente.getNombre()));
-        protocol.addParameter("CLI_CONTRASENIA", String.valueOf(cliente.getContrasenia()));
-        Gson gson = new Gson();
-        String requestJson = gson.toJson(protocol);
-        System.out.println("json: " + requestJson);
-        return  requestJson;
-    }
-    
-    
     @Override
     public List<Restaurante> listRestaurante(String typeRestaurante)throws Exception{
     String jsonResponse = null;
@@ -880,7 +741,7 @@ public class ClienteAccessSocket implements IClienteAccess {
 
         return requestJson;
     }
-    
+
     @Override
     public List<CarritoG> listCarritoPlatoEspecial(int idCliente, int idPedido, String resource)throws Exception{
     String jsonResponse = null;
@@ -912,6 +773,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         var list = new TypeToken<List<CarritoG>>(){}.getType();
         return gson.fromJson(jsonRestaurante, list);
     }
+
     @Override
     public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
         String action = "aumentarCantidad";
@@ -948,5 +810,4 @@ public class ClienteAccessSocket implements IClienteAccess {
 
         return requestJson;
     }
-    
 }

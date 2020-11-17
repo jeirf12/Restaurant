@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.servidor.acceso;
 
 import co.unicauca.microkernel.app.Application;
@@ -283,18 +278,18 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO platoespecial (PLAE_ID,MENE_ID,PLAE_NOMBRE,PLAE_FOTO,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO platoespecial (MENE_ID,PLAE_NOMBRE,PLAE_FOTO,PLAE_DESCRIPCION,PLAE_PRECIO) VALUES (?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setInt(1, instancia.getId_pe());
-            pstmt.setInt(2, instancia.getMenuEsp());
-            pstmt.setString(3, instancia.getNombre());
-            pstmt.setBytes(4, instancia.getImagen());
-            pstmt.setString(5, instancia.getDescripcion());
-            pstmt.setInt(6, (int) instancia.getPrecio());
+            pstmt.setInt(1, 1);
+            pstmt.setString(2, instancia.getNombre());
+            pstmt.setBytes(3, instancia.getImagen());
+            pstmt.setString(4, instancia.getDescripcion());
+            pstmt.setInt(5, (int) instancia.getPrecio());
             //se ejecuta la sentencia sql
-            pstmt.executeUpdate();
+            //reversar a update por si algo----------------
+            pstmt.execute();
             //se cierra
             pstmt.close();
             //se termina la coneccion
@@ -316,25 +311,32 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             System.out.println("entro");
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
+            /*
+                    protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
+        protocol.addParameter("rac_nombre", instancia.getNombre());
+        protocol.addParameter("rac_foto", Arrays.toString(instancia.getImagen()));
+        protocol.addParameter("rac_tipo", instancia.getTipo().toString());
+        protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
+            */
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO raciondia(RAC_ID,MEND_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO raciondia(MEND_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
-            pstmt.setInt(1, instancia.getRacId());
-            pstmt.setInt(2, instancia.getMenuId());
-            pstmt.setString(3, instancia.getNombre());
-            pstmt.setBytes(4, instancia.getImagen());
-            pstmt.setString(5, instancia.getTipo().toString());
-            pstmt.setInt(6, instancia.getPrecio());
+            pstmt.setInt(1, instancia.getMenuId());
+            pstmt.setString(2, instancia.getNombre());
+            pstmt.setBytes(3, instancia.getImagen());
+            pstmt.setString(4, instancia.getTipo().toString());
+            pstmt.setInt(5, instancia.getPrecio());
             //se ejecuta la sentencia sql
-            pstmt.executeUpdate();
+            pstmt.execute();
             //se cierra
             pstmt.close();
             //se termina la coneccion
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
+            return "FALLO";
         }
         //lo ideal es retornor un id
         return instancia.getNombre();

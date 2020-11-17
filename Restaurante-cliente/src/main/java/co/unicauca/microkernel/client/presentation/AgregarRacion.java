@@ -5,21 +5,21 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.access.Factory;
-import static co.unicauca.microkernel.client.access.Factory.getInstance;
-import co.unicauca.microkernel.client.access.IClienteAccess;
+
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
-import static co.unicauca.microkernel.common.entities.CategoriaEnum.valueOf;
+//borrar esta imprtacion despues de la prueba
+import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
-import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
-import java.awt.Image;
+import co.unicauca.microkernel.common.prueba.prueba;
 import static java.awt.Image.SCALE_SMOOTH;
-import static java.lang.Integer.parseInt;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -27,12 +27,19 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author EdynsonMJ
  */
 public class AgregarRacion extends javax.swing.JFrame {
-
+    private clienteService cliente;
+    private FramePrincipalAdmin frame;
+    private RacionDia racion;
     /**
      * Creates new form FrameEdynson
      */
-    public AgregarRacion() {
+    public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame) {
+        this.cliente = cliente;
+        this.frame = frame;
+        this.racion = new RacionDia();
         initComponents();
+        this.btnAgregar.setEnabled(false);
+        this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -58,7 +65,8 @@ public class AgregarRacion extends javax.swing.JFrame {
         btnFoto = new javax.swing.JButton();
         txtPrecio = new javax.swing.JTextField();
         lblImagen = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,15 +90,30 @@ public class AgregarRacion extends javax.swing.JFrame {
         txtNombre.setBackground(new java.awt.Color(0, 0, 0));
         txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNombreKeyReleased(evt);
+            }
+        });
 
         txtRuta.setEditable(false);
         txtRuta.setBackground(new java.awt.Color(0, 0, 0));
         txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtRuta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtRutaKeyReleased(evt);
+            }
+        });
 
         cbxTipo.setBackground(new java.awt.Color(0, 0, 0));
         cbxTipo.setForeground(new java.awt.Color(255, 255, 255));
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "ENTRADA", "BASE", "BEBIDA", "CARNE" }));
+        cbxTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxTipoItemStateChanged(evt);
+            }
+        });
 
         lblDia.setForeground(new java.awt.Color(255, 255, 255));
         lblDia.setText("Dia:");
@@ -98,10 +121,15 @@ public class AgregarRacion extends javax.swing.JFrame {
         cbxDia.setBackground(new java.awt.Color(0, 0, 0));
         cbxDia.setForeground(new java.awt.Color(255, 255, 255));
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+        cbxDia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxDiaItemStateChanged(evt);
+            }
+        });
 
         btnFoto.setBackground(new java.awt.Color(0, 0, 0));
         btnFoto.setForeground(new java.awt.Color(255, 255, 255));
-        btnFoto.setText("upload");
+        btnFoto.setText("Subir");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFotoActionPerformed(evt);
@@ -111,11 +139,26 @@ public class AgregarRacion extends javax.swing.JFrame {
         txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
         txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyTyped(evt);
+            }
+        });
 
-        jButton1.setText("UPDATE");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setText("AGREGAR");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -152,18 +195,23 @@ public class AgregarRacion extends javax.swing.JFrame {
                                         .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(28, 28, 28)))
                         .addComponent(lblImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 32, Short.MAX_VALUE))
+                        .addGap(17, 25, Short.MAX_VALUE))
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnFoto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                                .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnFoto))
+                            .addComponent(btnAgregar))
                         .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jButton1))
-                            .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 24, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCancelar)
+                                .addGap(95, 95, 95))))))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                     .addContainerGap(244, Short.MAX_VALUE)
@@ -199,7 +247,9 @@ public class AgregarRacion extends javax.swing.JFrame {
                     .addComponent(btnFoto)
                     .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
@@ -227,33 +277,77 @@ public class AgregarRacion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFotoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        var racion = new RacionDia();
-        racion.setNombre(this.txtNombre.getText());
-        racion.setPrecio(parseInt(this.txtPrecio.getText()));
-        racion.setMenuId(this.cbxDia.getSelectedIndex());
-        racion.setImagen(convertirFoto(this.txtRuta.getText()));
-        racion.setTipo(valueOf(this.cbxTipo.getSelectedItem().toString()));
-        
-        var service = getInstance().getClienteService();
-        var servicioRestaurante = new clienteService(service);
-        
-        //aqui usar servicio para agregar
-        /*try {
-            servicioRestaurante.updateRacion(racion);
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        this.racion.setNombre(this.txtNombre.getText());
+        this.racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
+        this.racion.setMenuId(this.cbxDia.getSelectedIndex());
+        this.racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
+        if(!(this.txtRuta.getText().isBlank())){
+            this.racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
+            //prueba p = new prueba(racion, new PlatoEspecial());
+        }else{
+            this.racion.setImagen(null);
+        }
+        try {
+            if(cliente.saveRacionDia(racion)==null){
+                JOptionPane.showConfirmDialog(rootPane, "ES PROBABLE QUE ESTE NOMBRE YA ESTE REGISTRADO", "ERROR", JOptionPane.CLOSED_OPTION);
+            }else{
+                JOptionPane.showConfirmDialog(rootPane, "RACION AGREGADO CON EXITO!!!", "OK", JOptionPane.CLOSED_OPTION);
+                frame.crearTablaRaciones();
+                this.dispose();
+            }
         } catch (Exception ex) {
+            JOptionPane.showConfirmDialog(rootPane, "ERROR FATAL, NO SE PUDO CUMPLIR LA PETICION, REVISE LOS DATOS DIGITADOS", "ERROR", JOptionPane.CLOSED_OPTION);
             Logger.getLogger(AgregarRacion.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void habilitarBtnAgregar() {
+        if(this.txtNombre.getText().isBlank() || this.txtPrecio.getText().isBlank() || this.cbxDia.getSelectedIndex()==0 || this.cbxTipo.getSelectedIndex()==0){
+            this.btnAgregar.setEnabled(false);
+        }else{
+            this.btnAgregar.setEnabled(true);
+        }
+    }
+    
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtNombreKeyReleased
+
+    private void txtPrecioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyTyped
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9')
+            evt.consume();
+    }//GEN-LAST:event_txtPrecioKeyTyped
+
+    private void txtPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtPrecioKeyReleased
+
+    private void cbxTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTipoItemStateChanged
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_cbxTipoItemStateChanged
+
+    private void cbxDiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxDiaItemStateChanged
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_cbxDiaItemStateChanged
+
+    private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
+        this.habilitarBtnAgregar();
+    }//GEN-LAST:event_txtRutaKeyReleased
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnFoto;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxTipo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblFoto;
     private javax.swing.JLabel lblImagen;

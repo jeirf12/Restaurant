@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
@@ -17,8 +12,7 @@ public class Cliente {
     private TipoClien tipo;
     private String contrasenia;
     private byte [] imagen;
-
-
+    private int idrestaurante;
 
     public Cliente() {};
 
@@ -95,4 +89,13 @@ public class Cliente {
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
+
+    public int getIdrestaurante() {
+        return idrestaurante;
+    }
+
+    public void setIdrestaurante(int idrestaurante) {
+        this.idrestaurante = idrestaurante;
+    }
+    
 }

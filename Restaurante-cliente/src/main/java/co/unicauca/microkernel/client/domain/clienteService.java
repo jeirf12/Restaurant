@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.client.domain;
 
 import co.unicauca.microkernel.client.access.IClienteAccess;
@@ -29,7 +24,7 @@ public class clienteService {
     }
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
-    }
+    } 
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
      * @param plato informacion del plato a actualizar
@@ -51,11 +46,9 @@ public class clienteService {
         //validaciones
         return service.updateRacion(racion);
     }
-
     public String deleteRacionDia(int rac_id) throws Exception{
         return service.deleteRacionDia(rac_id);
     }
-    //
     public String deletePlatoEspecial(int plae_id) throws Exception{
         return service.deletePlatoEspecial(plae_id);
     }
