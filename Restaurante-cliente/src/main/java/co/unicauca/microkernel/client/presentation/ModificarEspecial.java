@@ -7,20 +7,13 @@ package co.unicauca.microkernel.client.presentation;
 
 
 import co.unicauca.microkernel.client.domain.clienteService;
-import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
-import java.awt.Image;
 import static java.awt.Image.SCALE_SMOOTH;
 import static java.lang.Integer.parseInt;
-import static java.lang.Integer.parseInt;
-import java.util.logging.Level;
 import static java.util.logging.Level.SEVERE;
-import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
@@ -93,28 +86,32 @@ public class ModificarEspecial extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(51, 51, 51));
+        pnlPrincipal.setBackground(new java.awt.Color(30, 100, 85));
 
+        lblPlatoId.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPlatoId.setForeground(new java.awt.Color(255, 255, 255));
         lblPlatoId.setText("Id plato:");
 
+        lblTitulo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
-        lblTitulo1.setText("Modificar plato especial");
+        lblTitulo1.setText("MODIFICAR PLATO ESPECIAL");
 
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setText("Nombre:");
 
+        lblPrecio.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblPrecio.setForeground(new java.awt.Color(255, 255, 255));
         lblPrecio.setText("Precio:");
 
+        lblDescripcion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblDescripcion.setForeground(new java.awt.Color(255, 255, 255));
         lblDescripcion.setText("descripcion:");
 
+        lblFoto.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblFoto.setForeground(new java.awt.Color(255, 255, 255));
         lblFoto.setText("Foto:");
 
-        txtNombre.setBackground(new java.awt.Color(0, 0, 0));
-        txtNombre.setForeground(new java.awt.Color(255, 255, 255));
         txtNombre.setCaretColor(new java.awt.Color(255, 0, 0));
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -123,16 +120,10 @@ public class ModificarEspecial extends javax.swing.JFrame {
         });
 
         txtRuta.setEditable(false);
-        txtRuta.setBackground(new java.awt.Color(0, 0, 0));
-        txtRuta.setForeground(new java.awt.Color(255, 255, 255));
         txtRuta.setCaretColor(new java.awt.Color(255, 0, 0));
 
-        txtId.setBackground(new java.awt.Color(0, 0, 0));
-        txtId.setForeground(new java.awt.Color(255, 255, 255));
         txtId.setCaretColor(new java.awt.Color(255, 0, 0));
 
-        btnFoto.setBackground(new java.awt.Color(0, 0, 0));
-        btnFoto.setForeground(new java.awt.Color(255, 255, 255));
         btnFoto.setText("nueva foto");
         btnFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,8 +131,6 @@ public class ModificarEspecial extends javax.swing.JFrame {
             }
         });
 
-        txtPrecio.setBackground(new java.awt.Color(0, 0, 0));
-        txtPrecio.setForeground(new java.awt.Color(255, 255, 255));
         txtPrecio.setCaretColor(new java.awt.Color(255, 0, 0));
         txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -152,6 +141,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
             }
         });
 
+        btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnActualizar.setText("ACTUALIZAR");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -159,8 +149,6 @@ public class ModificarEspecial extends javax.swing.JFrame {
             }
         });
 
-        txtDescripcion.setBackground(new java.awt.Color(0, 0, 0));
-        txtDescripcion.setForeground(new java.awt.Color(255, 255, 255));
         txtDescripcion.setCaretColor(new java.awt.Color(255, 0, 0));
         txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -168,6 +156,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("CANCELAR");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +216,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                    .addContainerGap(226, Short.MAX_VALUE)
+                    .addContainerGap(161, Short.MAX_VALUE)
                     .addComponent(lblTitulo1)
                     .addGap(229, 229, 229)))
         );
@@ -269,7 +258,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
                 .addGroup(pnlPrincipalLayout.createSequentialGroup()
                     .addGap(16, 16, 16)
                     .addComponent(lblTitulo1)
-                    .addContainerGap(284, Short.MAX_VALUE)))
+                    .addContainerGap(280, Short.MAX_VALUE)))
         );
 
         getContentPane().add(pnlPrincipal, java.awt.BorderLayout.CENTER);
