@@ -24,7 +24,10 @@ public class clienteService {
     }
     public String savePlatoEspecial(PlatoEspecial plato) throws Exception{
         return service.savePlatoEspecial(plato);
-    } 
+    }
+    public String saveRacionDia(RacionDia racion,int idRestaurante) throws Exception{
+        return service.saveRacionDia(racion,idRestaurante);
+    }
     /**
      * el cliente solicita la modificacion de un parametro en la base de datos para plato especial
      * @param plato informacion del plato a actualizar
@@ -60,10 +63,7 @@ public class clienteService {
     }
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
-    }
-    public String saveRacionDia(RacionDia racion) throws Exception{
-        return service.saveRacionDia(racion);
-    }       
+    }     
     public String payedPedido(Pedido pedido) throws Exception{
         return service.payedPedido(pedido);
     }

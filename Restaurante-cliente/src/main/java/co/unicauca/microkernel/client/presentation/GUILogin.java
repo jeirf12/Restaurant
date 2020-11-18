@@ -9,10 +9,14 @@ import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.clienteService;
 import co.unicauca.microkernel.common.entities.Cliente;
+import co.unicauca.microkernel.common.infra.Utilities;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,8 +28,7 @@ public class GUILogin extends javax.swing.JFrame {
 
     private IClienteAccess service;
     private clienteService servicioRestaurante;
-    JPanel HacerPedido = new JPanel();
-    //pnlFondo fondo = new pnlFondo(this.getWidth(),this.getHeight());
+
     /**
      * Creates new form GUILogin2
      */
@@ -141,6 +144,7 @@ public class GUILogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
@@ -251,6 +255,7 @@ public class GUILogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
+    private javax.swing.JLabel jLabelUsuIcon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblContrasenia;
     private javax.swing.JLabel lblNombreUsu;

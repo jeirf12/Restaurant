@@ -271,21 +271,22 @@ public class ClienteAccessSocket implements IClienteAccess {
      * @throws Exception
      */
     @Override
-    public String saveRacionDia(RacionDia instancia) throws Exception {
+    public String saveRacionDia(RacionDia instancia,int idRestaurante) throws Exception {
         String jsonResponse = null;
         //devuelve un string en formato Json que lo que se enviara
-        var requestJson = crearRacionDiaJson(instancia);
+        var requestJson = crearRacionDiaJson(instancia,idRestaurante);
         if ((this.procesarConexion(requestJson).equals("FALLO"))) {
             return null;
         }
         return instancia.getNombre();
     }
 
-    private String crearRacionDiaJson(RacionDia instancia) {
+    private String crearRacionDiaJson(RacionDia instancia,int idRestaurante) {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRacionDia");
         protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
+        protocol.addParameter("res_id", ""+idRestaurante);
         protocol.addParameter("rac_nombre", instancia.getNombre());
         protocol.addParameter("rac_tipo", instancia.getTipo().toString());
         protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
@@ -595,12 +596,13 @@ public class ClienteAccessSocket implements IClienteAccess {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRestaurant");
-        protocol.addParameter("res_id", valueOf(restaurante.getId()));
-        protocol.addParameter("res_codigo", valueOf(restaurante.getCodigo()));
+        protocol.addParameter("cli_id", ""+restaurante.getIdCliente());
+        protocol.addParameter("res_codigo", restaurante.getCodigo());
         protocol.addParameter("res_nombre", restaurante.getNombre());
         protocol.addParameter("res_foto", Arrays.toString(restaurante.getImagen()));
         protocol.addParameter("res_calle", String.valueOf(restaurante.getCalle()));
         protocol.addParameter("res_carrera", String.valueOf(restaurante.getCarrera()));
+
 
 
         Gson gson = new Gson();

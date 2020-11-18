@@ -81,8 +81,8 @@ public class PlatoServicio {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed){
         return repositorio.addPlatoEspecialPedido(platoEspecialPed);
     }
-    public String saveRacionDia(RacionDia racion){
-        return repositorio.saveRacionDia(racion);
+    public String saveRacionDia(RacionDia racion,int idRestaurante){
+        return repositorio.saveRacionDia(racion,idRestaurante);
     }
 
     public String payedPedido(Pedido pedido){

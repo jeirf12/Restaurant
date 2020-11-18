@@ -35,7 +35,7 @@ public class testCrear {
      * @param args the command line arguments
      */
    public static void main(String[] args) {
-        var service = getInstance().getClienteService();
+       /* var service = getInstance().getClienteService();
         var servicioRestaurante = new clienteService(service);
         //MenuEspecial menuEspecial = new MenuEspecial(366,1);
         //PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
@@ -61,7 +61,7 @@ public class testCrear {
             
         }catch(Exception ex) {
                 showMessageDialog(null, "La racion ya esta registrada" + ex.getMessage());
-        }
+        }*/
 
     }
     
