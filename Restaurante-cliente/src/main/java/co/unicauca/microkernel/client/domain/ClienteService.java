@@ -10,13 +10,13 @@ import co.unicauca.microkernel.common.entities.*;
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
-public class clienteService {
+public class ClienteService {
     private final IClienteAccess service;
     /**
      * inyeccion de dependencias
      * @param service un clase concreta que implementa la interfaz de acceso, se instancia con una fabrica
      */
-    public clienteService(IClienteAccess service) {
+    public ClienteService(IClienteAccess service) {
         this.service = service;
     }
     public String calcularCosto(int idCliente)throws Exception{

@@ -6,7 +6,7 @@
 package co.unicauca.microkernel.client.presentation;
 
 
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
@@ -27,13 +27,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ModificarEspecial extends javax.swing.JFrame {
 
     private PlatoEspecial especial;
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
 
     /**
      * Creates new form FrameEdynson
      */
-    public ModificarEspecial(PlatoEspecial plato, clienteService cliente, FramePrincipalAdmin frame) {
+    public ModificarEspecial(PlatoEspecial plato, ClienteService cliente, FramePrincipalAdmin frame) {
         this.setVisible(true);
         this.cliente = cliente;
         this.frame = frame;

@@ -5,7 +5,7 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static java.awt.Image.SCALE_SMOOTH;
@@ -22,13 +22,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class AgregarEspecial extends javax.swing.JFrame {
 
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
     private PlatoEspecial especial;
     /**
      * Creates new form AgregarEspecial
      */
-    public AgregarEspecial(clienteService cliente, FramePrincipalAdmin frame) {
+    public AgregarEspecial(ClienteService cliente, FramePrincipalAdmin frame) {
         this.cliente = cliente;
         this.frame = frame;
         this.especial = new PlatoEspecial();

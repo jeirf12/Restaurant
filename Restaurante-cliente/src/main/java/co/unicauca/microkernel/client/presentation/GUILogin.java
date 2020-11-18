@@ -7,7 +7,7 @@ package co.unicauca.microkernel.client.presentation;
 
 import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.Cliente;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +22,14 @@ import javax.swing.JOptionPane;
 public class GUILogin extends javax.swing.JFrame {
 
     private IClienteAccess service;
-    private clienteService servicioRestaurante;
+    private ClienteService servicioRestaurante;
     //pnlFondo fondo = new pnlFondo(this.getWidth(),this.getHeight());
     /**
      * Creates new form GUILogin2
      */
     public GUILogin() {
         service = Factory.getInstance().getClienteService();
-        servicioRestaurante = new clienteService(service);
+        servicioRestaurante = new ClienteService(service);
         initComponents();
         this.btnInicio.setEnabled(false);
     }

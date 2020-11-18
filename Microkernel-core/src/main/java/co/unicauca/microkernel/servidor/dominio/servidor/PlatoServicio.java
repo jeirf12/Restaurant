@@ -14,7 +14,7 @@ public class PlatoServicio {
     /**
      * repositorio de platos, via de comunicacion a bajo nivel
      */
-    IPlatoRepositorio repositorio;
+    private final IPlatoRepositorio repositorio;
     
     public PlatoServicio(IPlatoRepositorio repositorio) {
         this.repositorio = repositorio;

@@ -7,7 +7,7 @@ package co.unicauca.microkernel.client.presentation;
 
 import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.access.IClienteAccess;
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -40,7 +40,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     TablaEspeciales tabEspeciales;
     //servicio
     IClienteAccess service;
-    clienteService servicioRestaurante;
+    ClienteService servicioRestaurante;
     //variables
     private static List<String> idRestaurante;
     private static String varDia;
@@ -57,7 +57,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             this.estilo();
             idRestaurante = idRestaurantes;
             service = getInstance().getClienteService();
-            servicioRestaurante = new clienteService(service);
+            servicioRestaurante = new ClienteService(service);
             //INICIALIZANDO TABLAS
             tabRaciones = new TablaRaciones();
             tabEspeciales = new TablaEspeciales();
@@ -613,7 +613,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
     private void serviceListarEspeciales() throws Exception {
         //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
+        this.especiales = servicioRestaurante.listMenuSpecial(idSeleccionado, "administrador");
     }
 
     public void crearTablaRaciones() throws Exception {
