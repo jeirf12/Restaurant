@@ -65,7 +65,9 @@ public class TablaEspeciales {
 		 * correspondiendo a las columnas definidas por defecto
          */
         var tamaño = titulosList.size();
-        var informacion = new Object[especiales.size()][tamaño];
+        Object[][] informacion = null;
+        try {
+            informacion=new Object[especiales.size()][tamaño];
         //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
         for (var x = 0; x < informacion.length; x++) {
             var btnModificar = new JButton("modificar");
@@ -79,6 +81,8 @@ public class TablaEspeciales {
             informacion[x][PRECIO] = especiales.get(x).getPrecio() + "";
             informacion[x][ELIMINAR] = btnEliminar;
             informacion[x][MODIFICAR] = btnModificar;
+        }
+        } catch (Exception e) {
         }
         return informacion;
     }

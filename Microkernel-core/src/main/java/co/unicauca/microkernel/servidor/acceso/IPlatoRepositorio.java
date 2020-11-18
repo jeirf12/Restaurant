@@ -43,12 +43,24 @@ public interface IPlatoRepositorio {
     public String listMenuDay(int idRes,String dia);
     public String listMenuSpecial(int idRes);
     public String listMenuDayAll(int idRes);
-
-    public String calcularCosto(int idCliente);
-    
     public String addPedido(Pedido pedido);
     public String addRacionPedido(RacionPed racionPed);
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
     public String saveRacionDia(RacionDia racion,int idRestaurante);
     public String validarAcceso(Cliente cliente);
+    public String listaPedido(int idRestaurante);
+    public String payedPedido(Pedido pedido);
+    public String cancelPedido(Pedido pedido);
+    public String deleteRacionPedido(int idRacionPedido);
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido);
+    public String listRestaurante(String typeRestaurante);
+    public String listCarritoRacion(int idCliente, int idPedido); 
+    public String listCarritoPlatoEspecial(int idCliente, int idPedido);
+    public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual);
+    public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual);
+    public String sumOrder(int idCliente, int idPedido);
+    public String priceDomicileOrder(int idCliente, int idPedido);    
+    public String impuestoRestaurante(int idCliente, int idPedido);    
+    public String total(int idCliente, int idPedido);
+    public String listHistoryPed(int idCliente, String estado);
 }

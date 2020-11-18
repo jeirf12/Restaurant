@@ -5,7 +5,7 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static java.awt.Image.SCALE_SMOOTH;
@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -22,13 +23,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class AgregarEspecial extends javax.swing.JFrame {
 
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
     private PlatoEspecial especial;
+    private int mene_id;
     /**
      * Creates new form AgregarEspecial
      */
-    public AgregarEspecial(clienteService cliente, FramePrincipalAdmin frame) {
+    public AgregarEspecial(ClienteService cliente, FramePrincipalAdmin frame,int mene_id) {
+        this.mene_id=mene_id;
         this.cliente = cliente;
         this.frame = frame;
         this.especial = new PlatoEspecial();
@@ -265,16 +268,22 @@ public class AgregarEspecial extends javax.swing.JFrame {
         especial.setNombre(this.txtNombre.getText());
         especial.setDescripcion(this.txtDescripcion.getText());
         especial.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
+        especial.setMenuEsp(mene_id);
         if(!(this.txtRuta.getText().isBlank())){
             especial.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
         }else{
             especial.setImagen(null);
         }
         try {
-            this.cliente.savePlatoEspecial(especial);
-            this.frame.crearTablaEspeciales();
-            this.dispose();
+            if (this.cliente.savePlatoEspecial(especial)==null) {
+                JOptionPane.showConfirmDialog(rootPane, "ES PROBABLE QUE ESTE NOMBRE YA ESTE REGISTRADO", "ERROR", JOptionPane.CLOSED_OPTION);
+            }else{
+                JOptionPane.showConfirmDialog(rootPane, "PLATO ESPECIAL AGREGADO CON EXITO!!!", "OK", JOptionPane.CLOSED_OPTION);
+                this.frame.crearTablaEspeciales();
+                this.dispose();
+            }
         } catch (Exception ex) {
+            JOptionPane.showConfirmDialog(rootPane, "ERROR FATAL, NO SE PUDO CUMPLIR LA PETICION, REVISE LOS DATOS DIGITADOS", "ERROR", JOptionPane.CLOSED_OPTION);
             Logger.getLogger(AgregarEspecial.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarActionPerformed

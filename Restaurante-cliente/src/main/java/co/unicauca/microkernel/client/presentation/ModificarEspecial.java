@@ -6,7 +6,7 @@
 package co.unicauca.microkernel.client.presentation;
 
 
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
@@ -27,13 +27,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ModificarEspecial extends javax.swing.JFrame {
 
     private PlatoEspecial especial;
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
 
     /**
      * Creates new form FrameEdynson
      */
-    public ModificarEspecial(PlatoEspecial plato, clienteService cliente, FramePrincipalAdmin frame) {
+    public ModificarEspecial(PlatoEspecial plato, ClienteService cliente, FramePrincipalAdmin frame) {
         this.setVisible(true);
         this.cliente = cliente;
         this.frame = frame;
@@ -284,15 +284,15 @@ public class ModificarEspecial extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         var plato = new PlatoEspecial();
         plato.setId_pe(parseInt(this.txtId.getText()));
+        plato.setMenuEsp(this.especial.getMenuEsp());
         plato.setNombre(this.txtNombre.getText());
         plato.setDescripcion(this.txtDescripcion.getText());
         plato.setPrecio(parseInt(this.txtPrecio.getText()));
-        if(!(this.txtRuta.getText().isBlank())){
+        if(!(this.txtRuta.getText().isEmpty())){
             plato.setImagen(convertirFoto(this.txtRuta.getText()));
         }else{
-            plato.setImagen(null);
+            plato.setImagen(this.especial.getImagen());
         }
-        plato.setMenuEsp(1);
         try {
             if (cliente.updatePlatoEspecial(plato)) {
                 JOptionPane.showConfirmDialog(rootPane, "PLATO ACTUALIZADO", "OK", JOptionPane.CLOSED_OPTION);

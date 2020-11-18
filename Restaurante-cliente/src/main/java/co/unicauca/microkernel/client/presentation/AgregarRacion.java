@@ -5,7 +5,7 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -23,8 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author EdynsonMJ
  */
 public class AgregarRacion extends javax.swing.JFrame {
-
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
     private RacionDia racion;
     private int idRestaurante;
@@ -34,7 +33,8 @@ public class AgregarRacion extends javax.swing.JFrame {
      * @param cliente
      * @param frame
      */
-    public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame,int idRestaurante) {
+
+    public AgregarRacion(ClienteService cliente, FramePrincipalAdmin frame,int idRestaurante) {
         this.cliente = cliente;
         this.frame = frame;
         this.idRestaurante = idRestaurante;

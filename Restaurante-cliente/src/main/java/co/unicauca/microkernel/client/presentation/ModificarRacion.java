@@ -6,7 +6,7 @@
 package co.unicauca.microkernel.client.presentation;
 
 import static co.unicauca.microkernel.client.access.Factory.getInstance;
-import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.domain.ClienteService;
 import static co.unicauca.microkernel.common.entities.CategoriaEnum.valueOf;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
@@ -30,12 +30,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class ModificarRacion extends javax.swing.JFrame {
 
     private RacionDia racion;
-    private clienteService cliente;
+    private ClienteService cliente;
     private FramePrincipalAdmin frame;
     /**
      * Creates new form FrameEdynson
      */
-    public ModificarRacion(RacionDia racion, clienteService cliente, FramePrincipalAdmin frame) {
+    public ModificarRacion(RacionDia racion, ClienteService cliente, FramePrincipalAdmin frame) {
         this.cliente = cliente;
         this.frame = frame;
         this.setVisible(true);
@@ -317,10 +317,10 @@ public class ModificarRacion extends javax.swing.JFrame {
         racion.setNombre(this.txtNombre.getText());
         racion.setPrecio(parseInt(this.txtPrecio.getText()));
         racion.setMenuId(this.cbxDia.getSelectedIndex());
-        if(!(this.txtRuta.getText().isBlank())){
+        if(!(this.txtRuta.getText().isEmpty())){
             racion.setImagen(convertirFoto(this.txtRuta.getText()));
         }else{
-            racion.setImagen(null);
+            racion.setImagen(this.racion.getImagen());
         }
         racion.setTipo(valueOf(this.cbxTipo.getSelectedItem().toString()));
         try {

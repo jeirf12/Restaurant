@@ -11,17 +11,29 @@ public class Pedido {
     private int cliente;
     private int resId;
     private EstadoPed estado;
-    private LocalDateTime fecha;
+    private LocalDateTime fechaCreado;
+    private LocalDateTime fechaPagado;
 
-    public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fecha) {
+    public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fechaCreado, LocalDateTime fechaPagado) {
         this.idPedido = idPedido;
         this.cliente = cliente;
         this.resId = resId;
-        this.fecha = fecha;
         this.estado = estado;
+        this.fechaCreado = fechaCreado;
+        this.fechaPagado = fechaPagado;
+    }
+    public Pedido(int cliente, int resId) {
+        this.cliente = cliente;
+        this.resId = resId;
+    }
+    public Pedido(int idPedido, int cliente, int resId) {
+        this.idPedido = idPedido;
+        this.cliente = cliente;
+        this.resId = resId;
     }
 
     public Pedido() {
+        
     }
 
     public int getIdPedido() {
@@ -48,14 +60,6 @@ public class Pedido {
         this.resId = resId;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }    
-
     public EstadoPed getEstado() {
         return estado;
     }
@@ -63,4 +67,22 @@ public class Pedido {
     public void setEstado(EstadoPed estado) {
         this.estado = estado;
     }
+
+    public LocalDateTime getFechaCreado() {
+        return fechaCreado;
+    }
+
+    public void setFechaCreado(LocalDateTime fechaCreado) {
+        this.fechaCreado = fechaCreado;
+    }
+
+    public LocalDateTime getFechaPagado() {
+        return fechaPagado;
+    }
+
+    public void setFechaPagado(LocalDateTime fechaPagado) {
+        this.fechaPagado = fechaPagado;
+    }
+    
+    
 }

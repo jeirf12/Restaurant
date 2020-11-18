@@ -10,18 +10,14 @@ import co.unicauca.microkernel.common.entities.*;
  * @author EdynsonMJ
  * @author Jhonny Rosero
  */
-public class clienteService {
+public class ClienteService {
     private final IClienteAccess service;
     /**
      * inyeccion de dependencias
      * @param service un clase concreta que implementa la interfaz de acceso, se instancia con una fabrica
      */
-    public clienteService(IClienteAccess service) {
+    public ClienteService(IClienteAccess service) {
         this.service = service;
-    }
-    public String calcularCosto(int idCliente)throws Exception{
-        
-        return service.calcularCosto(idCliente);
     }
     public String saveRestaurant(Restaurante restaurant) throws Exception{
         return service.saveRestaurant(restaurant);
@@ -67,6 +63,18 @@ public class clienteService {
     }
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
+    }     
+    public String payedPedido(Pedido pedido) throws Exception{
+        return service.payedPedido(pedido);
+    }
+    public String cancelPedido(Pedido pedido) throws Exception{
+        return service.cancelPedido(pedido);
+    }
+    public String deleteRacionPedido(int idRacionPedido) throws Exception{
+        return service.deleteRacionPedido(idRacionPedido);
+    }
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido) throws Exception{
+        return service.deletePlatoEspecialPedido(idPlatoEspecialPedido);
     }
     public List<RacionDia> listMenuDay(int idRes,String diaSem,String resource)throws Exception{
         return service.listMenuDay(idRes, diaSem, resource);
@@ -78,6 +86,39 @@ public class clienteService {
         return service.listMenuDayAll(idRes,resource);
     }
     public String validarAcceso (Cliente cliente)throws Exception{
-        return service.validarAcceso(cliente);
+         return service.validarAcceso(cliente);
+    }
+    public List<Restaurante> listRestaurante(String typeRestaurante)throws Exception{
+        return service.listRestaurante(typeRestaurante);
+    }
+    public List<CarritoG> listCarritoRacion(int idCliente, int idPedido,String resource)throws Exception{
+        return service.listCarritoRacion(idCliente, idPedido, resource);
+    }
+    public List<CarritoG> listCarritoPlatoEspecial(int idCliente, int idPedido,String resource)throws Exception{
+        return service.listCarritoPlatoEspecial(idCliente, idPedido, resource);
+    }
+    public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
+        return service.aumentarCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception{
+        return service.disminuirCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String sumOrder(int idCliente, int idPedido)throws Exception{
+        return service.sumOrder(idCliente, idPedido);
+    }
+    public String priceDomicileOrder(int idCliente, int idPedido)throws Exception{
+        return service.priceDomicileOrder(idCliente, idPedido);
+    }
+    public String impuestoRestaurante(int idCliente, int idPedido)throws Exception{
+        return service.impuestoRestaurante(idCliente, idPedido);
+    }
+    public String total(int idCliente, int idPedido)throws Exception{
+        return service.total(idCliente, idPedido);
+    }
+    public List<HistorialPed> listHistoryPed(int idCliente, String estado)throws Exception{
+        return service.listHistoryPed(idCliente, estado);
+    }
+    public List<Pedido> listPedido(int idres) throws Exception{
+        return service.listPedido(idres);
     }
 }

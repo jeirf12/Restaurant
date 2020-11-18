@@ -14,15 +14,12 @@ public class PlatoServicio {
     /**
      * repositorio de platos, via de comunicacion a bajo nivel
      */
-    IPlatoRepositorio repositorio;
+    private final IPlatoRepositorio repositorio;
     
     public PlatoServicio(IPlatoRepositorio repositorio) {
         this.repositorio = repositorio;
     }
 
-    public String calcularCosto(int idCliente){
-        return repositorio.calcularCosto(idCliente);
-    }
     public String savePlatoEspecial(PlatoEspecial plato){
         //hacer validaciones aqui
         return repositorio.savePlatoEspecial(plato);
@@ -87,11 +84,62 @@ public class PlatoServicio {
     public String saveRacionDia(RacionDia racion,int idRestaurante){
         return repositorio.saveRacionDia(racion,idRestaurante);
     }
-    public String validarAcceso(Cliente cliente) {
-        return repositorio.validarAcceso(cliente);
+
+    public String payedPedido(Pedido pedido){
+        return repositorio.payedPedido(pedido);
     }
+    public String cancelPedido(Pedido pedido){
+        return repositorio.cancelPedido(pedido);
+    }
+    public String deleteRacionPedido(int idRacionPedido){
+        return repositorio.deleteRacionPedido(idRacionPedido);
+    }
+    public String deletePlatoEspecialPedido(int idPlatoEspecialPedido){
+        return repositorio.deletePlatoEspecialPedido(idPlatoEspecialPedido);
+    }
+
+
+
+   public String validarAcceso(Cliente cliente){
+       return repositorio.validarAcceso(cliente);
+   }
+
     
     public String listMenuDayAll(int resId){
         return repositorio.listMenuDayAll(resId);
+    }
+    public String listPedido(int idRestaurante){
+        return repositorio.listaPedido(idRestaurante);
+    }
+    public String listRestaurante(String typeRestaurante){
+        return repositorio.listRestaurante(typeRestaurante);
+    }
+    public String listCarritoRacion(int idCliente, int idPedido){
+        return repositorio.listCarritoRacion(idCliente, idPedido);
     } 
+    public String listCarritoPlatoEspecial(int idCliente, int idPedido){
+        return repositorio.listCarritoPlatoEspecial(idCliente, idPedido);
+    }
+    public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual){
+        return repositorio.aumentarCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual){
+        return repositorio.disminuirCantidad(typeOrden, idOrden, cantidadActual);
+    }
+    public String sumOrder(int idCliente, int idPedido){
+        return repositorio.sumOrder(idCliente, idPedido);
+    }
+    public String priceDomicileOrder(int idCliente, int idPedido){
+        return repositorio.priceDomicileOrder(idCliente, idPedido);
+    }
+    public String impuestoRestaurante(int idCliente, int idPedido){
+        return repositorio.impuestoRestaurante(idCliente, idPedido);
+    }   
+    public String total(int idCliente, int idPedido){
+        return repositorio.total(idCliente, idPedido);
+    }
+    public String listHistoryPed(int idCliente, String estado){
+        return repositorio.listHistoryPed(idCliente, estado);
+    }
+
 }

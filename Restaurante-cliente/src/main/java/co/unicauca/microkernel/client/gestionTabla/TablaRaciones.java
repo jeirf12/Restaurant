@@ -64,22 +64,27 @@ public class TablaRaciones {
 		 * correspondiendo a las columnas definidas por defecto
          */
         var tamaño = titulosList.size();
-        var informacion = new Object[raciones.size()][tamaño];
+        Object[][] informacion = null;
         //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
-        for (var x = 0; x < informacion.length; x++) {
-            var btnModificar = new JButton("modificar");
-            btnModificar.setName("modificar");
-            var btnEliminar = new JButton("eliminar");
-            btnEliminar.setName("eliminar");
-            
-            informacion[x][ID] = raciones.get(x).getRacId() + "";
-            informacion[x][NOMBRE] = raciones.get(x).getNombre() + "";
-            informacion[x][TIPO] = raciones.get(x).getTipo() + "";
-            informacion[x][PRECIO] = raciones.get(x).getPrecio() + "";
-            informacion[x][DIA] = raciones.get(x).getMenuId() + "";
-            informacion[x][MODIFICAR] = btnModificar;
-            informacion[x][ELIMINAR] = btnEliminar;
+        try {
+            informacion=new Object[raciones.size()][tamaño];
+            for (var x = 0; x < informacion.length; x++) {
+                var btnModificar = new JButton("modificar");
+                btnModificar.setName("modificar");
+                var btnEliminar = new JButton("eliminar");
+                btnEliminar.setName("eliminar");
+
+                informacion[x][ID] = raciones.get(x).getRacId() + "";
+                informacion[x][NOMBRE] = raciones.get(x).getNombre() + "";
+                informacion[x][TIPO] = raciones.get(x).getTipo() + "";
+                informacion[x][PRECIO] = raciones.get(x).getPrecio() + "";
+                informacion[x][DIA] = raciones.get(x).getMenuId() + "";
+                informacion[x][MODIFICAR] = btnModificar;
+                informacion[x][ELIMINAR] = btnEliminar;
+            }
+        } catch (Exception e) {
         }
+        
         return informacion;
     }
     

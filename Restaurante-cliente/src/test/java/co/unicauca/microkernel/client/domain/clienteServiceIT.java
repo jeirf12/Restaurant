@@ -22,13 +22,13 @@ import static org.junit.Assert.*;
  */
 public class clienteServiceIT {
     private final IClienteAccess service;
-    private final clienteService  instance;
+    private final ClienteService  instance;
     private List<RacionDia> platosDias;
     private List<PlatoEspecial> platosEspeciales;
     
     public clienteServiceIT() {
         service=Factory.getInstance().getClienteService();
-        instance=new  clienteService(service);
+        instance=new  ClienteService(service);
     }
 
     /**
@@ -52,7 +52,7 @@ public class clienteServiceIT {
         System.out.println("saveRacionDia");
         RacionDia racion = new RacionDia(0, CategoriaEnum.CARNE, 13000, "carne de borrego", 1, null);
         String expResult = "carne de borrego";
-        String result = instance.saveRacionDia(racion);
+        String result = instance.saveRacionDia(racion,1);
         int idrac=0;
         platosDias=instance.listMenuDayAll(1, "administrador");
         for (RacionDia pdia : platosDias) {
@@ -125,7 +125,7 @@ public class clienteServiceIT {
     public void testSupdateRacion() throws Exception {
         int idracion=0;
         RacionDia racion=new RacionDia(0, CategoriaEnum.BASE, 12000, "Arroz con pollo", 1, null);
-        instance.saveRacionDia(racion);
+        instance.saveRacionDia(racion,1);
         
         platosDias=instance.listMenuDayAll(1,"administrador");
         System.out.println("updateRacion");
@@ -183,7 +183,7 @@ public class clienteServiceIT {
         System.out.println("deleteRacionDia");
         int rac_id=0;
         RacionDia racion=new RacionDia(0, CategoriaEnum.PRINCIPIO, 12000, "lentejas", 1, null);
-        instance.saveRacionDia(racion);
+        instance.saveRacionDia(racion,1);
         
         platosDias=instance.listMenuDayAll(1, "administrador");
          //esta forma de obtener el codigo no es la mas optima
@@ -260,7 +260,7 @@ public class clienteServiceIT {
        // instance.saveRestaurant(new Restaurante(2, 12345,"mx", "Mexicano wey", null, 20, 10));
         //crear menu 15 para este restaurante
         RacionDia rac=new RacionDia(0, CategoriaEnum.BEBIDA, 1200, "Cholados", 15, null);
-        instance.saveRacionDia(rac);
+        instance.saveRacionDia(rac,2);
         //INSERT INTO `menudia` (`MEND_ID`, `RES_ID`, `MEND_DIASEM`) 
         //VALUES ('15', '2', 'LUNES'), ('14', '2', 'MARTES');
         int idrac=0;
@@ -336,7 +336,7 @@ public class clienteServiceIT {
        // instance.saveRestaurant(new Restaurante(2, 12345,"mx", "Mexicano wey", null, 20, 10));
         //crear menu 14 para este restaurante
         RacionDia rac=new RacionDia(0, CategoriaEnum.CARNE, 12000, "Pollo Asado", 14, null);
-        instance.saveRacionDia(rac);
+        instance.saveRacionDia(rac,2);
         //INSERT INTO `menudia` (`MEND_ID`, `RES_ID`, `MEND_DIASEM`) 
         //VALUES ('15', '2', 'LUNES'), ('14', '2', 'MARTES');
        /* Cliente cl=new Cliente("Manuel", "12345");
