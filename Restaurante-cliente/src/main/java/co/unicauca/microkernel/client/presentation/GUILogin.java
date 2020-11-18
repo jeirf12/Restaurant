@@ -147,12 +147,15 @@ public class GUILogin extends javax.swing.JFrame {
         Cliente us = new Cliente();
         us.setNombre(this.txtNombreUsu.getText());
         us.setContrasenia(this.txtContrasenia.getText());
+        
         String re = "";
         String[] arrayResult = null;
         List<String> datoRestaurante = new ArrayList<>();
         try {
             re = servicioRestaurante.validarAcceso(us);
             arrayResult = re.split("-");
+            int idCliente = Integer.parseInt(arrayResult[1]);
+            System.out.println(idCliente);
             for (int i = 1; i < arrayResult.length; i = i + 3) {
                 datoRestaurante.add(arrayResult[i] + "-" + arrayResult[i + 1]);
             }
@@ -162,6 +165,7 @@ public class GUILogin extends javax.swing.JFrame {
             
             datoRestaurante.add(this.txtNombreUsu.getText());
             if (arrayResult[0].equals("ADMINISTRADOR")) {
+            
                 this.setVisible(false);
                 JOptionPane.showMessageDialog(null, "Bienvenido");
                 this.limpiarCampos();
@@ -173,10 +177,11 @@ public class GUILogin extends javax.swing.JFrame {
                 this.setVisible(false);
                 this.limpiarCampos();
                 JOptionPane.showMessageDialog(null, "Bienvenido");
-
+                FramePrincipalCliente ingreso = new FramePrincipalCliente(idCliente);
+                ingreso.setVisible(true);
                 // EdynsonModificarRacion ingresos = new EdynsonModificarRacion();
                 //ingresos.setVisible(true);
-                // ingresos.pack();
+                 ingreso.pack();
             }
             if ((!arrayResult[0].equals("ADMINISTRADOR")) && (!arrayResult[0].equals("COMPRADOR"))) {
                 JOptionPane.showMessageDialog(this, "Usuario o contraseña no valida, verifique sus datos");

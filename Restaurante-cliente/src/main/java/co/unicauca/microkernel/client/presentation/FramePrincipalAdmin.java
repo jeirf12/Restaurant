@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -31,7 +32,7 @@ import static javax.swing.JOptionPane.showConfirmDialog;
  *
  * @author EdynsonMJ
  */
-public class FramePrincipalAdmin extends javax.swing.JFrame {
+public class FramePrincipalAdmin extends JFrame {
 
     //borrar este comentario luego
     //listas
@@ -75,8 +76,11 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             varDia = "TODOS";
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
+            this.crearTablaPedidos();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
-            photoNull = "\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
+            photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
+
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -149,7 +153,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         pnlPedidos = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblPedidos = new javax.swing.JTable();
-        btnListPedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -412,13 +415,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblPedidos);
 
-        btnListPedidos.setText("Listar Pedidos");
-        btnListPedidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListPedidosActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlPedidosLayout = new javax.swing.GroupLayout(pnlPedidos);
         pnlPedidos.setLayout(pnlPedidosLayout);
         pnlPedidosLayout.setHorizontalGroup(
@@ -426,19 +422,13 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnListPedidos)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(375, Short.MAX_VALUE))
         );
         pnlPedidosLayout.setVerticalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlPedidosLayout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(btnListPedidos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PEDIDOS", pnlPedidos);
@@ -552,6 +542,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                     aux.setPrecio(this.especiales.get(row).getPrecio());
                     aux.setDescripcion(this.especiales.get(row).getDescripcion());
                     aux.setImagen(this.especiales.get(row).getImagen());
+                    aux.setMenuEsp(this.especiales.get(row).getMenuEsp());
                     try {
                         ModificarEspecial frameEspecial = new ModificarEspecial(aux, this.servicioRestaurante, this);
                     } catch (Exception ex) {
@@ -575,7 +566,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
-
+                            
                         }
                     } catch (Exception ex) {
                         showConfirmDialog(null, "OPERACION FALLIDA", "Confirmar", OK_CANCEL_OPTION);
@@ -606,7 +597,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarRacionActionPerformed
 
     private void btnAddEspecialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEspecialActionPerformed
-        AgregarEspecial add = new AgregarEspecial(this.servicioRestaurante, this);
+        int menu_esp_id=indexMenuEspecial();
+        AgregarEspecial add = new AgregarEspecial(this.servicioRestaurante, this,menu_esp_id);
         add.setVisible(true);
     }//GEN-LAST:event_btnAddEspecialActionPerformed
 
@@ -638,17 +630,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 
-    private void btnListPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListPedidosActionPerformed
-        try {
-            pedidos=servicioRestaurante.listPedido(idSeleccionado);
-        } catch (Exception ex) {
-            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.tblPedidos.removeAll();
-        tabPedidos.ver_tabla(tblPedidos, pedidos);
-        
-    }//GEN-LAST:event_btnListPedidosActionPerformed
-
     private void serviceListarRaciones() throws Exception {
         if (varDia.equals("TODOS")) {
             this.raciones = servicioRestaurante.listMenuDayAll(idSeleccionado, "administrador");
@@ -673,7 +654,12 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         this.serviceListarEspeciales();
         tabEspeciales.ver_tabla(tblEspeciales, especiales);
     }
-
+    
+    private void crearTablaPedidos() throws Exception{
+        this.tblPedidos.removeAll();
+        pedidos=servicioRestaurante.listPedido(idSeleccionado);
+        tabPedidos.ver_tabla(tblPedidos, pedidos);
+    }
     private void crearIndexRestaurante() {
         cbxRestaurante.removeAllItems();
         for (int i = 0; i < idRestaurante.size() - 1; i++) {
@@ -681,12 +667,19 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             cbxRestaurante.addItem(datos[1]);
         }
     }
-
+    
+    private int indexMenuEspecial(){
+        int valor=0;
+        for (PlatoEspecial esp : especiales) {
+            valor=esp.getMenuEsp();
+            break;
+        }
+        return valor;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddEspecial;
     private javax.swing.JButton btnAgregarRacion;
-    private javax.swing.JButton btnListPedidos;
     private javax.swing.JComboBox<String> cbxDia;
     private javax.swing.JComboBox<String> cbxRestaurante;
     private javax.swing.JScrollPane jScrollPane1;

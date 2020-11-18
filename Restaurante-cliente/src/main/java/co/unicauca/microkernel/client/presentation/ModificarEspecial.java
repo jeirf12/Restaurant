@@ -284,15 +284,15 @@ public class ModificarEspecial extends javax.swing.JFrame {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         var plato = new PlatoEspecial();
         plato.setId_pe(parseInt(this.txtId.getText()));
+        plato.setMenuEsp(this.especial.getMenuEsp());
         plato.setNombre(this.txtNombre.getText());
         plato.setDescripcion(this.txtDescripcion.getText());
         plato.setPrecio(parseInt(this.txtPrecio.getText()));
-        if(!(this.txtRuta.getText().isBlank())){
+        if(!(this.txtRuta.getText().isEmpty())){
             plato.setImagen(convertirFoto(this.txtRuta.getText()));
         }else{
-            plato.setImagen(null);
+            plato.setImagen(this.especial.getImagen());
         }
-        plato.setMenuEsp(this.especial.getMenuEsp());
         try {
             if (cliente.updatePlatoEspecial(plato)) {
                 JOptionPane.showConfirmDialog(rootPane, "PLATO ACTUALIZADO", "OK", JOptionPane.CLOSED_OPTION);

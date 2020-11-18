@@ -317,10 +317,10 @@ public class ModificarRacion extends javax.swing.JFrame {
         racion.setNombre(this.txtNombre.getText());
         racion.setPrecio(parseInt(this.txtPrecio.getText()));
         racion.setMenuId(this.cbxDia.getSelectedIndex());
-        if(!(this.txtRuta.getText().isBlank())){
+        if(!(this.txtRuta.getText().isEmpty())){
             racion.setImagen(convertirFoto(this.txtRuta.getText()));
         }else{
-            racion.setImagen(null);
+            racion.setImagen(this.racion.getImagen());
         }
         racion.setTipo(valueOf(this.cbxTipo.getSelectedItem().toString()));
         try {

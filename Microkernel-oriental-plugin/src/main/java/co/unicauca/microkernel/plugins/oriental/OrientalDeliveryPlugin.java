@@ -1,30 +1,35 @@
 package co.unicauca.microkernel.plugins.oriental;
 
 import co.unicauca.microkernel.common.entities.Delivery;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
-
+/**
+ * Plugin para restaurantes orientales
+ * @author Jafes
+ */
 public class OrientalDeliveryPlugin implements IDeliveryPlugin {
 
-    /**
-     * El cálculo de Colombia es una mezcla de peso y distancia.
-     *
-     * @param delivery envío
-     * @return costo del envío
-     */
-    public double calculateCost(Delivery delivery) {
-        
-        int total = delivery.getPrecio();
+ 
+    @Override
+    public double calculateCostDomicile(Delivery delivery) {
         
         int distancia = (int)(delivery.getDistance());
 
         double cost;
         
-        cost = (distancia*0)+total;
+        cost = (distancia*200);
         
 
         return cost;
+    }
+    @Override
+    public double impuestoRestaurante(Delivery delivery){
+        int sumaOrder = delivery.getPrecio();
+        
+        double cost;
+        
+        cost = sumaOrder+(sumaOrder*0.2);
+        
 
+        return cost;
     }
 }

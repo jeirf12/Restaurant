@@ -11,8 +11,8 @@ public class Restaurante {
     private String codigo;
     private String nombre;
     private byte[] imagen;
-    private int carrera;
     private int calle;
+    private int carrera;
 
     public Restaurante() {
     }
@@ -23,8 +23,8 @@ public class Restaurante {
         this.codigo = codigo;
         this.nombre = nombre;
         this.imagen = imagen;
-        this.carrera = carrera;
         this.calle = calle;
+        this.carrera = carrera;
     }
 
     public String getNombre() {
@@ -58,7 +58,6 @@ public class Restaurante {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-
     public int getCarrera() {
         return carrera;
     }

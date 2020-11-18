@@ -9,7 +9,6 @@ import static co.unicauca.microkernel.client.gestionTabla.StructPedidos.*;
 import co.unicauca.microkernel.common.entities.Pedido;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
 import javax.swing.JTable;
 import static javax.swing.JTable.AUTO_RESIZE_OFF;
 import javax.swing.table.DefaultTableModel;
@@ -68,7 +67,7 @@ public class TablaPedidos {
                 informacion[x][CLIENTE] = pedidos.get(x).getCliente() + "";
                 informacion[x][RESTAURANTE] = pedidos.get(x).getResId() + "";
                 informacion[x][ESTADO] = pedidos.get(x).getEstado() + "";
-                informacion[x][FECHA] = pedidos.get(x).getFecha();
+                informacion[x][FECHA] = pedidos.get(x).getFechaCreado();
             }
         } catch (Exception e) {
         }
