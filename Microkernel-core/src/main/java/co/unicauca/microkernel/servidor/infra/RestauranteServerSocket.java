@@ -387,14 +387,15 @@ public class RestauranteServerSocket implements Runnable{
         //se asignan los atributos de la instancia, segun los valores de los parametros
         //el orden debe ser exacto
         racionD.setMenuId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
-        racionD.setNombre(protocolRequest.getParameters().get(1).getValue());
-        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(2).getValue()));
-        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(3).getValue()));
+        int idRestaurante = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        racionD.setNombre(protocolRequest.getParameters().get(2).getValue());
+        racionD.setTipo(CategoriaEnum.valueOf(protocolRequest.getParameters().get(3).getValue()));
+        racionD.setPrecio(Integer.parseInt(protocolRequest.getParameters().get(4).getValue()));
         racionD.setImagen(protocolRequest.getBytes());
         String response;
         //el servicio comunicara con la base de datos,
         //se pasa el plato creado, y servicio llamara al repositorio
-        response = service.saveRacionDia(racionD);
+        response = service.saveRacionDia(racionD,idRestaurante);
         output.println(response);
     }  
 

@@ -252,7 +252,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
     }
 
     @Override
-    public String saveRacionDia(RacionDia instancia) {
+    public String saveRacionDia(RacionDia instancia,int idRestaurante) {
       try{
        //    if (findRacion(instancia.getRacId()))
  //           {
@@ -269,15 +269,16 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
             */
             //se estructura la sentencia sql en un string
-            String sql = "INSERT INTO raciondia(MEND_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?)";
+            String sql = "INSERT INTO raciondia(MEND_ID,RES_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
             PreparedStatement pstmt = conn.prepareStatement(sql);
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
             pstmt.setInt(1, instancia.getMenuId());
-            pstmt.setString(2, instancia.getNombre());
-            pstmt.setBytes(3, instancia.getImagen());
-            pstmt.setString(4, instancia.getTipo().toString());
-            pstmt.setInt(5, instancia.getPrecio());
+            pstmt.setInt(2, idRestaurante);
+            pstmt.setString(3, instancia.getNombre());
+            pstmt.setBytes(4, instancia.getImagen());
+            pstmt.setString(5, instancia.getTipo().toString());
+            pstmt.setInt(6, instancia.getPrecio());
             //se ejecuta la sentencia sql
             pstmt.execute();
             //se cierra
@@ -436,13 +437,11 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         System.out.println("Entered the list menu day");
         try{
             this.connect();
-            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto"
-                    + " from (restaurante r inner join menudia m on r.res_id=m.res_id)"
-                    + " inner join raciondia p on m.mend_id=p.mend_id where r.res_id = (?)"
-                    + " and m.mend_diasem = (?)";
+            String sql = "SELECT rac_id,rac_tipo,rac_precio,rac_nombre,mend_id,rac_foto FROM raciondia where raciondia.MEND_ID = (SELECT menudia.MEND_ID FROM menudia WHERE menudia.RES_ID = ? and menudia.MEND_DIASEM = ?) and raciondia.RES_ID = ?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
             pstmt.setInt(1, idRes);
             pstmt.setString(2, dia);
+            pstmt.setInt(3, idRes);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {      
                 RacionDia pla=  new RacionDia(Integer.parseInt(rs.getString(1)), CategoriaEnum.valueOf(rs.getString(2)), Integer.parseInt(rs.getString(3)), rs.getString(4), Integer.parseInt(rs.getString(5)),rs.getBytes(6));

@@ -230,21 +230,22 @@ public class ClienteAccessSocket implements IClienteAccess {
      * @throws Exception
      */
     @Override
-    public String saveRacionDia(RacionDia instancia) throws Exception {
+    public String saveRacionDia(RacionDia instancia,int idRestaurante) throws Exception {
         String jsonResponse = null;
         //devuelve un string en formato Json que lo que se enviara
-        var requestJson = crearRacionDiaJson(instancia);
+        var requestJson = crearRacionDiaJson(instancia,idRestaurante);
         if ((this.procesarConexion(requestJson).equals("FALLO"))) {
             return null;
         }
         return instancia.getNombre();
     }
 
-    private String crearRacionDiaJson(RacionDia instancia) {
+    private String crearRacionDiaJson(RacionDia instancia,int idRestaurante) {
         var protocol = new Protocol();
         protocol.setResource("administrador");
         protocol.setAction("postRacionDia");
         protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
+        protocol.addParameter("res_id", ""+idRestaurante);
         protocol.addParameter("rac_nombre", instancia.getNombre());
         protocol.addParameter("rac_tipo", instancia.getTipo().toString());
         protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));

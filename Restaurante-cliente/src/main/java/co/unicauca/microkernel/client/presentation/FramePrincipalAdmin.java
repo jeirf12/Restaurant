@@ -472,8 +472,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
-                                        , lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -571,7 +570,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
     private void btnAgregarRacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarRacionActionPerformed
         // TODO add your handling code here:
-        AgregarRacion aux = new AgregarRacion(this.servicioRestaurante, this);
+        AgregarRacion aux = new AgregarRacion(this.servicioRestaurante, this,idSeleccionado);
         aux.setVisible(true);
     }//GEN-LAST:event_btnAgregarRacionActionPerformed
 
@@ -618,7 +617,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
     private void serviceListarEspeciales() throws Exception {
         //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.especiales = servicioRestaurante.listMenuSpecial(2, "administrador");
+        this.especiales = servicioRestaurante.listMenuSpecial(idSeleccionado, "administrador");
     }
 
     public void crearTablaRaciones() throws Exception {

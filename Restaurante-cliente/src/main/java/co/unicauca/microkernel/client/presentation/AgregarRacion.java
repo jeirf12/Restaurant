@@ -27,15 +27,17 @@ public class AgregarRacion extends javax.swing.JFrame {
     private clienteService cliente;
     private FramePrincipalAdmin frame;
     private RacionDia racion;
+    private int idRestaurante;
 
     /**
      * Creates new form FrameEdynson
      * @param cliente
      * @param frame
      */
-    public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame) {
+    public AgregarRacion(clienteService cliente, FramePrincipalAdmin frame,int idRestaurante) {
         this.cliente = cliente;
         this.frame = frame;
+        this.idRestaurante = idRestaurante;
         this.racion = new RacionDia();
         initComponents();
         this.btnAgregar.setEnabled(false);
@@ -275,7 +277,7 @@ public class AgregarRacion extends javax.swing.JFrame {
             this.racion.setImagen(null);
         }
         try {
-            if (cliente.saveRacionDia(racion) == null) {
+            if (cliente.saveRacionDia(racion,idRestaurante) == null) {
                 JOptionPane.showConfirmDialog(rootPane, "ES PROBABLE QUE ESTE NOMBRE YA ESTE REGISTRADO", "ERROR", JOptionPane.CLOSED_OPTION);
             } else {
                 JOptionPane.showConfirmDialog(rootPane, "RACION AGREGADO CON EXITO!!!", "OK", JOptionPane.CLOSED_OPTION);
