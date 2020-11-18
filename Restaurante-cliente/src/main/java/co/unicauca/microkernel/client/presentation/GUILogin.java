@@ -28,7 +28,6 @@ public class GUILogin extends javax.swing.JFrame {
 
     private IClienteAccess service;
     private clienteService servicioRestaurante;
-    private String usuIcon;
     /**
      * Creates new form GUILogin2
      */
@@ -36,8 +35,6 @@ public class GUILogin extends javax.swing.JFrame {
         service = Factory.getInstance().getClienteService();
         servicioRestaurante = new clienteService(service);
         initComponents();
-        usuIcon="\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\usuIcon.jpg";
-        this.jLabelUsuIcon.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.usuIcon),jLabelUsuIcon.getWidth(),jLabelUsuIcon.getHeight()));
         this.btnInicio.setEnabled(false);
     }
 
@@ -56,7 +53,6 @@ public class GUILogin extends javax.swing.JFrame {
         txtNombreUsu = new javax.swing.JTextField();
         lblContrasenia = new javax.swing.JLabel();
         txtContrasenia = new javax.swing.JPasswordField();
-        jLabelUsuIcon = new javax.swing.JLabel();
         btnInicio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
