@@ -88,6 +88,8 @@ public interface IClienteAccess {
     
     public List<CarritoG> listCarritoPlatoEspecial(int idCliente, int idPedido,String resource)throws Exception;
     
+    public List<HistorialPed> listHistoryPed(int idCliente, String estado)throws Exception;
+    
     public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception;
     
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual) throws Exception;

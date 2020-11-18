@@ -61,7 +61,6 @@ public class clienteService {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed) throws Exception{
         return service.addPlatoEspecialPedido(platoEspecialPed);
     }
-
     public String saveRacionDia(RacionDia racion) throws Exception{
         return service.saveRacionDia(racion);
     }       
@@ -116,5 +115,7 @@ public class clienteService {
     public String total(int idCliente, int idPedido)throws Exception{
         return service.total(idCliente, idPedido);
     }
-    
+    public List<HistorialPed> listHistoryPed(int idCliente, String estado)throws Exception{
+        return service.listHistoryPed(idCliente, estado);
+    }
 }

@@ -63,4 +63,5 @@ public interface IPlatoRepositorio {
     public String priceDomicileOrder(int idCliente, int idPedido);    
     public String impuestoRestaurante(int idCliente, int idPedido);    
     public String total(int idCliente, int idPedido);
+    public String listHistoryPed(int idCliente, String estado);
 }

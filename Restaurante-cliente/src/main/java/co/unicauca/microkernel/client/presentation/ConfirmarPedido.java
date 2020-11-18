@@ -5,17 +5,36 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
+import static co.unicauca.microkernel.client.access.Factory.getInstance;
+import co.unicauca.microkernel.client.access.IClienteAccess;
+import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.common.entities.Pedido;
+
 /**
  *
  * @author jafes
  */
-public class ConfirmarPedido extends javax.swing.JPanel {
-
-    /**
-     * Creates new form ConfirmarPedido
-     */
-    public ConfirmarPedido() {
+public class ConfirmarPedido extends javax.swing.JFrame {
+    IClienteAccess service;
+    clienteService servicioRestaurante;
+    public ConfirmarPedido(Pedido pedido, clienteService cliente) throws Exception {
         initComponents();
+        service = getInstance().getClienteService();
+        servicioRestaurante = new clienteService(service);
+        
+        var suma = servicioRestaurante.sumOrder(pedido.getCliente(), pedido.getIdPedido());
+        var impuesto = servicioRestaurante.impuestoRestaurante(pedido.getCliente(), pedido.getIdPedido());
+        var domicilio = servicioRestaurante.priceDomicileOrder(pedido.getCliente(), pedido.getIdPedido());
+        var TOTAL = servicioRestaurante.total(pedido.getCliente(), pedido.getIdPedido());
+        
+        System.out.println(impuesto);
+        lblSumaOrdenesR.setText(suma);
+        lblImpuestoPedido.setText(impuesto);
+        lblPrecioDomicilio.setText(domicilio);
+        lblTotalR.setText(TOTAL);
+        
+        System.out.println("alsd,"+pedido.getIdPedido());
+        
     }
 
     /**
@@ -27,38 +46,31 @@ public class ConfirmarPedido extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblSumaDeOrdenes = new javax.swing.JLabel();
-        txtSumaOrdenes = new javax.swing.JTextField();
-        lblPrecioDomicilio = new javax.swing.JLabel();
-        txtPrecioDomicilio = new javax.swing.JTextField();
-        lblImpuestoRestaurante = new javax.swing.JLabel();
-        txtImpuestoRestaurante = new javax.swing.JTextField();
         lblTOTAL = new javax.swing.JLabel();
-        txtTOTAL = new javax.swing.JTextField();
+        lblSumaOrdenes = new javax.swing.JLabel();
+        lblDomicilio = new javax.swing.JLabel();
+        lblImpuesto = new javax.swing.JLabel();
         btnCancelarPedido = new javax.swing.JButton();
         btnPagarPedido = new javax.swing.JButton();
+        lblSumaOrdenesR = new javax.swing.JLabel();
+        lblImpuestoPedido = new javax.swing.JLabel();
+        lblPrecioDomicilio = new javax.swing.JLabel();
+        lblTotalR = new javax.swing.JLabel();
 
-        lblSumaDeOrdenes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblSumaDeOrdenes.setText("SUMA DE LAS ORDENES: ");
-
-        txtSumaOrdenes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        lblPrecioDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblPrecioDomicilio.setText("PRECIO DEL DOMICILIO: ");
-
-        txtPrecioDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        lblImpuestoRestaurante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblImpuestoRestaurante.setText("IMPUESTO AL PEDIDO: ");
-
-        txtImpuestoRestaurante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTOTAL.setForeground(new java.awt.Color(255, 0, 0));
-        lblTOTAL.setText("TOTAL:");
+        lblTOTAL.setText("TOTAL: ");
 
-        txtTOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTOTAL.setForeground(new java.awt.Color(255, 0, 0));
+        lblSumaOrdenes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblSumaOrdenes.setText("SUMA ORDENES: ");
+
+        lblDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblDomicilio.setText("DOMICILIO");
+
+        lblImpuesto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblImpuesto.setText("IMPUESTO PEDIDO: ");
 
         btnCancelarPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCancelarPedido.setText("CANCELAR PEDIDO");
@@ -66,70 +78,86 @@ public class ConfirmarPedido extends javax.swing.JPanel {
         btnPagarPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnPagarPedido.setText("PAGAR PEDIDO");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        lblSumaOrdenesR.setText(" ");
+
+        lblImpuestoPedido.setText(" ");
+
+        lblPrecioDomicilio.setText(" ");
+
+        lblTotalR.setText(" ");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(lblSumaDeOrdenes)
-                        .addComponent(lblPrecioDomicilio)
-                        .addComponent(lblImpuestoRestaurante)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(55, 55, 55)
-                            .addComponent(lblTOTAL)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCancelarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
-                .addGap(26, 26, 26)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtImpuestoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPrecioDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSumaOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPagarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblDomicilio)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTOTAL)
+                                .addGap(8, 8, 8)))
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblSumaOrdenes)
+                        .addGap(60, 60, 60))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCancelarPedido)
+                            .addComponent(lblImpuesto))
+                        .addGap(50, 50, 50)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPagarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSumaOrdenesR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImpuestoPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblPrecioDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTotalR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSumaDeOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSumaOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblSumaOrdenes)
+                    .addComponent(lblSumaOrdenesR))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblPrecioDomicilio)
-                    .addComponent(txtPrecioDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblImpuesto)
+                    .addComponent(lblImpuestoPedido))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblImpuestoRestaurante)
-                    .addComponent(txtImpuestoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblDomicilio)
+                    .addComponent(lblPrecioDomicilio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTOTAL)
-                    .addComponent(txtTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                    .addComponent(lblTotalR))
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarPedido)
-                    .addComponent(btnPagarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42))
+                    .addComponent(btnPagarPedido))
+                .addGap(47, 47, 47))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarPedido;
     private javax.swing.JButton btnPagarPedido;
-    private javax.swing.JLabel lblImpuestoRestaurante;
+    private javax.swing.JLabel lblDomicilio;
+    private javax.swing.JLabel lblImpuesto;
+    private javax.swing.JLabel lblImpuestoPedido;
     private javax.swing.JLabel lblPrecioDomicilio;
-    private javax.swing.JLabel lblSumaDeOrdenes;
+    private javax.swing.JLabel lblSumaOrdenes;
+    private javax.swing.JLabel lblSumaOrdenesR;
     private javax.swing.JLabel lblTOTAL;
-    private javax.swing.JTextField txtImpuestoRestaurante;
-    private javax.swing.JTextField txtPrecioDomicilio;
-    private javax.swing.JTextField txtSumaOrdenes;
-    private javax.swing.JTextField txtTOTAL;
+    private javax.swing.JLabel lblTotalR;
     // End of variables declaration//GEN-END:variables
 }

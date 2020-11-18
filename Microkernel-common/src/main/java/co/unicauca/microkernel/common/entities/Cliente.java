@@ -63,9 +63,6 @@ public class Cliente {
         this.contrasenia = contrasenia;
     }
 
-  
-  
-
     public int getIdCliente() {
         return idCliente;
     }

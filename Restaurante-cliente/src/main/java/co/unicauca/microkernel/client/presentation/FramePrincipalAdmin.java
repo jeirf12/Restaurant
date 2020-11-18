@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -30,7 +31,7 @@ import static javax.swing.JOptionPane.showConfirmDialog;
  *
  * @author EdynsonMJ
  */
-public class FramePrincipalAdmin extends javax.swing.JFrame {
+public class FramePrincipalAdmin extends JFrame {
 
     //borrar este comentario luego
     //listas
@@ -72,7 +73,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             this.crearIndexRestaurante();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            photoNull = "F:\\UNIVERSIDAD\\LAB SOFTWARE 2\\proyecto corte 2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            photoNull = "C:\\Users\\jafes\\Desktop\\corte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -306,26 +307,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         pnlRacionesLayout.setHorizontalGroup(
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRacionesLayout.createSequentialGroup()
-/*<<<<<<< HEAD
-                .addGap(14, 14, 14)
-                .addGroup(pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlRacionesLayout.createSequentialGroup()
-                        .addComponent(lblFiltro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRacionesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregarRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
-=======*/
                 .addComponent(pnlFondoRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-//>>>>>>> d3ed6e658fc85767d555b35d881f791729ef10af
         );
         pnlRacionesLayout.setVerticalGroup(
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

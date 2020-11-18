@@ -135,5 +135,8 @@ public class PlatoServicio {
     public String total(int idCliente, int idPedido){
         return repositorio.total(idCliente, idPedido);
     }
+    public String listHistoryPed(int idCliente, String estado){
+        return repositorio.listHistoryPed(idCliente, estado);
+    }
 
 }

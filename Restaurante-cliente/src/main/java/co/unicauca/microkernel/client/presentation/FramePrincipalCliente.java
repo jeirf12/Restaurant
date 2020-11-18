@@ -5,19 +5,72 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
+import static co.unicauca.microkernel.client.access.Factory.getInstance;
+import co.unicauca.microkernel.client.access.IClienteAccess;
+import co.unicauca.microkernel.client.domain.clienteService;
+import co.unicauca.microkernel.client.gestionTabla.TablaHistorialPed;
+import co.unicauca.microkernel.client.gestionTabla.TableRestaurantesHaPed;
+import co.unicauca.microkernel.common.entities.HistorialPed;
+import co.unicauca.microkernel.common.entities.Pedido;
+import co.unicauca.microkernel.common.entities.Restaurante;
+import co.unicauca.microkernel.common.infra.Utilities;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import static java.util.logging.Level.SEVERE;
+import java.util.logging.Logger;
+import static java.util.logging.Logger.getLogger;
+import javax.swing.JButton;
+
 /**
  *
  * @author jafes
  */
-public class FramePrincipalCliente extends javax.swing.JPanel {
-
+public class FramePrincipalCliente extends javax.swing.JFrame {
+    List<Restaurante> restaurantes;
+    List<HistorialPed> historiaPedidos;
+    
+    TableRestaurantesHaPed tabRestaurantes;
+    TablaHistorialPed tabHistoria;
+    //servicio
+    IClienteAccess service;
+    clienteService servicioRestaurante;
+    
+    private static String tipoRestaurante;
+    private static String estadoPedido;
+    private static int idCliente;
+    private String photoNull;
     /**
-     * Creates new form FramePrincipalCliente
+     * Creates new form FramePrincipalClientes
      */
-    public FramePrincipalCliente() {
-        initComponents();
-    }
+    public FramePrincipalCliente(int parIdCliente) {
+    try {
 
+            service = getInstance().getClienteService();
+            servicioRestaurante = new clienteService(service);
+            //INICIALIZANDO TABLAS
+            tabRestaurantes = new TableRestaurantesHaPed();
+            tabHistoria = new TablaHistorialPed();
+            //INICIANDO COMPONENENTES
+            initComponents();
+            //INICIALIZANDO TABLAS Y LLENANDO LISTAS
+            restaurantes = new ArrayList<>();
+            historiaPedidos = new ArrayList<>();
+            idCliente = parIdCliente;
+            tipoRestaurante = "Todos";
+            estadoPedido = "CREADO";
+            //crear index debe estar antes de fiar texto para lblNomUsu
+            this.crearTablaRestaurantes(tipoRestaurante);
+            this.crearTablaHistoria(estadoPedido);
+            //this.crearTablaHistoria(estadoPedido);
+
+            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
+            photoNull = "C:\\Users\\jafes\\Desktop\\corte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+        } catch (Exception ex) {
+            getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
+        }
+        //this.setVisible(true);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,26 +80,33 @@ public class FramePrincipalCliente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pstPrnClienteGlobal = new javax.swing.JTabbedPane();
-        pnlpstHacerPedido = new javax.swing.JPanel();
+        pstFrmPrnCli = new javax.swing.JTabbedPane();
+        pstHacerPedido = new javax.swing.JPanel();
         lblTipoRestaurante = new javax.swing.JLabel();
         cbxTipoRestaurante = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblRestaurantesG = new javax.swing.JTable();
-        lblImagenRestaurantesG = new javax.swing.JLabel();
-        pnlpstHistorialPedido = new javax.swing.JPanel();
+        tblRestaurantes = new javax.swing.JTable();
+        lblImagenRestaurante = new javax.swing.JLabel();
+        pstHistorialPedido = new javax.swing.JPanel();
         lblEstadoDelPedido = new javax.swing.JLabel();
         cbxEstadoDelPedido = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblHistorialPedidos = new javax.swing.JTable();
+        tblPedidosEstado = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lblTipoRestaurante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblTipoRestaurante.setText("Tipo de Restaurante:");
+        lblTipoRestaurante.setText("Tipo de restaurante: ");
 
         cbxTipoRestaurante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbxTipoRestaurante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Tradicional", "Mexicano", "Oriental", " " }));
+        cbxTipoRestaurante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Tradicional", "Oriental", "Mexicano" }));
+        cbxTipoRestaurante.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxTipoRestauranteItemStateChanged(evt);
+            }
+        });
 
-        tblRestaurantesG.setModel(new javax.swing.table.DefaultTableModel(
+        tblRestaurantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -54,105 +114,241 @@ public class FramePrincipalCliente extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE ", "CALLE", "CARRERA", "ACCION 1"
+                "ID", "NOMBRE", "CALLE", "CARRERA", "ACCION 1"
             }
         ));
-        jScrollPane1.setViewportView(tblRestaurantesG);
-        if (tblRestaurantesG.getColumnModel().getColumnCount() > 0) {
-            tblRestaurantesG.getColumnModel().getColumn(0).setPreferredWidth(50);
-        }
+        tblRestaurantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRestaurantesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblRestaurantes);
 
-        javax.swing.GroupLayout pnlpstHacerPedidoLayout = new javax.swing.GroupLayout(pnlpstHacerPedido);
-        pnlpstHacerPedido.setLayout(pnlpstHacerPedidoLayout);
-        pnlpstHacerPedidoLayout.setHorizontalGroup(
-            pnlpstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlpstHacerPedidoLayout.createSequentialGroup()
+        javax.swing.GroupLayout pstHacerPedidoLayout = new javax.swing.GroupLayout(pstHacerPedido);
+        pstHacerPedido.setLayout(pstHacerPedidoLayout);
+        pstHacerPedidoLayout.setHorizontalGroup(
+            pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pstHacerPedidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlpstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlpstHacerPedidoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                        .addComponent(lblImagenRestaurantesG, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlpstHacerPedidoLayout.createSequentialGroup()
+                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pstHacerPedidoLayout.createSequentialGroup()
                         .addComponent(lblTipoRestaurante)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23))
+                        .addGap(26, 26, 26)
+                        .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pstHacerPedidoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                        .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))))
         );
-        pnlpstHacerPedidoLayout.setVerticalGroup(
-            pnlpstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlpstHacerPedidoLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(pnlpstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        pstHacerPedidoLayout.setVerticalGroup(
+            pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pstHacerPedidoLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoRestaurante)
                     .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlpstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblImagenRestaurantesG, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        pstPrnClienteGlobal.addTab("HACER PEDIDO", pnlpstHacerPedido);
+        pstFrmPrnCli.addTab("HACER PEDIDO", pstHacerPedido);
 
         lblEstadoDelPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEstadoDelPedido.setText("Estado del pedido: ");
 
         cbxEstadoDelPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbxEstadoDelPedido.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creado", "Pagado" }));
+        cbxEstadoDelPedido.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbxEstadoDelPedidoItemStateChanged(evt);
+            }
+        });
 
-        tblHistorialPedidos.setModel(new javax.swing.table.DefaultTableModel(
+        tblPedidosEstado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "RESTAURANTE", "FECHA CREADO", "FECHA PAGADO", "ACCION 1"
+                "ID", "RESTAURANTE", "FECHA CREADO", "FECHA PAGADO", "ACCION 1"
             }
         ));
-        jScrollPane2.setViewportView(tblHistorialPedidos);
+        tblPedidosEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPedidosEstadoMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblPedidosEstado);
 
-        javax.swing.GroupLayout pnlpstHistorialPedidoLayout = new javax.swing.GroupLayout(pnlpstHistorialPedido);
-        pnlpstHistorialPedido.setLayout(pnlpstHistorialPedidoLayout);
-        pnlpstHistorialPedidoLayout.setHorizontalGroup(
-            pnlpstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlpstHistorialPedidoLayout.createSequentialGroup()
+        javax.swing.GroupLayout pstHistorialPedidoLayout = new javax.swing.GroupLayout(pstHistorialPedido);
+        pstHistorialPedido.setLayout(pstHistorialPedidoLayout);
+        pstHistorialPedidoLayout.setHorizontalGroup(
+            pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pstHistorialPedidoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlpstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlpstHistorialPedidoLayout.createSequentialGroup()
+                .addGroup(pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pstHistorialPedidoLayout.createSequentialGroup()
                         .addComponent(lblEstadoDelPedido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbxEstadoDelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(342, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxEstadoDelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
-        pnlpstHistorialPedidoLayout.setVerticalGroup(
-            pnlpstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlpstHistorialPedidoLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(pnlpstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        pstHistorialPedidoLayout.setVerticalGroup(
+            pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pstHistorialPedidoLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblEstadoDelPedido)
                     .addComponent(cbxEstadoDelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
         );
 
-        pstPrnClienteGlobal.addTab("HISTORIAL PEDIDO", pnlpstHistorialPedido);
+        pstFrmPrnCli.addTab("HISTORIAL PEDIDO", pstHistorialPedido);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pstPrnClienteGlobal)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pstPrnClienteGlobal)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cbxTipoRestauranteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTipoRestauranteItemStateChanged
+        try {
+            this.crearTablaRestaurantes(validarTipoRes());
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbxTipoRestauranteItemStateChanged
+
+    private void tblRestaurantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRestaurantesMouseClicked
+        int column = tblRestaurantes.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / tblRestaurantes.getRowHeight();
+        byte[] imagen = this.restaurantes.get(row).getImagen();
+        if (imagen != null) {
+            this.lblImagenRestaurante.setIcon(Utilities.crearIcono(imagen, this.lblImagenRestaurante.getWidth(), this.lblImagenRestaurante.getHeight()));
+        } else {
+            this.lblImagenRestaurante.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenRestaurante.getWidth(), this.lblImagenRestaurante.getHeight()));
+        }
+        
+        if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
+            Object value = tblRestaurantes.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                var boton = (JButton) value;
+                if (boton.getName().equals("Pedir")) {
+                    Pedido pedido = new Pedido(idCliente,this.restaurantes.get(row).getId());
+                    try {
+                        int idPedido = Integer.parseInt(this.servicioRestaurante.addPedido(pedido));
+                        Pedido aux = new Pedido(idPedido,idCliente,this.restaurantes.get(row).getId());
+                        HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
+                        frameRacion.setVisible(true);
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_tblRestaurantesMouseClicked
+
+    private void cbxEstadoDelPedidoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxEstadoDelPedidoItemStateChanged
+        try {
+            this.crearTablaHistoria(validarEstadoPed());
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbxEstadoDelPedidoItemStateChanged
+
+    private void tblPedidosEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPedidosEstadoMouseClicked
+        int column = tblPedidosEstado.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / tblRestaurantes.getRowHeight();
+        
+        if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
+            Object value = tblPedidosEstado.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                var boton = (JButton) value;
+                if (boton.getName().equals("Visualizar")) {
+                    String aux = String.valueOf(cbxEstadoDelPedido.getSelectedItem());
+                    if (aux.equals("Creado")){
+                        Pedido pedido = new Pedido(idCliente,this.historiaPedidos.get(row).getIdRes());
+                        try {
+                            HacerPedido frameRacion = new HacerPedido(pedido,this.servicioRestaurante);
+                            frameRacion.setVisible(true);
+                        }catch (Exception ex) {
+                            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }else{
+                        //se va a confirmar pedido donde esta el monto
+                    }
+                    
+                }
+            }
+        }
+    }//GEN-LAST:event_tblPedidosEstadoMouseClicked
+    
+    public void crearTablaHistoria(String estado) throws Exception {
+        this.tblPedidosEstado.removeAll();
+        this.serviceListarHistorial(estado);
+        tabHistoria.ver_tabla(tblPedidosEstado, historiaPedidos);
+    }
+    public void crearTablaRestaurantes(String validar) throws Exception {
+        this.tblRestaurantes.removeAll();
+        this.serviceListarRestaruntes(validar);
+        tabRestaurantes.ver_tabla(tblRestaurantes, restaurantes);
+    }
+    private void serviceListarRestaruntes(String validar) throws Exception {
+        this.restaurantes = servicioRestaurante.listRestaurante(validar);
+
+    }
+    private void serviceListarHistorial(String estado) throws Exception {
+        this.historiaPedidos = servicioRestaurante.listHistoryPed(idCliente, estado);
+
+    }
+    public String validarTipoRes(){
+        switch (cbxTipoRestaurante.getSelectedIndex()){
+            case 0:
+                return "Todos";
+            case 1:
+                return "tr";
+            case 2:
+                return "or";
+            case 3:
+                return "mx";
+            default:
+                return "Todos";
+        }
+    }
+    public String validarEstadoPed(){
+        switch (cbxEstadoDelPedido.getSelectedIndex()){
+            case 0:
+                return "CREADO";
+            case 1:
+                return "PAGADO";
+            default:
+                return "CREADO";
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -161,12 +357,12 @@ public class FramePrincipalCliente extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblEstadoDelPedido;
-    private javax.swing.JLabel lblImagenRestaurantesG;
+    private javax.swing.JLabel lblImagenRestaurante;
     private javax.swing.JLabel lblTipoRestaurante;
-    private javax.swing.JPanel pnlpstHacerPedido;
-    private javax.swing.JPanel pnlpstHistorialPedido;
-    private javax.swing.JTabbedPane pstPrnClienteGlobal;
-    private javax.swing.JTable tblHistorialPedidos;
-    private javax.swing.JTable tblRestaurantesG;
+    private javax.swing.JTabbedPane pstFrmPrnCli;
+    private javax.swing.JPanel pstHacerPedido;
+    private javax.swing.JPanel pstHistorialPedido;
+    private javax.swing.JTable tblPedidosEstado;
+    private javax.swing.JTable tblRestaurantes;
     // End of variables declaration//GEN-END:variables
 }

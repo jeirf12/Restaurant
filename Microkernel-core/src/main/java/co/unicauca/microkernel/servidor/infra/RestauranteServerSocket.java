@@ -277,6 +277,12 @@ public class RestauranteServerSocket implements Runnable {
                 if (protocolRequest.getAction().equals("disminuirCantidad")) {
                     this.adminDisminuirCantidad(protocolRequest);
                 }
+                if (protocolRequest.getAction().equals("listarRestaurantes")) {
+                    this.listarRestaurante(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("listarHistoria")) {
+                    this.listarHistorialPedidos(protocolRequest);
+                }
                 
                 break;
                 
@@ -296,7 +302,7 @@ public class RestauranteServerSocket implements Runnable {
      *
      * @param protocol protocolo en formato Json
      */
-    private void administradorUpdateRacion(Protocol protocol) {
+    private void administradorUpdateRacion(Protocol protocol){
         RacionDia racion = new RacionDia();
         racion.setRacId(Integer.parseInt(protocol.getParameters().get(0).getValue()));
         racion.setNombre(protocol.getParameters().get(1).getValue());
@@ -305,10 +311,11 @@ public class RestauranteServerSocket implements Runnable {
         racion.setMenuId(Integer.parseInt(protocol.getParameters().get(4).getValue()));
         racion.setImagen(protocol.getBytes());
 
+        
         String response = null;
         response = service.updateRacion(racion);
         output.println(response);
-        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: " + response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
     }
 
     /**
@@ -393,12 +400,12 @@ public class RestauranteServerSocket implements Runnable {
         Pedido pedido = new Pedido();
         //se asignan los atributos de la instancia, segun los valores de los parametros
         //el orden debe ser exacto
-        pedido.setIdPedido(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        //pedido.setIdPedido(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         pedido.setCliente(Integer.parseInt(protocolRequest.getParameters().get(1).getValue()));
         pedido.setResId(Integer.parseInt(protocolRequest.getParameters().get(2).getValue()));
-        pedido.setEstado(EstadoPed.valueOf(protocolRequest.getParameters().get(3).getValue()));
-        pedido.setFechaCreado(LocalDateTime.parse(protocolRequest.getParameters().get(4).getValue()));
-        pedido.setFechaPagado(LocalDateTime.parse(protocolRequest.getParameters().get(5).getValue()));
+        //pedido.setEstado(EstadoPed.valueOf(protocolRequest.getParameters().get(3).getValue()));
+        //pedido.setFechaCreado(LocalDateTime.parse(protocolRequest.getParameters().get(4).getValue()));
+        //pedido.setFechaPagado(LocalDateTime.parse(protocolRequest.getParameters().get(5).getValue()));
 
         
         //hacer validacion para esta, es decir sobre el parseo del dato
@@ -623,6 +630,15 @@ public class RestauranteServerSocket implements Runnable {
         output.println(response);
 
     }
+    private void listarHistorialPedidos(Protocol protocolRequest) {
+        int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String estado = protocolRequest.getParameters().get(1).getValue();
+        
+        String response;
+        response = service.listHistoryPed(idCliente, estado);
+        output.println(response);
+
+    }   
     private void listarCarritoRacion(Protocol protocolRequest) {
         int idCliente = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         int idPedido = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());

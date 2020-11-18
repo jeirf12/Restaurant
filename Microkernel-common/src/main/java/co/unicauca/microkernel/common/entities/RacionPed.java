@@ -16,6 +16,11 @@ public class RacionPed {
         this.racId = racId;
         this.cantidad = cantidad;
     }
+    public RacionPed(int pedId, int racId, int cantidad) {
+        this.pedId = pedId;
+        this.racId = racId;
+        this.cantidad = cantidad;
+    }
 
     public RacionPed() {
     }

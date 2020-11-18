@@ -3,15 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gestionTabla;
+package co.unicauca.microkernel.client.gestionTabla;
 
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import static gestionTabla.StructEspeciales.DESCRIPCION;
-import static gestionTabla.StructEspeciales.ELIMINAR;
-import static gestionTabla.StructEspeciales.ID;
-import static gestionTabla.StructEspeciales.MODIFICAR;
-import static gestionTabla.StructEspeciales.NOMBRE;
-import static gestionTabla.StructEspeciales.PRECIO;
+import static co.unicauca.microkernel.client.gestionTabla.StructRacionesPed.*;
+import co.unicauca.microkernel.common.entities.RacionDia;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -21,10 +17,10 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author EdynsonMJ
+ * @author jafes
  */
-public class TablaEspeciales {
-    public void ver_tabla(JTable tabla, List<PlatoEspecial> especiales) {
+public class TablaRacionesPed {
+    public void ver_tabla(JTable tabla, List<RacionDia> raciones) {
         tabla.setDefaultRenderer(Object.class, new Render());
 
         //lista de titulos
@@ -32,9 +28,9 @@ public class TablaEspeciales {
 
         titulosList.add("ID");
         titulosList.add("NOMBRE");
-        titulosList.add("DESCRIPCION");
+        titulosList.add("DIA");
+        titulosList.add("TIPO");
         titulosList.add("PRECIO");
-        titulosList.add("");
         titulosList.add(" ");
 
         //copiar titulos
@@ -43,9 +39,9 @@ public class TablaEspeciales {
             titulos[i] = titulosList.get(i);
         }
 
-        var data =obtenerMatrizDatos(titulosList,especiales);
+        var data =obtenerMatrizDatos(titulosList,raciones);
         
-        DefaultTableModel d = new DefaultTableModel(data, titulos){
+        DefaultTableModel d = new DefaultTableModel(data, titulos)  {
             public boolean isCellEditable(int row, int column){
                 return false;
             }
@@ -58,29 +54,28 @@ public class TablaEspeciales {
 
     }
 
-    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<PlatoEspecial> especiales) {
+    private Object[][] obtenerMatrizDatos(ArrayList<String> titulosList, List<RacionDia> raciones) {
 
         /*se crea la matriz donde las filas son dinamicas pues corresponde
 		 * a todos los usuarios, mientras que las columnas son estaticas
 		 * correspondiendo a las columnas definidas por defecto
          */
         var tamaño = titulosList.size();
-        var informacion = new Object[especiales.size()][tamaño];
+        var informacion = new Object[raciones.size()][tamaño];
         //se asignan las plabras clave para que en la clase GestionCeldas se use para asignar el icono correspondiente
         for (var x = 0; x < informacion.length; x++) {
-            var btnModificar = new JButton("modificar");
-            btnModificar.setName("modificar");
-            var btnEliminar = new JButton("eliminar");
-            btnEliminar.setName("eliminar");
+            var btnAgregar = new JButton("Agregar");
+            btnAgregar.setName("Agregar");
+            //btnAgregar.setSize(new Dimension (100,50));
             
-            informacion[x][ID] = especiales.get(x).getId_pe() + "";
-            informacion[x][NOMBRE] = especiales.get(x).getNombre() + "";
-            informacion[x][DESCRIPCION] = especiales.get(x).getDescripcion() + "";
-            informacion[x][PRECIO] = especiales.get(x).getPrecio() + "";
-            informacion[x][ELIMINAR] = btnEliminar;
-            informacion[x][MODIFICAR] = btnModificar;
+            informacion[x][ID] = raciones.get(x).getRacId() + "";
+            informacion[x][NOMBRE] = raciones.get(x).getNombre() + "";
+            informacion[x][TIPO] = raciones.get(x).getTipo() + "";
+            informacion[x][PRECIO] = raciones.get(x).getPrecio() + "";
+            informacion[x][DIA] = raciones.get(x).getMenuId() + "";
+            informacion[x][AGREGAR] = btnAgregar;
+
         }
         return informacion;
     }
-    
 }

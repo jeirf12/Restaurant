@@ -186,7 +186,6 @@ public class ClienteAccessSocket implements IClienteAccess {
 
     /**
      * genera el string en el formato json para ser enviado
-     *
      * @param clave
      * @param atributo
      * @param valor
@@ -218,7 +217,7 @@ public class ClienteAccessSocket implements IClienteAccess {
      * @throws Exception
      */
 
-     @Override
+    @Override
     public boolean updateRacion(RacionDia racion) throws Exception{
         var requestJson = updateRacionJson(racion);
         if(procesarConexion(requestJson).equals("FALLO")){
@@ -226,11 +225,8 @@ public class ClienteAccessSocket implements IClienteAccess {
         }
         return true;
     }
-
     /**
-     * genera un string con el formato para ser enviado, con la informacion del
-     * update racion
-     *
+     * genera un string con el formato para ser enviado, con la informacion del update racion
      * @param racion objeto a convertir
      * @return
      */
@@ -362,10 +358,9 @@ public class ClienteAccessSocket implements IClienteAccess {
         String jsonResponse = null;
         //devuelve un string en formato Json que lo que se enviara
         var requestJson = crearPedido(instancia);
-        if((this.procesarConexion(requestJson).equals("FALLO"))){
-            return null;
-        }
-        return valueOf(instancia.getEstado());
+        var response=procesarConexion(requestJson);
+
+        return response;
 
     }
 
@@ -713,6 +708,37 @@ public class ClienteAccessSocket implements IClienteAccess {
         var gson=new Gson();
         var list = new TypeToken<List<Restaurante>>(){}.getType();
         return gson.fromJson(jsonRestaurante, list);
+        
+    }
+    @Override
+    public List<HistorialPed> listHistoryPed(int idCliente, String estado)throws Exception{
+    String jsonResponse = null;
+        //devuelve un string en formato Json que lo que se enviara
+        var requestJson = listHistoriaPedJson(idCliente, estado);
+        var response = this.procesarConexion(requestJson);
+        
+        return jsonListHistoria(response);
+
+    }
+
+    private String listHistoriaPedJson(int idCliente, String estado){
+        var protocol = new Protocol();
+        protocol.setResource("comprador");
+        protocol.setAction("listarHistoria");
+        
+        protocol.addParameter("idCliente", ""+idCliente);
+        protocol.addParameter("estado_pedido", estado);
+        
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json: "+requestJson);
+
+        return requestJson;
+    }
+    private List<HistorialPed> jsonListHistoria(String jsonHistoria){
+        var gson=new Gson();
+        var list = new TypeToken<List<HistorialPed>>(){}.getType();
+        return gson.fromJson(jsonHistoria, list);
         
     }
     @Override

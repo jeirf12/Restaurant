@@ -12,7 +12,7 @@ public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
     @Override
     public double calculateCostDomicile(Delivery delivery) {
         
-        int distancia = (int)(delivery.getDistance());
+        double distancia = (delivery.getDistance());
 
         double cost;
         

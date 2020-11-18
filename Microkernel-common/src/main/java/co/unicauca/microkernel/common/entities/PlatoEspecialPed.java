@@ -10,12 +10,17 @@ public class PlatoEspecialPed {
     private int plaeId;
     private int cantidad;
 
-    public PlatoEspecialPed(int plaepId, int pedId, int plaeId, int cantidada) {
+    public PlatoEspecialPed(int plaepId, int pedId, int plaeId, int cantidad) {
         this.plaepId = plaepId;
         this.pedId = pedId;
         this.plaeId = plaeId;
         this.cantidad = cantidad;
     }
+    public PlatoEspecialPed(int pedId, int plaeId, int cantidad) {
+        this.pedId = pedId;
+        this.plaeId = plaeId;
+        this.cantidad = cantidad;
+    }    
 
     public PlatoEspecialPed() {
     }

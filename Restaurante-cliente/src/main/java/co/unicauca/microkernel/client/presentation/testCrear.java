@@ -1,4 +1,4 @@
- /*
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -34,7 +34,6 @@ public class testCrear {
     /**
      * @param args the command line arguments
      */
-    /*
    public static void main(String[] args) {
         var service = getInstance().getClienteService();
         var servicioRestaurante = new clienteService(service);
@@ -42,7 +41,7 @@ public class testCrear {
         //PlatoEspecial platoEspecial = new PlatoEspecial(3,1,"Nombre","Descripcion",123,null);
         //Si devuelve nulo, entonces significa que no encontro la ruta de la foto
         var photoRestaurant=convertirFoto("C:\\Users\\Camilo Gonzalez\\Desktop\\prueba\\ss.png");
-       var res=new Restaurante(2,"co","pipo",photoRestaurant,"calle31");
+       var res=new Restaurante(2,"co","pipo",photoRestaurant,1,1);
         var menuEspecial = new MenuEspecial(366,1);
         var platoEspecial = new PlatoEspecial(74,menuEspecial.getId(),"Nombre","Descripcion",123,photoRestaurant);
         try{
@@ -65,5 +64,5 @@ public class testCrear {
         }
 
     }
-    */
+    
 }
