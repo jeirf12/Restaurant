@@ -571,7 +571,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
     private void serviceListarEspeciales() throws Exception {
         //el numero debe reemplazarse por el codigo del restaurante proveniente de la base de datos
-        this.especiales = servicioRestaurante.listMenuSpecial(1, "administrador");
+        this.especiales = servicioRestaurante.listMenuSpecial(2, "administrador");
     }
 
     public void crearTablaRaciones() throws Exception {
