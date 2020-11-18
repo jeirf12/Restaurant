@@ -72,8 +72,6 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
             photoNull = "F:\\UNIVERSIDAD\\LAB SOFTWARE 2\\proyecto corte 2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
-            //this.crearTablaRaciones();
-            //this.crearTablaEspeciales();
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -110,7 +108,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
         /* Create and display the form */
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -122,14 +120,15 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
 
         jtpPestanias = new javax.swing.JTabbedPane();
         pnlInicio = new javax.swing.JPanel();
-        lblImagenInicio = new javax.swing.JLabel();
         pnlInfoUsuario = new javax.swing.JPanel();
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
         lblNomUsu = new javax.swing.JLabel();
         cbxRestaurante = new javax.swing.JComboBox<>();
+        lblImagenInicio = new javax.swing.JLabel();
         pnlRaciones = new javax.swing.JPanel();
+        pnlFondoRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
         cbxDia = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -137,17 +136,25 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
         lblImagenRacion = new javax.swing.JLabel();
         btnAgregarRacion = new javax.swing.JButton();
         pnlEspeciales = new javax.swing.JPanel();
+        pnlFondoEspeciales = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblEspeciales = new javax.swing.JTable();
-        lblImagenEspecial = new javax.swing.JLabel();
         btnAddEspecial = new javax.swing.JButton();
+        lblImagenEspecial = new javax.swing.JLabel();
         pnlPedidos = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jtpPestanias.setBackground(new java.awt.Color(30, 100, 85));
+        jtpPestanias.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        pnlInfoUsuario.setBackground(new java.awt.Color(30, 100, 85));
+
+        lblNombreUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombreUsuario.setText("Nombre: ");
 
+        lblNombreRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblNombreRestaurante.setText("Restaurante:");
 
         cbxRestaurante.addActionListener(new java.awt.event.ActionListener() {
@@ -163,23 +170,31 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                         .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNomUsu, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 15, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE))
+                        .addContainerGap(594, Short.MAX_VALUE))
+                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
             pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreUsuario)
@@ -188,32 +203,25 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNombreRestaurante)
                     .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
         pnlInicio.setLayout(pnlInicioLayout);
         pnlInicioLayout.setHorizontalGroup(
             pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInicioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
-                .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+            .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlInicioLayout.setVerticalGroup(
             pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlInicioLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlInicioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblImagenInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(135, Short.MAX_VALUE))
+            .addComponent(pnlInfoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jtpPestanias.addTab("INICIO", pnlInicio);
 
+        pnlFondoRaciones.setBackground(new java.awt.Color(30, 100, 85));
+
+        lblFiltro.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblFiltro.setText("Filtar por dia:");
 
         cbxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "LUNES", "MARTES", "MIERCOLES", "JUEVES", "VIERNES", "SABADO", "DOMINGO" }));
@@ -223,6 +231,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
+        tblRaciones.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tblRaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
@@ -244,6 +253,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             tblRaciones.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
+        btnAgregarRacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAgregarRacion.setText("AGREGAR");
         btnAgregarRacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,45 +261,65 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnlFondoRacionesLayout = new javax.swing.GroupLayout(pnlFondoRaciones);
+        pnlFondoRaciones.setLayout(pnlFondoRacionesLayout);
+        pnlFondoRacionesLayout.setHorizontalGroup(
+            pnlFondoRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoRacionesLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblFiltro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoRacionesLayout.createSequentialGroup()
+                .addGroup(pnlFondoRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlFondoRacionesLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))
+                    .addGroup(pnlFondoRacionesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)))
+                .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnlFondoRacionesLayout.setVerticalGroup(
+            pnlFondoRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoRacionesLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(pnlFondoRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFiltro)
+                    .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(pnlFondoRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlFondoRacionesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregarRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlRacionesLayout = new javax.swing.GroupLayout(pnlRaciones);
         pnlRaciones.setLayout(pnlRacionesLayout);
         pnlRacionesLayout.setHorizontalGroup(
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRacionesLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlRacionesLayout.createSequentialGroup()
-                        .addComponent(lblFiltro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlRacionesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregarRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(208, 208, 208))
+                .addComponent(pnlFondoRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlRacionesLayout.setVerticalGroup(
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRacionesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFiltro))
-                .addGap(18, 18, 18)
-                .addGroup(pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImagenRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAgregarRacion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlFondoRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("RACIONES", pnlRaciones);
 
+        pnlFondoEspeciales.setBackground(new java.awt.Color(30, 100, 85));
+
+        tblEspeciales.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tblEspeciales.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -311,6 +341,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             tblEspeciales.getColumnModel().getColumn(0).setPreferredWidth(50);
         }
 
+        btnAddEspecial.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAddEspecial.setText("AGREGAR");
         btnAddEspecial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,34 +349,48 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout pnlFondoEspecialesLayout = new javax.swing.GroupLayout(pnlFondoEspeciales);
+        pnlFondoEspeciales.setLayout(pnlFondoEspecialesLayout);
+        pnlFondoEspecialesLayout.setHorizontalGroup(
+            pnlFondoEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoEspecialesLayout.createSequentialGroup()
+                .addContainerGap(492, Short.MAX_VALUE)
+                .addComponent(btnAddEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(218, 218, 218))
+            .addGroup(pnlFondoEspecialesLayout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnlFondoEspecialesLayout.setVerticalGroup(
+            pnlFondoEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlFondoEspecialesLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnlFondoEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btnAddEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout pnlEspecialesLayout = new javax.swing.GroupLayout(pnlEspeciales);
         pnlEspeciales.setLayout(pnlEspecialesLayout);
         pnlEspecialesLayout.setHorizontalGroup(
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlEspecialesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-                .addGap(24, 24, 24)
-                .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEspecialesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAddEspecial)
-                .addGap(269, 269, 269))
+            .addComponent(pnlFondoEspeciales, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlEspecialesLayout.setVerticalGroup(
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImagenEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(btnAddEspecial)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addComponent(pnlFondoEspeciales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
+
+        pnlPedidos.setBackground(new java.awt.Color(30, 100, 85));
 
         jLabel4.setText("PEDIDOS");
 
@@ -356,14 +401,14 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addGap(220, 220, 220)
                 .addComponent(jLabel4)
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addContainerGap(543, Short.MAX_VALUE))
         );
         pnlPedidosLayout.setVerticalGroup(
             pnlPedidosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPedidosLayout.createSequentialGroup()
                 .addGap(122, 122, 122)
                 .addComponent(jLabel4)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PEDIDOS", pnlPedidos);
@@ -426,6 +471,7 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
                                 this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -610,6 +656,8 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombreUsuario;
     private javax.swing.JPanel pnlEspeciales;
+    private javax.swing.JPanel pnlFondoEspeciales;
+    private javax.swing.JPanel pnlFondoRaciones;
     private javax.swing.JPanel pnlInfoUsuario;
     private javax.swing.JPanel pnlInicio;
     private javax.swing.JPanel pnlPedidos;
@@ -618,4 +666,5 @@ public class FramePrincipalAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tblRaciones;
     // End of variables declaration//GEN-END:variables
 
+    
 }
