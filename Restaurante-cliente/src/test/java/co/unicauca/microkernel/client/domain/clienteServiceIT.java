@@ -22,13 +22,13 @@ import static org.junit.Assert.*;
  */
 public class clienteServiceIT {
     private final IClienteAccess service;
-    private final ClienteService  instance;
+    private final clienteService  instance;
     private List<RacionDia> platosDias;
     private List<PlatoEspecial> platosEspeciales;
     
     public clienteServiceIT() {
         service=Factory.getInstance().getClienteService();
-        instance=new  ClienteService(service);
+        instance=new  clienteService(service);
     }
 
     /**

@@ -135,6 +135,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="CANCELAR PEDIDO"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarPedidoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPagarPedido">
       <Properties>
@@ -143,6 +146,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="PAGAR PEDIDO"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPagarPedidoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblSumaOrdenesR">
       <Properties>

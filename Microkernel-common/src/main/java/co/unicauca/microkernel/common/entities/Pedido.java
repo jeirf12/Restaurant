@@ -22,14 +22,9 @@ public class Pedido {
         this.fechaCreado = fechaCreado;
         this.fechaPagado = fechaPagado;
     }
-    public Pedido(int cliente, int resId) {
-        this.cliente = cliente;
-        this.resId = resId;
-    }
-    public Pedido(int idPedido, int cliente, int resId) {
+    public Pedido(int idPedido, int cliente) {
         this.idPedido = idPedido;
         this.cliente = cliente;
-        this.resId = resId;
     }
 
     public Pedido() {

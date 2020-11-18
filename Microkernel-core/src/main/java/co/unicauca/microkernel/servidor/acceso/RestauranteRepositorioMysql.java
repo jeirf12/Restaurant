@@ -210,13 +210,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         distancia = this.calcularDistancia(idCliente,idPedido);
         String codigo = "";
         codigo = this.codigoRestaurante(idCliente, idPedido);
-        double cost = 0;
+        int cost = 0;
         try {    
             String basePath = getBaseFilePath();
             DeliveryService deliveryService = new DeliveryService();
 
             DeliveryPluginManager.init(basePath);
             Delivery deliveryEntity = new Delivery(sumaOrder, distancia, codigo);
+            
             cost = deliveryService.calculateDeliveryCostDomicile(deliveryEntity);
 
             return "" + cost;
@@ -232,13 +233,14 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         distancia = this.calcularDistancia(idCliente,idPedido);
         String codigo = "";
         codigo = this.codigoRestaurante(idCliente, idPedido);
-        double cost = 0;
+        int cost = 0;
         try {    
             String basePath = getBaseFilePath();
             DeliveryService deliveryService = new DeliveryService();
 
             DeliveryPluginManager.init(basePath);
             Delivery deliveryEntity = new Delivery(sumaOrder, distancia, codigo);
+            
             cost = deliveryService.calculateImpuestoRestaurante(deliveryEntity);
 
             return "" + cost;
@@ -250,10 +252,12 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     @Override
     public String total(int idCliente, int idPedido){
         try{
-            double impuesto = (Double.valueOf(this.impuestoRestaurante(idCliente, idPedido)));
-            double domicilio = (Double.valueOf(this.priceDomicileOrder(idCliente, idPedido)));
-            
-            double total = domicilio+impuesto;
+            String domi = this.priceDomicileOrder(idCliente, idPedido);
+            String imp = this.impuestoRestaurante(idCliente, idPedido);
+            int domicilio = Integer.parseInt(domi);
+            int impuesto = Integer.parseInt(imp);
+            int total = domicilio+impuesto;
+            System.out.println("AQUIIIIIIIIIIIIIII");
             System.out.println(total+"564asd");
         
             return ""+total;
@@ -664,7 +668,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         try{
             
             this.connect(); 
-            String sql = "DELETE FROM racionpedido WHERE plae_id = (?)";
+            String sql = "DELETE FROM racionpedido WHERE RACP_ID = (?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1,idRacionPedido);
             pstmt.executeUpdate();
@@ -977,7 +981,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Entered the list menu day");
         try {
             this.connect();
-                String sql = " SELECT  r.RES_ID, r.RES_NOMBRE,p.PED_FECHA_CREADO,p.PED_FECHA_PAGADO"
+                String sql = " SELECT  p.PED_ID, r.RES_NOMBRE,p.PED_FECHA_CREADO,p.PED_FECHA_PAGADO"
                         +" FROM pedido p inner join restaurante r on p.RES_ID=r.RES_ID" 
                         +" WHERE p.CLI_ID = "+idCliente+" and p.PED_ESTADO = '"+estado+"'";
                 PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -985,8 +989,6 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
                 while (rs.next()) {
                     HistorialPed res = new HistorialPed(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4));
                     list.add(res);
-                    System.out.println("ALGO");
-                    System.out.println(list.size());
                 }
                 pstmt.close();
 
@@ -1006,7 +1008,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Entered the list menu day");
         try {
             this.connect();
-            String sql = "SELECT rdia.RAC_ID,rdia.RAC_NOMBRE,rdia.RAC_PRECIO,rped.RAC_CANTIDAD"
+            String sql = "SELECT rped.RACP_ID,rdia.RAC_NOMBRE,rdia.RAC_PRECIO,rped.RAC_CANTIDAD"
                         + " FROM pedido ped inner join racionpedido rped on ped.PED_ID=rped.PED_ID"
                         + " inner join raciondia rdia on rdia.RAC_ID= rped.RAC_ID"
                         + " WHERE ped.PED_ID = "+idPedido+" and ped.CLI_ID = "+idCliente+"";
@@ -1032,7 +1034,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         System.out.println("Entered the list menu day");
         try {
             this.connect();
-            String sql = "SELECT pe.PLAE_ID,pe.PLAE_NOMBRE,pe.PLAE_PRECIO,pep.PLAE_CANTIDAD"
+            String sql = "SELECT pep.PLAEP_ID,pe.PLAE_NOMBRE,pe.PLAE_PRECIO,pep.PLAE_CANTIDAD"
                         + " FROM pedido ped inner join platoespecialpedido pep on ped.PED_ID=pep.PED_ID"
                         + " inner join platoespecial pe on pep.PLAE_ID=pe.PLAE_ID"
                         + " WHERE ped.PED_ID = "+idPedido+" and ped.CLI_ID = "+idCliente+"";
@@ -1054,19 +1056,21 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     
     @Override
     public String aumentarCantidad(String typeOrden,int idOrden, int cantidadActual){
-    cantidadActual+=1;
+    int cantidad = cantidadActual;
+    cantidad++;
+        System.out.println("la cantidad aumentada es: "+cantidad);
         try{
             this.connect();
-            if(typeOrden.equalsIgnoreCase("RACION")){
-                String sql = "UPDATE racionpedido SET RAC_CANTIDAD = "+cantidadActual+" WHERE RACP_ID = "+idOrden+"";
+            if(typeOrden.equals("RACION")){
+                String sql = "UPDATE racionpedido SET RAC_CANTIDAD = "+cantidad+" WHERE RACP_ID = "+idOrden+"";
                 PreparedStatement pstmt=conn.prepareStatement(sql);
-                ResultSet rs = pstmt.executeQuery();
+                pstmt.executeUpdate();
                 pstmt.close();
             }
-            if(typeOrden.equalsIgnoreCase("PLATO")){
-                String sql = "UPDATE platoespecialpedido SET PLAE_CANTIDAD = "+cantidadActual+" WHERE PLAEP_ID = "+idOrden+"";
+            if(typeOrden.equals("PLATO")){
+                String sql = "UPDATE platoespecialpedido SET PLAE_CANTIDAD = "+cantidad+" WHERE PLAEP_ID = "+idOrden+"";
                 PreparedStatement pstmt=conn.prepareStatement(sql);
-                ResultSet rs = pstmt.executeQuery();
+                pstmt.executeUpdate();
                 pstmt.close();
             }
 
@@ -1075,37 +1079,38 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al insertar el registro", ex);
             return "FALLO";
         }
-        return typeOrden;
+        return ""+cantidad;
     }
     @Override
     public String disminuirCantidad(String typeOrden,int idOrden, int cantidadActual){
+        int cantidad = cantidadActual;
         try{
             this.connect();
             if (cantidadActual==1){
-                if(typeOrden.equalsIgnoreCase("RACION")){
+                if(typeOrden.equals("RACION")){
                     String sql = "DELETE FROM racionpedido WHERE RACP_ID = "+idOrden+"";
                     PreparedStatement pstmt=conn.prepareStatement(sql);
-                    ResultSet rs = pstmt.executeQuery();
+                    pstmt.executeUpdate();
                     pstmt.close();
                 }
-                if(typeOrden.equalsIgnoreCase("PLATO")){
+                if(typeOrden.equals("PLATO")){
                     String sql = "DELETE FROM platoespecialpedido WHERE PLAEP_ID = "+idOrden+"";
                     PreparedStatement pstmt=conn.prepareStatement(sql);
-                    ResultSet rs = pstmt.executeQuery();
+                    pstmt.executeUpdate();
                     pstmt.close();
                 }
             }else{
-                cantidadActual-=1;
+                cantidad--;
                 if(typeOrden.equalsIgnoreCase("RACION")){
-                    String sql = "UPDATE racionpedido SET RAC_CANTIDAD = "+cantidadActual+" WHERE RACP_ID = "+idOrden+"";
+                    String sql = "UPDATE racionpedido SET RAC_CANTIDAD = "+cantidad+" WHERE RACP_ID = "+idOrden+"";
                     PreparedStatement pstmt=conn.prepareStatement(sql);
-                    ResultSet rs = pstmt.executeQuery();
+                    pstmt.executeUpdate();
                     pstmt.close();
                 }
                 if(typeOrden.equalsIgnoreCase("PLATO")){
-                    String sql = "UPDATE platoespecialpedido SET PLAE_CANTIDAD = "+cantidadActual+" WHERE PLAEP_ID = "+idOrden+"";
+                    String sql = "UPDATE platoespecialpedido SET PLAE_CANTIDAD = "+cantidad+" WHERE PLAEP_ID = "+idOrden+"";
                     PreparedStatement pstmt=conn.prepareStatement(sql);
-                    ResultSet rs = pstmt.executeQuery();
+                    pstmt.executeUpdate();
                     pstmt.close();
                 }
             }

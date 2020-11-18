@@ -6,7 +6,7 @@ import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
 
 public class DeliveryService {
 
-    public double calculateDeliveryCostDomicile(Delivery deliveryData) throws Exception {
+    public int calculateDeliveryCostDomicile(Delivery deliveryData) throws Exception {
 
         String resCode = deliveryData.getResCode();
         DeliveryPluginManager manager = DeliveryPluginManager.getInstance();
@@ -19,7 +19,7 @@ public class DeliveryService {
         return plugin.calculateCostDomicile(deliveryData);
 
     }
-    public double calculateImpuestoRestaurante(Delivery deliveryData) throws Exception {
+    public int calculateImpuestoRestaurante(Delivery deliveryData) throws Exception {
 
         String resCode = deliveryData.getResCode();
         DeliveryPluginManager manager = DeliveryPluginManager.getInstance();

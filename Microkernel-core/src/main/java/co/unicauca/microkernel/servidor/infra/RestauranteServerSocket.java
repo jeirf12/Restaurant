@@ -666,16 +666,16 @@ public class RestauranteServerSocket implements Runnable {
     }
     private void adminAumentarCantidad(Protocol protocolRequest) {
         String typeOrden = protocolRequest.getParameters().get(0).getValue();
-        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
         String response;
         response = service.aumentarCantidad(typeOrden, idOrden, cantidadActual);
         output.println(response);
     }
     private void adminDisminuirCantidad(Protocol protocolRequest) {
         String typeOrden = protocolRequest.getParameters().get(0).getValue();
-        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
         String response;
         response = service.disminuirCantidad(typeOrden, idOrden, cantidadActual);
         output.println(response);
