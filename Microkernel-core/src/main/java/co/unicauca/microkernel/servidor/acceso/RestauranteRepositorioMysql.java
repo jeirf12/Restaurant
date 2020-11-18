@@ -619,9 +619,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         System.out.println("Entered the list menu day all");
         try{
             this.connect();
-            String sql = "select rac_id,rac_tipo,rac_precio,rac_nombre,m.mend_id,rac_foto"
-                    + " from (restaurante r inner join menudia m on r.res_id=m.res_id)"
-                    + " inner join raciondia p on m.mend_id=p.mend_id where r.res_id = (?)";
+            String sql = "SELECT rac_id,rac_tipo,rac_precio,rac_nombre,mend_id,rac_foto FROM raciondia where raciondia.RES_ID = ?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
             pstmt.setInt(1, idRes);
             ResultSet rs = pstmt.executeQuery();
