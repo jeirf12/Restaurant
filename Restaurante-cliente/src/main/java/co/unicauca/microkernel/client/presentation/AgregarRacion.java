@@ -5,7 +5,6 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-
 import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.CategoriaEnum;
 import co.unicauca.microkernel.common.entities.RacionDia;
@@ -27,14 +26,18 @@ public class AgregarRacion extends javax.swing.JFrame {
     private ClienteService cliente;
     private FramePrincipalAdmin frame;
     private RacionDia racion;
+    private int idRestaurante;
+
     /**
      * Creates new form FrameEdynson
      * @param cliente
      * @param frame
      */
-    public AgregarRacion(ClienteService cliente, FramePrincipalAdmin frame) {
+
+    public AgregarRacion(ClienteService cliente, FramePrincipalAdmin frame,int idRestaurante) {
         this.cliente = cliente;
         this.frame = frame;
+        this.idRestaurante = idRestaurante;
         this.racion = new RacionDia();
         initComponents();
         this.btnAgregar.setEnabled(false);
@@ -252,11 +255,10 @@ public class AgregarRacion extends javax.swing.JFrame {
 
     private void btnFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFotoActionPerformed
         var j = new JFileChooser();
-        var fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
+        var fil = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         j.setFileFilter(fil);
-        
         var s = j.showOpenDialog(this);
-        if(s == APPROVE_OPTION){
+        if (s == APPROVE_OPTION) {
             var ruta = j.getSelectedFile().getAbsolutePath();
             txtRuta.setText(ruta);
             var imagen = new ImageIcon(ruta);
@@ -269,16 +271,15 @@ public class AgregarRacion extends javax.swing.JFrame {
         this.racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
         this.racion.setMenuId(this.cbxDia.getSelectedIndex());
         this.racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
-        if(!(this.txtRuta.getText().isBlank())){
+        if (!(this.txtRuta.getText().isBlank())) {
             this.racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
-            //prueba p = new prueba(racion, new PlatoEspecial());
         }else{
             this.racion.setImagen(null);
         }
         try {
-            if(cliente.saveRacionDia(racion)==null){
+            if (cliente.saveRacionDia(racion,idRestaurante) == null) {
                 JOptionPane.showConfirmDialog(rootPane, "ES PROBABLE QUE ESTE NOMBRE YA ESTE REGISTRADO", "ERROR", JOptionPane.CLOSED_OPTION);
-            }else{
+            } else {
                 JOptionPane.showConfirmDialog(rootPane, "RACION AGREGADO CON EXITO!!!", "OK", JOptionPane.CLOSED_OPTION);
                 frame.crearTablaRaciones();
                 this.dispose();
@@ -290,13 +291,13 @@ public class AgregarRacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void habilitarBtnAgregar() {
-        if(this.txtNombre.getText().isBlank() || this.txtPrecio.getText().isBlank() || this.cbxDia.getSelectedIndex()==0 || this.cbxTipo.getSelectedIndex()==0){
+        if (this.txtNombre.getText().isBlank() || this.txtPrecio.getText().isBlank() || this.cbxDia.getSelectedIndex() == 0 || this.cbxTipo.getSelectedIndex() == 0) {
             this.btnAgregar.setEnabled(false);
-        }else{
+        } else {
             this.btnAgregar.setEnabled(true);
         }
     }
-    
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -326,8 +327,6 @@ public class AgregarRacion extends javax.swing.JFrame {
     private void txtRutaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRutaKeyReleased
         this.habilitarBtnAgregar();
     }//GEN-LAST:event_txtRutaKeyReleased
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

@@ -24,6 +24,7 @@ public class GUILogin extends javax.swing.JFrame {
     private IClienteAccess service;
     private ClienteService servicioRestaurante;
     //pnlFondo fondo = new pnlFondo(this.getWidth(),this.getHeight());
+
     /**
      * Creates new form GUILogin2
      */
@@ -139,6 +140,7 @@ public class GUILogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
@@ -244,6 +246,7 @@ public class GUILogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
+    private javax.swing.JLabel jLabelUsuIcon;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblContrasenia;
     private javax.swing.JLabel lblNombreUsu;
