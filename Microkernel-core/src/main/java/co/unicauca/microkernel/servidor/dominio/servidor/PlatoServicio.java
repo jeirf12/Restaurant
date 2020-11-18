@@ -93,5 +93,8 @@ public class PlatoServicio {
     
     public String listMenuDayAll(int resId){
         return repositorio.listMenuDayAll(resId);
-    } 
+    }
+    public String listPedido(int idRestaurante){
+        return repositorio.listaPedido(idRestaurante);
+    }
 }

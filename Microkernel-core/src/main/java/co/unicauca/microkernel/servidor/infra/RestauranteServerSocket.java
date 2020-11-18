@@ -196,6 +196,9 @@ public class RestauranteServerSocket implements Runnable{
                 if (protocolRequest.getAction().equals("listMenuDayAll")) {
                     this.listarMenuDiaTodos(protocolRequest);
                 }
+                if (protocolRequest.getAction().equals("listPedido")) {
+                    this.listarPedido(protocolRequest);
+                }
                 break;
 
             //comprador solo tendra la opcion de visualizar, es decir un selec sobre la base de datos y enviarlos platoD cliente
@@ -508,6 +511,12 @@ public class RestauranteServerSocket implements Runnable{
         int resId =Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         String response;
         response=service.listMenuDayAll(resId);
+        output.println(response); 
+    }
+    private void listarPedido(Protocol protocolRequest){
+        int resId =Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response;
+        response=service.listPedido(resId);
         output.println(response); 
     }
 }

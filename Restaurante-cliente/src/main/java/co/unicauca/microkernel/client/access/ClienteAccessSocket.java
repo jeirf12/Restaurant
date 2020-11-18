@@ -547,4 +547,32 @@ public class ClienteAccessSocket implements IClienteAccess {
         String response=procesarConexion(requestJson);
         return jsonListMenuDay(response);
     }
+
+    @Override
+    public List<Pedido> listPedido(int idRestaurante) throws Exception {
+        String accion="listPedido";
+        String [] parameters={""+idRestaurante};
+        String requestJson = createlistJson("administrador",accion,parameters);
+        String response=procesarConexion(requestJson);
+        return jsonList(response);
+    }
+    private String createlistJson(String resource,String accion,String[] parameters){
+        var protocol=new Protocol();
+        protocol.setResource(resource);
+        protocol.setAction(accion);
+        protocol.addParameter("resId", valueOf(parameters[0]));
+        
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json: "+requestJson);
+
+        
+        return requestJson;
+    }
+    private List<Pedido> jsonList(String jsonListar){
+        var gson=new Gson();
+        var list = new TypeToken<List<Pedido>>(){}.getType();
+        return gson.fromJson(jsonListar, list);
+    }
+    
 }

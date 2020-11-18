@@ -78,4 +78,5 @@ public interface IClienteAccess {
      * @throws Exception 
      */
     public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception;
+    public List<Pedido> listPedido(int idRestaurante)throws Exception;
 }

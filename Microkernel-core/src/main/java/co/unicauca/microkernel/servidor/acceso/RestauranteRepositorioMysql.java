@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -663,4 +664,27 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio{
         return resultado;
     }
 
+    @Override
+    public String listaPedido(int idres) {
+        //
+        String resultado = "";
+        List<Pedido> list=new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "select * from pedido where RES_ID="+idres;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs1 = pstmt.executeQuery();
+            while (rs1.next()) {
+                Pedido ped=new Pedido(rs1.getInt(1), rs1.getInt(2), rs1.getInt(3), EstadoPed.valueOf(rs1.getString(4)), null);
+                list.add(ped);
+            }
+            resultado=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al validar usuario", ex);
+        }
+        return resultado;
+    }
+    
 }

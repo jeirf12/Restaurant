@@ -51,4 +51,5 @@ public interface IPlatoRepositorio {
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
     public String saveRacionDia(RacionDia racion);
     public String validarAcceso(Cliente cliente);
+    public String listaPedido(int idRestaurante);
 }

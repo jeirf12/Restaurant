@@ -292,7 +292,7 @@ public class ModificarEspecial extends javax.swing.JFrame {
         }else{
             plato.setImagen(null);
         }
-        plato.setMenuEsp(1);
+        plato.setMenuEsp(this.especial.getMenuEsp());
         try {
             if (cliente.updatePlatoEspecial(plato)) {
                 JOptionPane.showConfirmDialog(rootPane, "PLATO ACTUALIZADO", "OK", JOptionPane.CLOSED_OPTION);

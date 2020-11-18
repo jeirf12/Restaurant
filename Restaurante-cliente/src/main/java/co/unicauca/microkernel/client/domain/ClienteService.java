@@ -80,4 +80,7 @@ public class ClienteService {
     public String validarAcceso (Cliente cliente)throws Exception{
         return service.validarAcceso(cliente);
     }
+    public List<Pedido> listPedido(int idres) throws Exception{
+        return service.listPedido(idres);
+    }
 }
