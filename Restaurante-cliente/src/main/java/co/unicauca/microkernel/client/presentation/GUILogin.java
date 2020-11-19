@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class GUILogin extends javax.swing.JFrame {
 
@@ -165,6 +165,7 @@ public class GUILogin extends javax.swing.JFrame {
                 }
 
                 datoRestaurante.add(this.txtNombreUsu.getText());
+                //se controla que tipo de usuario es dependiendo el tipo se le carga su respectiva interfaz
                 if (arrayResult[0].equals("ADMINISTRADOR")) {
 
                     this.setVisible(false);

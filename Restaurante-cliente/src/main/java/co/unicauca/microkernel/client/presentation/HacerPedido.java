@@ -29,21 +29,22 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class HacerPedido extends javax.swing.JFrame {
+    //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
     List<CarritoG> carritoR;
     List<CarritoG> carritoE;
-    
+    //tablas
     TablaRacionesHaP tabRacionesHaP;
     TablaEspecialesHaP tabEspecialesHaP;
     TablaCarritoRacion tabCarritoR;
     TablaCarritoEspeciales tabCarritoE;
     TablaCarritoEspecialesCf tabCarritoECf;
     TablaCarritoRacionCf tabCarritoRCf;
-    //servicio
+    //servicios
     IClienteAccess service;
     ClienteService servicioRestaurante;
     
@@ -53,10 +54,10 @@ public class HacerPedido extends javax.swing.JFrame {
     private String photoNull;
     
     public HacerPedido(Pedido pedido, ClienteService cliente) throws Exception {
-        
+        // se inicializan los servicios
         service = getInstance().getClienteService();
         servicioRestaurante = new ClienteService(service);
-        
+        //sse inicializan las tablas
         tabRacionesHaP = new TablaRacionesHaP();
         tabEspecialesHaP = new TablaEspecialesHaP();
         tabCarritoR = new TablaCarritoRacion();
@@ -65,13 +66,14 @@ public class HacerPedido extends javax.swing.JFrame {
         tabCarritoECf = new TablaCarritoEspecialesCf();
         
         initComponents();
+        //se inicializa el pedido
         this.pedido = pedido;
-        System.out.println("pedido res:  "+pedido.getResId());
+        //se inicializan las listas
         raciones = new ArrayList<>();
         especiales = new ArrayList<>();
         carritoR = new ArrayList<>();
         carritoE = new ArrayList<>();
-        
+        //se crean las tablas
         this.crearTablaCarritoRacionesCf(pedido.getIdPedido());
         this.crearTablaCarritoEspecialesCf(pedido.getIdPedido());
         this.crearTablaCarritoRaciones(pedido.getIdPedido());

@@ -23,22 +23,22 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class FramePrincipalCliente extends javax.swing.JFrame {
+    //listas
     List<Restaurante> restaurantes;
     List<HistorialPed> historiaPedidos;
-    
+    //tablas
     TableRestaurantesHaPed tabRestaurantes;
     TablaHistorialPed tabHistoria;
-    //servicio
+    //servicios
     IClienteAccess service;
     ClienteService servicioRestaurante;
-    
+
     private static String tipoRestaurante;
     private static String estadoPedido;
     private static int idCliente;
-    private String photoNull;
     /**
      * Creates new form FramePrincipalClientes
      */
@@ -63,7 +63,6 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
-        //this.setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -242,8 +241,8 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         int column = tblRestaurantes.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRestaurantes.getRowHeight();
         byte[] imagen = this.restaurantes.get(row).getImagen();
+        //instanciar imagen
         this.servicioRestaurante.fijarImagen(this.lblImagenRestaurante, imagen, "FOTONULA");
-        
         if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
             Object value = tblRestaurantes.getValueAt(row, column);
             if (value instanceof JButton) {

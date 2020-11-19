@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class ConfirmarPedido extends javax.swing.JFrame {
     IClienteAccess service;
@@ -29,18 +29,17 @@ public class ConfirmarPedido extends javax.swing.JFrame {
     private Pedido pedido;
     
     public ConfirmarPedido(Pedido pedido, ClienteService cliente) throws Exception {
-        
+        //intancia los servicios
         service = getInstance().getClienteService();
         servicioRestaurante = new ClienteService(service);
-        
+        //instancia el pedido
         this.pedido = pedido;
-
+        //captura los datos necesarios para crear la factura
         String suma = servicioRestaurante.sumOrder(pedido.getCliente(), pedido.getIdPedido());
         String impuesto = servicioRestaurante.impuestoRestaurante(pedido.getCliente(), pedido.getIdPedido());
         String domicilio = servicioRestaurante.priceDomicileOrder(pedido.getCliente(), pedido.getIdPedido());
         String TOTAL = servicioRestaurante.total(pedido.getCliente(), pedido.getIdPedido());
-        
-        System.out.println("impuesto: "+impuesto);
+        //parsea los datos para poder hacer las operaciones necesariass para la realizacion de la factura
         domi = Integer.parseInt(domicilio);
         sum = Integer.parseInt(suma);
         imp = Integer.parseInt(impuesto);

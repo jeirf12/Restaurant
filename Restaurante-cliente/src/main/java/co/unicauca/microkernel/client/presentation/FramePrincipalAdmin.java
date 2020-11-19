@@ -31,11 +31,10 @@ import static javax.swing.JOptionPane.showConfirmDialog;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class FramePrincipalAdmin extends JFrame {
 
-    //borrar este comentario luego
     //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
@@ -80,7 +79,7 @@ public class FramePrincipalAdmin extends JFrame {
             especiales = new ArrayList<>();
             pedidos=new ArrayList<>();
             varDia = "TODOS";
-            //crear index debe estar antes de fiar texto para lblNomUsu
+
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
 
