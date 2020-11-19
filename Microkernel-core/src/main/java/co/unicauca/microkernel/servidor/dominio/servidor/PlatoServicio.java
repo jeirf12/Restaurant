@@ -46,41 +46,78 @@ public class PlatoServicio {
         return repositorio.updateRacion(racion);
     }
 
-    /*
-     * 
-     * @param rac_id
-     * @return 
+    /**
+     * borra una racion del sitema segun un identificador
+     * @param rac_id identificador de la racion
+     * @return respuesta de la operacion
      */
     public String deleteRacionDia(int rac_id) {
         return repositorio.deleteRacionDia(rac_id);
     }
     /**
-     * 
-     * @param plae_id
-     * @return 
+     * elimina un plato especial 
+     * @param plae_id identificador del plato
+     * @return respuesta del la operacion
      */
     public String deletePlatoEspecial(int plae_id) {
         return repositorio.deletePlatoEspecial(plae_id);
     }
 
+    /**
+     * guarda un retaurante en la base de datos
+     * @param restaurant instancia a registrar
+     * @return respuesta sobre la operacion
+     */
     public String saveRestaurant(Restaurante restaurant){
         return repositorio.saveRestaurant(restaurant);
     }
+    /**
+     * lista el menu de raciones
+     * @param resId identificador de un restaurante al que esta asociada la racion
+     * @param dia dia que tiene asignada la raicon
+     * @return respuesta sobre la operacion
+     */
     public String listMenuDay(int resId,String dia){
         return repositorio.listMenuDay(resId,dia);
     }
+    /**
+     * listar menu especial
+     * @param resId identificador del restaurante
+     * @return FALLO  en caso de fracasar
+     */
     public String listMenuSpecial(int resId){
         return repositorio.listMenuSpecial(resId);
     }
+    /**
+     * adiciona un pedido 
+     * @param pedido registro a guardar
+     * @return 
+     */
     public String addPedido(Pedido pedido){
         return repositorio.addPedido(pedido);
     }
+    /**
+     * 
+     * @param racionPed
+     * @return 
+     */
     public String addRacionPedido(RacionPed racionPed){
         return repositorio.addRacionPedido(racionPed);
     }
+    /**
+     * 
+     * @param platoEspecialPed
+     * @return 
+     */
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed){
         return repositorio.addPlatoEspecialPedido(platoEspecialPed);
     }
+    /**
+     * guarda una racion en la base de datos
+     * @param racion registro a guardar
+     * @param idRestaurante identificador del restaurante al que pertenece
+     * @return 
+     */
     public String saveRacionDia(RacionDia racion,int idRestaurante){
         return repositorio.saveRacionDia(racion,idRestaurante);
     }
@@ -99,34 +136,68 @@ public class PlatoServicio {
     }
 
 
-
+/**
+ * verifica la cuenta de un cliente
+ * @param cliente datos de un cliente
+ * @return 
+ */
    public String validarAcceso(Cliente cliente){
        return repositorio.validarAcceso(cliente);
    }
 
-    
+    /**
+     * obtiene la lista de raciones para todos los dias
+     * @param resId identificador del restaurante
+     * @return 
+     */
     public String listMenuDayAll(int resId){
         return repositorio.listMenuDayAll(resId);
-    
     }
+    /**
+     * cosulta la exitencia de un restaurante
+     * @param id identificador de restaurante
+     * @return informacion relrestaurante o FALLLO  en caso de error
+     */
     public String getRestaurant(int id){
         return repositorio.getRestaurant(id);
     }
     
+    /**
+     * cunsulta la existencia de un cliente
+     * @param id identificador del cliente
+     * @return informacion del cliente  o FALLO en caso de error
+     */
     public String getCliente(int id){
         return repositorio.getClient(id);
     }
     
+    /**
+     * consulta la base de dato spor un recurso solicitado
+     * @param nombre nombre clave del recurso
+     * @return la informacion del recurso.
+     */
     public String getRecurso(String nombre){
         return repositorio.getRecurso(nombre);
     }
     
+    /**
+     * lista pedidos
+     * @param idRestaurante identificador del restaurante
+     * @return lista almacenadda en string
+     */
     public String listPedido(int idRestaurante){
         return repositorio.listaPedido(idRestaurante);
     }
+    
+    /**
+     * lista restaurantes
+     * @param typeRestaurante tipo de restaurante a listar
+     * @return lista en un string
+     */
     public String listRestaurante(String typeRestaurante){
         return repositorio.listRestaurante(typeRestaurante);
     }
+    
     public String listCarritoRacion(int idCliente, int idPedido){
         return repositorio.listCarritoRacion(idCliente, idPedido);
     } 

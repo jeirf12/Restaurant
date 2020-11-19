@@ -10,15 +10,12 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaPedidos;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
 import co.unicauca.microkernel.common.entities.Cliente;
 import co.unicauca.microkernel.common.entities.Pedido;
-import co.unicauca.microkernel.common.entities.Recurso;
 import co.unicauca.microkernel.common.entities.Restaurante;
-import co.unicauca.microkernel.common.infra.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,18 +25,16 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class FramePrincipalAdmin extends JFrame {
 
-    //borrar este comentario luego
     //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
@@ -84,13 +79,11 @@ public class FramePrincipalAdmin extends JFrame {
             especiales = new ArrayList<>();
             pedidos=new ArrayList<>();
             varDia = "TODOS";
-            //crear index debe estar antes de fiar texto para lblNomUsu
+
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
-            
+
             this.showInfoUsuario();
-            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            //photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -262,7 +255,7 @@ public class FramePrincipalAdmin extends JFrame {
                         .addComponent(lblTituloRestaurante)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -371,7 +364,7 @@ public class FramePrincipalAdmin extends JFrame {
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRacionesLayout.createSequentialGroup()
                 .addComponent(pnlFondoRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 53, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("RACIONES", pnlRaciones);
@@ -413,7 +406,7 @@ public class FramePrincipalAdmin extends JFrame {
         pnlFondoEspecialesLayout.setHorizontalGroup(
             pnlFondoEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoEspecialesLayout.createSequentialGroup()
-                .addContainerGap(492, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(btnAddEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(218, 218, 218))
             .addGroup(pnlFondoEspecialesLayout.createSequentialGroup()
@@ -444,7 +437,7 @@ public class FramePrincipalAdmin extends JFrame {
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
                 .addComponent(pnlFondoEspeciales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 72, Short.MAX_VALUE))
+                .addGap(0, 66, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);

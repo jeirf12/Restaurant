@@ -9,8 +9,18 @@ import co.unicauca.microkernel.common.entities.*;
  */
 public interface IPlatoRepositorio {
  
+    /**
+     * almacena un restaurante en la base de datos
+     * @param res resgistro a almacenar
+     * @return respuesta sobre la operacion
+     */
     public String saveRestaurant(Restaurante res);
 
+    /**
+     * almacena un plato especialen la base de datos
+     * @param plato registro a almacenar
+     * @return respuesta sobre la operacion
+     */
     public String savePlatoEspecial(PlatoEspecial plato);
 
     /**
@@ -28,26 +38,74 @@ public interface IPlatoRepositorio {
     public String updateRacion(RacionDia racion);
 
     /**
-     * 
-     * @param rac_id
-     * @return 
+     * borrar una racion de la base de datos
+     * @param rac_id identificaro de la racion
+     * @return respuesta de exito o fracaso sobre la operacion
      */
     public String deleteRacionDia(int rac_id);
     /**
-     * 
-     * @param plae_id
-     * @return 
+     * borrar un plato especial de la base de datos
+     * @param plae_id identificador del plato
+     * @return respuesta de exito o fracaso sobre la operacion
      */
     public String deletePlatoEspecial(int plae_id);
 
+    /**
+     * lista el menu del dia
+     * @param idRes identificador del restaurante
+     * @param dia
+     * @return 
+     */
     public String listMenuDay(int idRes,String dia);
+    /**
+     * lista el menu de platos especiales
+     * @param idRes identificador del restaurante
+     * @return 
+     */
     public String listMenuSpecial(int idRes);
+    /**
+     * lista todos las raciones o platos del dia de la base de datos
+     * @param idRes identificador del restaurante
+     * @return 
+     */
     public String listMenuDayAll(int idRes);
+    /**
+     * agrega un pedido
+     * @param pedido informacion a registrar
+     * @return 
+     */
     public String addPedido(Pedido pedido);
+    /**
+     * agrega un pedido de racion 
+     * @param racionPed informacion a registrar
+     * @return 
+     */
     public String addRacionPedido(RacionPed racionPed);
+    /**
+     * agrega un pedido de platos especiales
+     * @param platoEspecialPed informacion a registrar
+     * @return 
+     */
     public String addPlatoEspecialPedido(PlatoEspecialPed platoEspecialPed);
+    /**
+     * almace una racion del dia en la base de datos
+     * @param racion informacion a registrar
+     * @param idRestaurante identificador del restaurante
+     * @return 
+     */
     public String saveRacionDia(RacionDia racion,int idRestaurante);
+    /**
+     * valida la existencia de un cliente y coincidencia de su password
+     * @param cliente
+     * @return 
+     */
     public String validarAcceso(Cliente cliente);
+    /**
+     * lista los pedidos
+     * @param idRestaurante restaurante asociado, identificador
+     * @return 
+     */
+    //james no te pases
     public String listaPedido(int idRestaurante);
     public String payedPedido(Pedido pedido);
     public String cancelPedido(Pedido pedido);

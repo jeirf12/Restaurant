@@ -24,6 +24,9 @@ import java.util.logging.Logger;
  *
  * @author EdynsonMJ
  * @author Jhonny Rosero
+ * @author jhonfer ruiz
+ * * @author camilo gonzales
+ * * @author james
  */
 //AUTO_INCREMENT
 public class RestauranteRepositorioMysql implements IPlatoRepositorio {
@@ -312,13 +315,6 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             System.out.println("entro");
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
-            /*
-                    protocol.addParameter("mend_id", valueOf(instancia.getMenuId()));
-        protocol.addParameter("rac_nombre", instancia.getNombre());
-        protocol.addParameter("rac_foto", Arrays.toString(instancia.getImagen()));
-        protocol.addParameter("rac_tipo", instancia.getTipo().toString());
-        protocol.addParameter("rac_precio", valueOf(instancia.getPrecio()));
-            */
             //se estructura la sentencia sql en un string
             String sql = "INSERT INTO raciondia(MEND_ID,RES_ID,RAC_NOMBRE,RAC_FOTO,RAC_TIPO,RAC_PRECIO) VALUES (?,?,?,?,?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
@@ -383,15 +379,9 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     public String addPedido(Pedido instancia) {
         int resultado = 0;
         try {
-            System.out.println("entro agregar pedido");
-            System.out.println("cliente"+instancia.getCliente());
-            System.out.println("cliente"+instancia.getEstado());
-            System.out.println("cliente"+instancia.getFechaCreado());
-            System.out.println("cliente"+instancia.getFechaPagado());
-            System.out.println("cliente"+instancia.getIdPedido());
-            System.out.println("cliente"+instancia.getResId());
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
+            System.out.println("id restaurante = "+instancia.getResId());
             //se estructura la sentencia sql en un string
             String sql = "INSERT INTO pedido (CLI_ID,RES_ID) VALUES (?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas

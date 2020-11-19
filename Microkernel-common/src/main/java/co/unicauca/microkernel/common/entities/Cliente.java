@@ -1,21 +1,56 @@
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author jafes
+ * representa un cliente de para la aplicacion.
+ * @author edynson muñoz, jhonfer ruiz, camilo mulato, james, mateo
  */
 public class Cliente {
+    /**
+     * identificador incremental del cliente
+     */
     private int idCliente;
+    /**
+     * nombre del cliente
+     */
     private String nombre;
+    /**
+     * hace referencia a la direccion
+     */
     private int carrera;
+    /**
+     * hace referenca a la direccion
+     */
     private int calle;
+    /**
+     * para la aplicacion puede ser un comprador o cliente comun, un administrador o dueño de restaurante
+     */
     private TipoClien tipo;
+    /**
+     * el pasword del usuario
+     */
     private String contrasenia;
+    /**
+     * una imagen que representa al cliente
+     */
     private byte [] imagen;
+    /**
+     * un id de restaurante si es que esta asociado a uno.
+     */
     private int idrestaurante;
-
+/**
+ * constructor por defecto
+ */
     public Cliente() {};
-
+/**
+ * constructor parametrizado
+ * @param idCliente identificador
+ * @param nombre nombre del usuario
+ * @param carrera direccion
+ * @param calle direccion
+ * @param tipo administrador o comprador
+ * @param contrasenia una contraseña para su cuenta
+ * @param imagen imagen o foto que lo representa
+ */
     public Cliente(int idCliente, String nombre, int carrera, int calle, TipoClien tipo, String contrasenia, byte[] imagen) {
         this.idCliente = idCliente;
         this.nombre = nombre;
@@ -25,12 +60,17 @@ public class Cliente {
         this.contrasenia = contrasenia;
         this.imagen = imagen;
     }
+    /**
+     * constructor parametrizado
+     * @param nombre nombre se usuario
+     * @param contrasenia contraseña
+     */
     public Cliente(String nombre, String contrasenia) {
        this.nombre = nombre;
        this.contrasenia = contrasenia;
     }
 
-
+    //SET AND GET  
     public int getCarrera() {
         return carrera;
     }
