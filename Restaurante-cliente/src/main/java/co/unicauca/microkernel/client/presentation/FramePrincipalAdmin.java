@@ -15,6 +15,7 @@ import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaPedidos;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
 import co.unicauca.microkernel.common.entities.Pedido;
+import co.unicauca.microkernel.common.infra.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -54,6 +55,7 @@ public class FramePrincipalAdmin extends JFrame {
 
     /**
      * Creates new form FramePrincipalAdmin
+     * @param idRestaurantes
      */
     public FramePrincipalAdmin(List<String> idRestaurantes) {
 
@@ -78,6 +80,8 @@ public class FramePrincipalAdmin extends JFrame {
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
+            
+            
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
             photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
 
@@ -187,13 +191,11 @@ public class FramePrincipalAdmin extends JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE))
-                        .addContainerGap(594, Short.MAX_VALUE))
-                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
+                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE)))
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 403, Short.MAX_VALUE)
+                .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
             pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -13,7 +13,9 @@ import co.unicauca.microkernel.client.gestionTabla.TableRestaurantesHaPed;
 import co.unicauca.microkernel.common.entities.HistorialPed;
 import co.unicauca.microkernel.common.entities.Pedido;
 import co.unicauca.microkernel.common.entities.Restaurante;
+import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -65,6 +67,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             //this.crearTablaHistoria(estadoPedido);
 
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
+            
             photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
@@ -260,7 +263,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                     Pedido pedido = new Pedido(idCliente,this.restaurantes.get(row).getId());
                     try {
                         int idPedido = Integer.parseInt(this.servicioRestaurante.addPedido(pedido));
-                        Pedido aux = new Pedido(idPedido,idCliente,this.restaurantes.get(row).getId());
+                        Pedido aux = new Pedido(idCliente,this.restaurantes.get(row).getId());
                         HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         frameRacion.setVisible(true);
                     } catch (Exception ex) {
@@ -349,7 +352,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                 return "CREADO";
         }
     }
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxEstadoDelPedido;

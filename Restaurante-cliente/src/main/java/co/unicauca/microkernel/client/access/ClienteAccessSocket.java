@@ -620,7 +620,7 @@ public class ClienteAccessSocket implements IClienteAccess {
         if (valor.equals("FALLO")) {
             return null;
         }
-       return valor;
+        return valor;
     }
     
     private String validardorAcceso(Cliente cliente) {
