@@ -29,21 +29,22 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class HacerPedido extends javax.swing.JFrame {
+    //listas
     List<RacionDia> raciones;
     List<PlatoEspecial> especiales;
     List<CarritoG> carritoR;
     List<CarritoG> carritoE;
-    
+    //tablas
     TablaRacionesHaP tabRacionesHaP;
     TablaEspecialesHaP tabEspecialesHaP;
     TablaCarritoRacion tabCarritoR;
     TablaCarritoEspeciales tabCarritoE;
     TablaCarritoEspecialesCf tabCarritoECf;
     TablaCarritoRacionCf tabCarritoRCf;
-    //servicio
+    //servicios
     IClienteAccess service;
     ClienteService servicioRestaurante;
     
@@ -53,10 +54,10 @@ public class HacerPedido extends javax.swing.JFrame {
     private String photoNull;
     
     public HacerPedido(Pedido pedido, ClienteService cliente) throws Exception {
-        
+        // se inicializan los servicios
         service = getInstance().getClienteService();
         servicioRestaurante = new ClienteService(service);
-        
+        //sse inicializan las tablas
         tabRacionesHaP = new TablaRacionesHaP();
         tabEspecialesHaP = new TablaEspecialesHaP();
         tabCarritoR = new TablaCarritoRacion();
@@ -65,13 +66,14 @@ public class HacerPedido extends javax.swing.JFrame {
         tabCarritoECf = new TablaCarritoEspecialesCf();
         
         initComponents();
+        //se inicializa el pedido
         this.pedido = pedido;
-        System.out.println("pedido res:  "+pedido.getResId());
+        //se inicializan las listas
         raciones = new ArrayList<>();
         especiales = new ArrayList<>();
         carritoR = new ArrayList<>();
         carritoE = new ArrayList<>();
-        
+        //se crean las tablas
         this.crearTablaCarritoRacionesCf(pedido.getIdPedido());
         this.crearTablaCarritoEspecialesCf(pedido.getIdPedido());
         this.crearTablaCarritoRaciones(pedido.getIdPedido());
@@ -175,32 +177,30 @@ public class HacerPedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblRaciones)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCarritoRaciones)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(lblRaciones)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblCarritoRaciones)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 

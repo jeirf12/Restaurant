@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class ConfirmarPedido extends javax.swing.JFrame {
     IClienteAccess service;
@@ -29,18 +29,17 @@ public class ConfirmarPedido extends javax.swing.JFrame {
     private Pedido pedido;
     
     public ConfirmarPedido(Pedido pedido, ClienteService cliente) throws Exception {
-        
+        //intancia los servicios
         service = getInstance().getClienteService();
         servicioRestaurante = new ClienteService(service);
-        
+        //instancia el pedido
         this.pedido = pedido;
-
+        //captura los datos necesarios para crear la factura
         String suma = servicioRestaurante.sumOrder(pedido.getCliente(), pedido.getIdPedido());
         String impuesto = servicioRestaurante.impuestoRestaurante(pedido.getCliente(), pedido.getIdPedido());
         String domicilio = servicioRestaurante.priceDomicileOrder(pedido.getCliente(), pedido.getIdPedido());
         String TOTAL = servicioRestaurante.total(pedido.getCliente(), pedido.getIdPedido());
-        
-        System.out.println("impuesto: "+impuesto);
+        //parsea los datos para poder hacer las operaciones necesariass para la realizacion de la factura
         domi = Integer.parseInt(domicilio);
         sum = Integer.parseInt(suma);
         imp = Integer.parseInt(impuesto);
@@ -108,7 +107,7 @@ public class ConfirmarPedido extends javax.swing.JFrame {
 
         lblTOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTOTAL.setForeground(new java.awt.Color(255, 0, 0));
-        lblTOTAL.setText("TOTAL: ____________");
+        lblTOTAL.setText("TOTAL: ______________");
 
         lblDomicilio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblDomicilio.setText("COSTO DOMICILIO:_____");
@@ -148,20 +147,20 @@ public class ConfirmarPedido extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(123, 123, 123))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblTOTAL)
-                        .addGap(18, 18, 18)
+                        .addComponent(lblTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblTotalR, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40))))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(148, 148, 148))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addGap(37, 37, 37)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblSumaOrdenes)
                     .addComponent(lblSumaOrdenesR))
@@ -173,11 +172,11 @@ public class ConfirmarPedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDomicilio)
                     .addComponent(lblPrecioDomicilio))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTOTAL)
                     .addComponent(lblTotalR))
-                .addGap(26, 26, 26)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelarPedido)
                     .addComponent(btnPagarPedido))

@@ -381,6 +381,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         try {
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
+            System.out.println("id restaurante = "+instancia.getResId());
             //se estructura la sentencia sql en un string
             String sql = "INSERT INTO pedido (CLI_ID,RES_ID) VALUES (?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas

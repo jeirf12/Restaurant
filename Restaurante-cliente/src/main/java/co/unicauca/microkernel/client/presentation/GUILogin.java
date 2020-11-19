@@ -9,8 +9,6 @@ import co.unicauca.microkernel.client.access.Factory;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.Cliente;
-import co.unicauca.microkernel.common.infra.Parameter;
-import co.unicauca.microkernel.common.infra.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,7 +17,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class GUILogin extends javax.swing.JFrame {
 
@@ -167,6 +165,7 @@ public class GUILogin extends javax.swing.JFrame {
                 }
 
                 datoRestaurante.add(this.txtNombreUsu.getText());
+                //se controla que tipo de usuario es dependiendo el tipo se le carga su respectiva interfaz
                 if (arrayResult[0].equals("ADMINISTRADOR")) {
 
                     this.setVisible(false);

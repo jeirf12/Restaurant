@@ -19,7 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class AgregarEspecial extends javax.swing.JFrame {
 
@@ -263,12 +263,17 @@ public class AgregarEspecial extends javax.swing.JFrame {
             this.lblImagen.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(this.lblImagen.getWidth(), this.lblImagen.getHeight(), SCALE_SMOOTH)));
         }
     }//GEN-LAST:event_btnFotoActionPerformed
-
+    /**
+     * accion del boton agregar
+     * @param evt 
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        //captura los datos del plato a agregar
         especial.setNombre(this.txtNombre.getText());
         especial.setDescripcion(this.txtDescripcion.getText());
         especial.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
         especial.setMenuEsp(mene_id);
+        //si se escoge una foto se toma la direccion del archivo y se pasa a byte usando el metodo convertirFoto
         if(!(this.txtRuta.getText().isBlank())){
             especial.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
         }else{

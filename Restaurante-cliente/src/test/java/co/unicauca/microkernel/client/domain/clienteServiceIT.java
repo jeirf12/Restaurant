@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author fallen
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class clienteServiceIT {
     private final IClienteAccess service;
@@ -38,8 +38,10 @@ public class clienteServiceIT {
     @Test
     public void testSaveRestaurant() throws Exception {
         System.out.println("saveRestaurant");
+        //se crea un restaurante local
         Restaurante restaurant = new Restaurante(0,1, "mx", "Burrito Sabanero", null, 30,30);
         String expResult = "Burrito Sabanero";
+        //se guarda en la base de datos
         String result = instance.saveRestaurant(restaurant);
         assertEquals(expResult, result);
     }
@@ -50,8 +52,10 @@ public class clienteServiceIT {
     @Test
     public void testSaveRacionDia() throws Exception {
         System.out.println("saveRacionDia");
+        //se crea una racion local
         RacionDia racion = new RacionDia(0, CategoriaEnum.CARNE, 13000, "carne de borrego", 1, null);
         String expResult = "carne de borrego";
+        //se guarda en la base de datos
         String result = instance.saveRacionDia(racion,1);
         int idrac=0;
         platosDias=instance.listMenuDayAll(1, "administrador");

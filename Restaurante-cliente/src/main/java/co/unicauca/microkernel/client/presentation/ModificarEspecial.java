@@ -22,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class ModificarEspecial extends javax.swing.JFrame {
 

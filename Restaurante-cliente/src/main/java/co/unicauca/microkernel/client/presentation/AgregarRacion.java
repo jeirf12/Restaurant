@@ -20,7 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
- * @author EdynsonMJ
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class AgregarRacion extends javax.swing.JFrame {
     private ClienteService cliente;
@@ -267,10 +267,12 @@ public class AgregarRacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFotoActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        //captura los datos del plato a agregar
         this.racion.setNombre(this.txtNombre.getText());
         this.racion.setPrecio(Integer.parseInt(this.txtPrecio.getText()));
         this.racion.setMenuId(this.cbxDia.getSelectedIndex());
         this.racion.setTipo(CategoriaEnum.valueOf(this.cbxTipo.getSelectedItem().toString()));
+        //si se escoge una foto se toma la direccion del archivo y se pasa a byte usando el metodo convertirFoto
         if (!(this.txtRuta.getText().isBlank())) {
             this.racion.setImagen(Utilities.convertirFoto(this.txtRuta.getText()));
         }else{

@@ -13,9 +13,6 @@ import co.unicauca.microkernel.client.gestionTabla.TableRestaurantesHaPed;
 import co.unicauca.microkernel.common.entities.HistorialPed;
 import co.unicauca.microkernel.common.entities.Pedido;
 import co.unicauca.microkernel.common.entities.Restaurante;
-import co.unicauca.microkernel.common.infra.Protocol;
-import co.unicauca.microkernel.common.infra.Utilities;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,22 +23,22 @@ import javax.swing.JButton;
 
 /**
  *
- * @author jafes
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class FramePrincipalCliente extends javax.swing.JFrame {
+    //listas
     List<Restaurante> restaurantes;
     List<HistorialPed> historiaPedidos;
-    
+    //tablas
     TableRestaurantesHaPed tabRestaurantes;
     TablaHistorialPed tabHistoria;
-    //servicio
+    //servicios
     IClienteAccess service;
     ClienteService servicioRestaurante;
-    
+
     private static String tipoRestaurante;
     private static String estadoPedido;
     private static int idCliente;
-    private String photoNull;
     /**
      * Creates new form FramePrincipalClientes
      */
@@ -63,13 +60,9 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearTablaRestaurantes(tipoRestaurante);
             this.crearTablaHistoria(estadoPedido);
-            //this.crearTablaHistoria(estadoPedido);
-
-            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
-        //this.setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -248,8 +241,8 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         int column = tblRestaurantes.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRestaurantes.getRowHeight();
         byte[] imagen = this.restaurantes.get(row).getImagen();
+        //instanciar imagen
         this.servicioRestaurante.fijarImagen(this.lblImagenRestaurante, imagen, "FOTONULA");
-        
         if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
             Object value = tblRestaurantes.getValueAt(row, column);
             if (value instanceof JButton) {
