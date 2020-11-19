@@ -1,29 +1,43 @@
 package co.unicauca.microkernel.plugins.mexicano;
 
 import co.unicauca.microkernel.common.entities.Delivery;
-import co.unicauca.microkernel.common.entities.PlatoEspecial;
-import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
 /**
- * Plugin para envios a Mexico
- * @author Libardo, Julio
+ * Plugin para restaurantes mexicanos
+ * @author EdynsonMJ,JhonnyRosero,JhonferRuiz,JuanGonzales,JamesSilva
  */
 public class MexicanoDeliveryPlugin implements IDeliveryPlugin {
 
     /**
-     * Calcular el costo de envío de un producto de la tienda enviado dentro de
-     * México.
-     *
+     * se calcula el costo del domicilio dependiendo de la direccion a la que e enviara el pedido
+     * @param delivery
+     * @return 
      */
-    public double calculateCost(Delivery delivery) {
-
-        int total = delivery.getPrecio();
+    @Override
+    public int calculateCostDomicile(Delivery delivery) {
         
-        int distancia = (int)(delivery.getDistance());
+        double distancia = (delivery.getDistance());
 
-        double cost;
+        int cost;
         
-        cost = (distancia)+(total*1000);
+        cost = (int)(distancia*100);
+        
+
+        return cost;
+    }
+     /**
+     * el impuesto varia del tipo del restaurante este impuesto es sobre el valor total de los platos
+     * @param delivery
+     * @return 
+     */
+
+    @Override
+    public int impuestoRestaurante(Delivery delivery){
+        int sumaOrder = delivery.getPrecio();
+        
+        int cost;
+        
+        cost = sumaOrder+(int)(sumaOrder*0.19);
         
 
         return cost;

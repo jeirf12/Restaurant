@@ -1,24 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author jafes
+ *representa las reciones que estan asociadas a un dia de la semana
+ * @author edynoson muñoz, jhonfer, mateo, james, camilo
  */
 public class RacionDia {
+    /**
+     * identificador de la raiz
+     */
     private int racId;
+    /**
+     * tipo de racion, entrada, principio etc
+     */
     private CategoriaEnum tipo;
+    /**
+     * costo de la racion
+     */
     private int precio;
+    /**
+     * nombre de la racion
+     */
     private String nombre;
+    /**
+     * identificador del emnu al que esta asociada
+     */
     private int menuId;
+    /**
+     * imagen de la racion en bytes
+     */
     private byte [] imagen;
 
+    /**
+     * constructor parametrizado
+     */
     public RacionDia(){};
-    
+    /**
+     * constructor por defecto
+     * @param racId identificador de la racion
+     * @param tipo tipo de racion
+     * @param precio costo de la porcion
+     * @param nombre nombre de la racion
+     * @param menuId identificador del menu al que esta asociada
+     * @param imagen imagen que representa la racion
+     */
     public RacionDia(int racId, CategoriaEnum tipo, int precio, String nombre, int menuId, byte [] imagen) {
         this.racId = racId;
         this.tipo = tipo;
@@ -27,7 +51,7 @@ public class RacionDia {
         this.menuId = menuId;
         this.imagen=imagen;
     }
-
+    //SET AND GET
     public int getRacId() {
         return racId;
     }

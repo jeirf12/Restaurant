@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author jafes
+ *representa un menu de platos especiales
+ * @author edynson, mateo, james, camilo, jhonfer
  */
 public class MenuEspecial {
+    /**
+     * identificador del menu
+     */
     private int id;
+    /**
+     * identificador del restaurante al que esta asociado
+     */
     private int res_id;
 
+    /**
+     * constructor parametrizado
+     * @param id identificador del menu
+     * @param res_id identificador del restaurante al que esta asociado
+     */
     public MenuEspecial(int id, int res_id) {
         this.id = id;
         this.res_id = res_id;
     }
 
+    //GET AND SET
     public int getId() {
         return id;
     }

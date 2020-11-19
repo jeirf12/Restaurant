@@ -72,7 +72,6 @@ public class DeliveryPluginManager {
         return plugin;
 
     }
-
     private void loadProperties(String basePath) {
 
         String filePath = basePath + FILE_NAME;

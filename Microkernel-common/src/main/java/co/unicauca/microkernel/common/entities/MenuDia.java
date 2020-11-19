@@ -1,25 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author fallen
+ * representa un menu que corresponde a un dia y esta asociado a un los resturantes
+ * @author edynson muñoz, jhonfer, camilo, james , mateo
  */
 public class MenuDia {
+    /**
+     * identificador del menu.
+     */
     private int idMenu;
+    /**
+     * dia de la semana al que se encuentra asociado
+     */
     private DiaEnum diaSem;
+    /**
+     * identificador del restaurante al que se asocia.
+     */
     private int resId;
 
+    /**
+     * constructor parametrizado
+     * @param idMenu idntificador del menu
+     * @param diaSem dia de la semana que representa
+     * @param resId  identificador del restaurante al que esta asociado
+     */
     public MenuDia(int idMenu, DiaEnum diaSem, int resId) {
         this.idMenu = idMenu;
         this.diaSem = diaSem;
         this.resId = resId;
     }
 
+    // SET AND GET
     public int getIdMenu() {
         return idMenu;
     }

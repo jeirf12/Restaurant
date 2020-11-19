@@ -1,33 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
+ * representa un pedido especial
  *
- * @author jafes
+ * @author edynson, camilo, jhonfer, james, mateo
  */
 public class PlatoEspecialPed {
+
+    /**
+     * identificador del palto especial
+     */
     private int plaepId;
+    /**
+     * identificador del pedido
+     */
     private int pedId;
     private int plaeId;
+    /**
+     * cantidad
+     */
+    private int cantidad;
 
-    public PlatoEspecialPed(int plaepId, int pedId, int plaeId) {
+    /**
+     *
+     * @param plaepId
+     * @param pedId
+     * @param plaeId
+     * @param cantidad
+     */
+    public PlatoEspecialPed(int plaepId, int pedId, int plaeId, int cantidad) {
         this.plaepId = plaepId;
         this.pedId = pedId;
         this.plaeId = plaeId;
+        this.cantidad = cantidad;
     }
 
-    public int getPlaeId() {
-        return plaeId;
-    }
-
-    public void setPlaeId(int plaeId) {
+    public PlatoEspecialPed(int pedId, int plaeId, int cantidad) {
+        this.pedId = pedId;
         this.plaeId = plaeId;
+        this.cantidad = cantidad;
     }
-
+ //SET AND GET
     public PlatoEspecialPed() {
     }
 
@@ -46,6 +59,21 @@ public class PlatoEspecialPed {
     public void setPedId(int pedId) {
         this.pedId = pedId;
     }
-    
-    
+
+    public int getPlaeId() {
+        return plaeId;
+    }
+
+    public void setPlaeId(int plaeId) {
+        this.plaeId = plaeId;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
 }

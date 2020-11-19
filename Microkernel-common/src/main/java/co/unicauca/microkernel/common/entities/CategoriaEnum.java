@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author jafes
+ *Enum que representa las categorias de las raciones.
+ * @author james, edynson muñoz, jhonfer ruiz, camilo mulato, mateo
  */
 public enum CategoriaEnum {
     BASE,ENTRADA,CARNE,PRINCIPIO,BEBIDA

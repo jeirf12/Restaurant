@@ -1,34 +1,77 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 import java.time.LocalDateTime;
 
 /**
- *
- * @author jafes
+ *representa el pediado realizado por un cliente
+ * @author edynson, james, mateo, jhonfer,camilo
  */
 public class Pedido {
+    /**
+     * identificador del padido
+     */
     private int idPedido;
+    /**
+     * identificador del cliente
+     */
     private int cliente;
+    /**
+     * identificador del restaurante
+     */
     private int resId;
+    /**
+     * estado del pedido
+     */
     private EstadoPed estado;
-    private LocalDateTime fecha;
+    /**
+     * fecha de creacion del pedido
+     */
+    private LocalDateTime fechaCreado;
+    /**
+     * fecha de pado del pedido
+     */
+    private LocalDateTime fechaPagado;
 
-    public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fecha) {
+    /**
+     * constructor parametrizado pedido
+     * @param idPedido identificador del pedido
+     * @param cliente identificador del cliente
+     * @param resId identificador del restaurante
+     * @param estado estado del pedido
+     * @param fechaCreado fecha de cracion
+     * @param fechaPagado fecha de pago
+     */
+    public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fechaCreado, LocalDateTime fechaPagado) {
         this.idPedido = idPedido;
         this.cliente = cliente;
         this.resId = resId;
-        this.fecha = fecha;
         this.estado = estado;
+        this.fechaCreado = fechaCreado;
+        this.fechaPagado = fechaPagado;
+    }
+    /**
+     * constructor parametrizado para cliente y restaurante
+     * @param idCliente identificador del cliente
+     * @param resId identificador del restaurante
+     */
+    public Pedido(int idCliente, int resId) {
+        this.cliente = idCliente;
+        this.resId = resId;
+    }
+    
+    public Pedido(int idPedido, int cliente, int resId) {
+        this.idPedido = idPedido;
+        this.cliente = cliente;
+        this.resId = resId;
     }
 
+    /**
+     * constructor por defecto
+     */
     public Pedido() {
+        
     }
-
+//SET AND GET
     public int getIdPedido() {
         return idPedido;
     }
@@ -53,14 +96,6 @@ public class Pedido {
         this.resId = resId;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha) {
-        this.fecha = fecha;
-    }    
-
     public EstadoPed getEstado() {
         return estado;
     }
@@ -68,4 +103,22 @@ public class Pedido {
     public void setEstado(EstadoPed estado) {
         this.estado = estado;
     }
+
+    public LocalDateTime getFechaCreado() {
+        return fechaCreado;
+    }
+
+    public void setFechaCreado(LocalDateTime fechaCreado) {
+        this.fechaCreado = fechaCreado;
+    }
+
+    public LocalDateTime getFechaPagado() {
+        return fechaPagado;
+    }
+
+    public void setFechaPagado(LocalDateTime fechaPagado) {
+        this.fechaPagado = fechaPagado;
+    }
+    
+    
 }

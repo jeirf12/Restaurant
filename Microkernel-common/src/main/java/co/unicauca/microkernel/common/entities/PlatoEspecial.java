@@ -1,23 +1,37 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
- * @author jafes
+ *esta clase representa un plato especial
+ * @author Edynson muñoz, camilo, jhonfer, mateo,james
  */
 public class PlatoEspecial{
-    
+    /**
+     * identificador del menu al que esta asociado
+     */
     private int menuEsp;
+    /**
+     * identificador del plato especial
+     */
     private int id_pe;
+    /**
+     * nombre del plato
+     */
     private String nombre;
+    /**
+     * breve descripcion del plato
+     */
     private String descripcion;
+    /**
+     * costo del plato
+     */
     private int precio;
+    /**
+     * array de bytes que representan la imagen de plato
+     */
     private byte [] imagen;
-    
+    /**
+     * constructor por defecto
+     */
     public PlatoEspecial(){};
     /**
      * contructor parametrizado para la creacion de un plato especial
@@ -36,7 +50,7 @@ public class PlatoEspecial{
         this.imagen=imagen;
     }
 
-
+//SET AND GET
     public int getMenuEsp() {
         return menuEsp;
     }

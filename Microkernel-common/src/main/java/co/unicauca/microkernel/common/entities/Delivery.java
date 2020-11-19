@@ -2,12 +2,21 @@ package co.unicauca.microkernel.common.entities;
 
 /**
  * Envio
- * @author Libardo, Julio
+ * @author james, edynson, camilo, jhonfer, mateo
  */
 public class Delivery {
 
+    /**
+     * precio de envio
+     */
     private int precio;
+    /**
+     * distacia
+     */
     private double distance;
+    /**
+     * codigo de agrupacion 
+     */
     private String resCode;
 
     public Delivery(int precio, double distance, String resCode) {
