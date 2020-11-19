@@ -442,7 +442,7 @@ public class HacerPedido extends javax.swing.JFrame {
         this.serviceListarCarritoEspeciales(idPedido);
         tabCarritoECf.ver_tabla(tblCarritoPlatosCf, carritoE);
     }
-        public void crearTablaCarritoRacionesCf(int idPedido) throws Exception {
+    public void crearTablaCarritoRacionesCf(int idPedido) throws Exception {
         this.tblCarritoRacionesCf.removeAll();
         this.serviceListarCarritoRaciones(idPedido);
         tabCarritoRCf.ver_tabla(tblCarritoRacionesCf, carritoR);

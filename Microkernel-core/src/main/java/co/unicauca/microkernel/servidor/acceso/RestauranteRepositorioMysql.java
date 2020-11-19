@@ -385,7 +385,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             //se estructura la sentencia sql en un string
             String sql = "INSERT INTO pedido (CLI_ID,RES_ID) VALUES (?,?)";
             //pstmt mantendra la solicitud sobre la base de datos, se asignam sus columnas
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);   
             //se registra cada elemento, OJO Ddebe cumplir estrictamente el orden y el tipo de dato
             pstmt.setInt(1, instancia.getCliente());
             pstmt.setInt(2, instancia.getResId());
