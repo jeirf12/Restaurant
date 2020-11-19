@@ -107,7 +107,16 @@ public class PlatoServicio {
     
     public String listMenuDayAll(int resId){
         return repositorio.listMenuDayAll(resId);
+    
     }
+    public String getRestaurant(int id){
+        return repositorio.getRestaurant(id);
+    }
+    
+    public String getCliente(int id){
+        return repositorio.getClient(id);
+    }
+    
     public String listPedido(int idRestaurante){
         return repositorio.listaPedido(idRestaurante);
     }

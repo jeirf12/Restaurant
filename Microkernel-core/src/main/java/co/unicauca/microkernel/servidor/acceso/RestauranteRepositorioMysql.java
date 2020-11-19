@@ -563,6 +563,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         String response = gson.toJson(list);
         return response;
     }
+    
 
     @Override
     public String saveRestaurant(Restaurante res) {
@@ -1116,5 +1117,73 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             return "FALLO";
         }
         return typeOrden;
+    }
+
+    @Override
+    public String getRestaurant(int id) {
+        List<Restaurante> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the obtener restaurante");
+        try{
+            this.connect();
+            String sql = "SELECT RES_ID, CLI_ID, RES_CODIGO, RES_NOMBRE, RES_FOTO, RES_CARRERA, RES_CALLE FROM restaurante where  RES_ID = ?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {      
+                Restaurante res= new Restaurante();
+                res.setId(rs.getInt(1));
+                res.setIdCliente(rs.getInt(2));
+                res.setCodigo(rs.getString(3));
+                res.setNombre(rs.getString(4));
+                res.setImagen(rs.getBytes(5));
+                res.setCarrera(rs.getInt(6));
+                res.setCalle(rs.getInt(7));
+                list.add(res);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "obtener restaurante", ex);
+            response = "FALLO";
+        }
+        return response;
+    }
+
+    /**
+     * obtiene la informacion correspondiente a un cliente
+     * @param id clave con la que se hace la consulta, es el id del cliente
+     * @return informacion en formato gson
+     */
+    @Override
+    public String getClient(int id) {
+        List<Cliente> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the obtener cliente");
+        try{
+            this.connect();
+            String sql = "SELECT CLI_ID, CLI_NOMBRE, CLI_CARRERA, CLI_CALLE, CLI_FOTO, CLI_TIPO WHERE CLI_ID = ?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {      
+                Cliente cli = new Cliente();
+                cli.setIdCliente(rs.getInt(1));
+                cli.setNombre(rs.getString(2));
+                cli.setCarrera(rs.getInt(3));
+                cli.setCalle(rs.getInt(4));
+                cli.setIdCliente(rs.getByte(5));
+                cli.setTipo(TipoClien.valueOf(rs.getString(6)));
+                list.add(cli);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "obtener restaurante", ex);
+            response = "FALLO";
+        }
+        return response;
     }
 }

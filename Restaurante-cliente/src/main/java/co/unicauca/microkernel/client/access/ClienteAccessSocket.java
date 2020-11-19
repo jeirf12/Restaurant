@@ -653,7 +653,69 @@ public class ClienteAccessSocket implements IClienteAccess {
         String response=procesarConexion(requestJson);
         return jsonListMenuDay(response);
     }
+    
+    @Override
+    public Restaurante getRestaurante(int id) throws Exception {
+        var requestJson = getRestauranteJson(id);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonRestaurante(response);
+    }
+     private Restaurante convertJsonRestaurante(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Restaurante>>(){}.getType();
+        List<Restaurante> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
+    private String getRestauranteJson(int id){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("administrador");
+        protocol.setAction("getRestaurant");
+        protocol.addParameter("clave", "" + id);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+    
 
+
+    @Override
+    public Cliente getClient(int id)throws Exception {
+        var requestJson = getClientJson(id);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonClient(response);
+    }
+    
+    private String getClientJson(int id){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("administrador");
+        protocol.setAction("getClient");
+        protocol.addParameter("clave", "" + id);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+    
+      private Cliente convertJsonClient(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Cliente>>(){}.getType();
+        List<Cliente> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
+    
     @Override
     public List<Pedido> listPedido(int idRestaurante) throws Exception {
         String accion="listPedido";

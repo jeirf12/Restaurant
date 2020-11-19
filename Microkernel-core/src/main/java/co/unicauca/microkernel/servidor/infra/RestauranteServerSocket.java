@@ -203,6 +203,14 @@ public class RestauranteServerSocket implements Runnable {
                     this.administradorRegistrarRacionDia(protocolRequest);       
                 }
                 
+                if(protocolRequest.getAction().equals("getRestaurant")){
+                    this.administradorGetRestaurant(protocolRequest);       
+                }
+                
+                if(protocolRequest.getAction().equals("getClient")){
+                    this.administradorGetClient(protocolRequest);
+                }
+                
                 if (protocolRequest.getAction().equals("listMenuDayAll")) {
                     this.listarMenuDiaTodos(protocolRequest);
                 }
@@ -237,6 +245,7 @@ public class RestauranteServerSocket implements Runnable {
                 if (protocolRequest.getAction().equals("listarMenuDia")) {
                     this.listarMenuDia(protocolRequest);
                 }
+                
                 if (protocolRequest.getAction().equals("listarMenuEspecial")) {
                     this.listarMenuEspecial(protocolRequest);
                 }
@@ -468,6 +477,18 @@ public class RestauranteServerSocket implements Runnable {
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.saveRacionDia(racionD,idRestaurante);
         output.println(response);
+    }
+    
+    private void administradorGetRestaurant(Protocol protocolRequest){
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response = service.getRestaurant(id);
+        output.print(response);
+    }
+    
+    private void administradorGetClient(Protocol protocolRequest){
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response = service.getCliente(id);
+        output.print(response);
     }
 
     /**

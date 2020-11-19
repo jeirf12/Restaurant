@@ -14,7 +14,9 @@ import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaPedidos;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
+import co.unicauca.microkernel.common.entities.Cliente;
 import co.unicauca.microkernel.common.entities.Pedido;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -60,6 +62,9 @@ public class FramePrincipalAdmin extends JFrame {
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             this.estilo();
+            for(int i = 0 ; i< idRestaurantes.size(); i++){
+                System.out.println("["+i+"]="+idRestaurantes.get(i));
+            }
             idRestaurante = idRestaurantes;
             service = getInstance().getClienteService();
             servicioRestaurante = new ClienteService(service);
@@ -77,9 +82,10 @@ public class FramePrincipalAdmin extends JFrame {
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
+            
             lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
+            photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
 
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
@@ -187,13 +193,11 @@ public class FramePrincipalAdmin extends JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE))
-                        .addContainerGap(594, Short.MAX_VALUE))
-                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
+                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE)))
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
             pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,19 +205,19 @@ public class FramePrincipalAdmin extends JFrame {
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNomUsu)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblNombreUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombreRestaurante)
+                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreUsuario)
-                    .addComponent(lblNomUsu))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreRestaurante)
-                    .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(201, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -627,6 +631,14 @@ public class FramePrincipalAdmin extends JFrame {
             this.crearTablaEspeciales();
         } catch (Exception ex) {
             Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Restaurante aux = this.servicioRestaurante.getRestaurante(idSeleccionado);
+            if(aux.getImagen()!=null){
+                this.lblImagenInicio.setIcon(Utilities.crearIcono(aux.getImagen(), this.lblImagenInicio.getWidth(), this.lblImagenInicio.getHeight()));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 

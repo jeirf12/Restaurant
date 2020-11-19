@@ -45,7 +45,6 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
      */
     public FramePrincipalCliente(int parIdCliente) {
     try {
-
             service = getInstance().getClienteService();
             servicioRestaurante = new ClienteService(service);
             //INICIALIZANDO TABLAS
@@ -65,7 +64,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             //this.crearTablaHistoria(estadoPedido);
 
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
+            photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
