@@ -1187,4 +1187,36 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
         }
         return response;
     }
+
+    /**
+     * obtine los recurso en base al nombre
+     * @param nombre nombre clave del recurso
+     * @return string con la informacion necesario para contruir un recurso
+     */
+    @Override
+    public String getRecurso(String nombre) {
+         List<Recurso> list=new ArrayList<>();
+        String response=null;
+        System.out.println("Entered the obtener recurso: "+nombre);
+        try{
+            this.connect();
+            String sql = "SELECT REC_NOMBRE, REC_RECURSO FROM RECURSOS WHERE REC_NOMBRE = ?";
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {      
+                Recurso rec = new Recurso();
+                rec.setNombre(rs.getString(1));
+                rec.setRecurso(rs.getBytes(2));
+                list.add(rec);
+            }
+            response=listMenuToJson(list);
+            pstmt.close();
+            this.disconnect();
+        }catch (SQLException ex) {
+            Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "obtener recurso", ex);
+            response = "FALLO";
+        }
+        return response;
+    }
 }

@@ -132,4 +132,9 @@ public class ClienteService {
         Cliente aux = service.getClient(id);
         return aux;
     }
+    
+    public Recurso getRecuso(String nombre)throws Exception{
+        Recurso aux = service.getRecuso(nombre);
+        return aux;
+    }
 }

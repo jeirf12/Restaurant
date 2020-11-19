@@ -715,6 +715,36 @@ public class ClienteAccessSocket implements IClienteAccess {
         List<Cliente> lista = gson.fromJson(respuestaConsulta, list);
         return lista.get(0);
     }
+
+      @Override
+    public Recurso getRecuso(String nombre) throws Exception {
+        var requestJson = getRecursoJson(nombre);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonRecurso(response);
+    }
+    private String getRecursoJson(String nombre){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("sistema");
+        protocol.setAction("getRecurso");
+        protocol.addParameter("clave", "" + nombre);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+      
+     private Recurso convertJsonRecurso(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Recurso>>(){}.getType();
+        List<Recurso> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
     
     @Override
     public List<Pedido> listPedido(int idRestaurante) throws Exception {
@@ -923,4 +953,5 @@ public class ClienteAccessSocket implements IClienteAccess {
 
         return requestJson;
     }
+
 }

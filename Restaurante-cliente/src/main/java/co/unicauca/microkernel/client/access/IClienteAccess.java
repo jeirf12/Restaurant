@@ -88,6 +88,8 @@ public interface IClienteAccess {
     public Restaurante getRestaurante(int id)throws Exception;
     
     public Cliente getClient(int id)throws Exception;
+    
+    public Recurso getRecuso(String nombre)throws Exception;
 
     public List<Pedido> listPedido(int idRestaurante)throws Exception;
     

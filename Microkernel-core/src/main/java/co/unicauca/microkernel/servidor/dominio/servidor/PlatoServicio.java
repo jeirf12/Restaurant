@@ -117,6 +117,10 @@ public class PlatoServicio {
         return repositorio.getClient(id);
     }
     
+    public String getRecurso(String nombre){
+        return repositorio.getRecurso(nombre);
+    }
+    
     public String listPedido(int idRestaurante){
         return repositorio.listaPedido(idRestaurante);
     }

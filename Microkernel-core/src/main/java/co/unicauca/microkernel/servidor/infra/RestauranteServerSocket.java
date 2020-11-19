@@ -301,12 +301,22 @@ public class RestauranteServerSocket implements Runnable {
              if (protocolRequest.getAction().equals("validarAcceso")) {
                     this.validarAcceso(protocolRequest);
                 }
+             if(protocolRequest.getAction().equals("getRecurso")){
+                    getRecurso(protocolRequest);
+                }
              break;
 
         }
 
     }
 
+    private void getRecurso(Protocol protocolRequest){
+        String nombre = protocolRequest.getParameters().get(0).getValue();
+        String response = null;
+        response = service.getRecurso(nombre);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
     /**
      * recibe un protocolo con la informacion necesarioa para modificar el plato
      * del dia en la base de datos.

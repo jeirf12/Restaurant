@@ -16,6 +16,7 @@ import co.unicauca.microkernel.client.gestionTabla.TablaPedidos;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
 import co.unicauca.microkernel.common.entities.Cliente;
 import co.unicauca.microkernel.common.entities.Pedido;
+import co.unicauca.microkernel.common.entities.Recurso;
 import co.unicauca.microkernel.common.entities.Restaurante;
 import co.unicauca.microkernel.common.infra.Protocol;
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import static javax.swing.JOptionPane.showConfirmDialog;
@@ -88,7 +90,7 @@ public class FramePrincipalAdmin extends JFrame {
             
             this.showInfoUsuario();
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
+            //photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -126,6 +128,23 @@ public class FramePrincipalAdmin extends JFrame {
         /* Create and display the form */
     }
     
+    private void fijarNula(JLabel refLabel, byte[] imagen, String nombre){
+        if (imagen != null) {
+            refLabel.setIcon(Utilities.crearIcono(imagen, refLabel.getWidth(), refLabel.getHeight()));
+        } else {
+            try {
+                Recurso aux;
+                aux = this.servicioRestaurante.getRecuso(nombre);
+                if(aux!=null){
+                    refLabel.setIcon(Utilities.crearIcono(aux.getRecurso(), refLabel.getWidth(), refLabel.getHeight()));
+                }else{
+                    refLabel.setIcon(null);
+                }
+            } catch (Exception ex) {
+                refLabel.setIcon(null);
+            }
+        }
+    }
     private void showInfoUsuario(){
         try {
             Cliente aux = this.servicioRestaurante.getClient(this.IdUsuario);
@@ -133,7 +152,7 @@ public class FramePrincipalAdmin extends JFrame {
                 this.lblNombreUsuario.setText("NOMBRE: "+aux.getNombre());
                 this.lblDireccionUsuario.setText("DIRECCION: carrera "+ aux.getCarrera()+" calle "+aux.getCalle());
                 this.lblTipoUsuario1.setText("TIPO: "+aux.getTipo()+" de restaurante");
-                this.lblImagenUsuario.setIcon(Utilities.crearIcono(aux.getImagen(), this.lblImagenUsuario.getWidth(),this.lblImagenUsuario.getHeight()));
+                this.fijarNula(this.lblImagenUsuario, aux.getImagen(), "FOTOPERFIL");
             }else{
                 System.out.println("id: "+this.IdUsuario);
             }
@@ -501,13 +520,7 @@ public class FramePrincipalAdmin extends JFrame {
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
-        if (imagen != null) {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth()
-                    , this.lblImagenRacion.getHeight()));
-        } else {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull)
-                    , lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
-        }
+        this.fijarNula(this.lblImagenRacion, imagen, "FOTONULA");
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -539,7 +552,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                this.fijarNula(this.lblImagenRacion, null, "FOTONULA");
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -568,14 +581,7 @@ public class FramePrincipalAdmin extends JFrame {
         int column = tblEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        if (imagen != null) {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth()
-                    , this.lblImagenEspecial.getHeight()));
-        } else {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
-                    , this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
-
-        }
+        this.fijarNula(this.lblImagenEspecial, imagen, "FOTONULA");
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -607,8 +613,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
-                                        , lblImagenEspecial.getWidth(), lblImagenEspecial.getHeight()));
+                                this.fijarNula(this.lblImagenEspecial, null, "FOTONULA");
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -677,9 +682,7 @@ public class FramePrincipalAdmin extends JFrame {
         }
         try {
             Restaurante aux = this.servicioRestaurante.getRestaurante(idSeleccionado);
-            if(aux.getImagen()!=null){
-                this.lblImagenInicio.setIcon(Utilities.crearIcono(aux.getImagen(), this.lblImagenInicio.getWidth(), this.lblImagenInicio.getHeight()));
-            }
+            this.fijarNula(this.lblImagenInicio, aux.getImagen(), "FOTONULA");
         } catch (Exception ex) {
             Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         }
