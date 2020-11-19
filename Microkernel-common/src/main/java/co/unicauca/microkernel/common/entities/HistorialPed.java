@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
  */
 public class HistorialPed {
     
-    private int idRes;
+    private int idPed;
     private String nombre;
     private String fechaCreado;
     private String fechaPagado;
 
-    public HistorialPed(int idRes, String nombre, String fechaCreado, String fechaPagado) {
-        this.idRes = idRes;
+    public HistorialPed(int idPed, String nombre, String fechaCreado, String fechaPagado) {
+        this.idPed = idPed;
         this.nombre = nombre;
         this.fechaCreado = fechaCreado;
         this.fechaPagado = fechaPagado;
@@ -52,12 +52,12 @@ public class HistorialPed {
         this.fechaPagado = fechaPagado;
     }
 
-    public int getIdRes() {
-        return idRes;
+    public int getIdPed() {
+        return idPed;
     }
 
-    public void setIdRes(int idRes) {
-        this.idRes = idRes;
+    public void setIdPed(int idPed) {
+        this.idPed = idPed;
     }
     
     

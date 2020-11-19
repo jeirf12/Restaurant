@@ -9,11 +9,11 @@ import co.unicauca.microkernel.common.interfaces.IDeliveryPlugin;
 public class TradicionalDeliveryPlugin implements IDeliveryPlugin {
 
     @Override
-    public double calculateCostDomicile(Delivery delivery) {
+    public int calculateCostDomicile(Delivery delivery) {
         
         int distancia = (int)(delivery.getDistance());
 
-        double cost;
+        int cost;
         
         cost = (distancia*50);
         
@@ -21,12 +21,12 @@ public class TradicionalDeliveryPlugin implements IDeliveryPlugin {
         return cost;
     }
     @Override
-    public double impuestoRestaurante(Delivery delivery){
+    public int impuestoRestaurante(Delivery delivery){
         int sumaOrder = delivery.getPrecio();
         
-        double cost;
+        int cost;
         
-        cost = sumaOrder+(sumaOrder*0.11);
+        cost = sumaOrder+(int)(sumaOrder*0.11);
         
 
         return cost;

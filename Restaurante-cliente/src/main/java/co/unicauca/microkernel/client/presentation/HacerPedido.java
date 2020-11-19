@@ -75,7 +75,10 @@ public class HacerPedido extends javax.swing.JFrame {
         carritoR = new ArrayList<>();
         carritoE = new ArrayList<>();
         
+        this.crearTablaCarritoRacionesCf(pedido.getIdPedido());
+        this.crearTablaCarritoEspecialesCf(pedido.getIdPedido());
         this.crearTablaCarritoRaciones(pedido.getIdPedido());
+        this.crearTablaCarritoEspeciales(pedido.getIdPedido());
         this.crearTablaRaciones();
         this.crearTablaEspeciales();
         
@@ -153,6 +156,11 @@ public class HacerPedido extends javax.swing.JFrame {
                 "ID", "NOMBRE", "PRECIO", "CANTIDAD", "ACCION 1", "ACCION 2", "ACCION 3"
             }
         ));
+        tblCarritoRaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCarritoRacionesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblCarritoRaciones);
 
         lblCarritoRaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -173,9 +181,9 @@ public class HacerPedido extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCarritoRaciones)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
                         .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))))
+                        .addGap(35, 35, 35))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,9 +199,9 @@ public class HacerPedido extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
+                        .addGap(40, 40, 40)
                         .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("COMPRAR RACIONES", jPanel1);
@@ -230,6 +238,11 @@ public class HacerPedido extends javax.swing.JFrame {
                 "ID", "NOMBRE", "PRECIO", "CANTIDAD", "ACCION 1", "ACCION 2", "ACCION 3"
             }
         ));
+        tblCarritoPlatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCarritoPlatosMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblCarritoPlatos);
 
         lblCarritosPlatos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -270,7 +283,7 @@ public class HacerPedido extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(lblImagenPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("COMPRAR PLATOS ESPECIALES", jPanel2);
@@ -324,7 +337,7 @@ public class HacerPedido extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCarritoRacionesCf)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCarritoPlatosCf))
@@ -347,7 +360,7 @@ public class HacerPedido extends javax.swing.JFrame {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(38, 38, 38)
                 .addComponent(btnConfirmarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("CONFIRMAR PEDIDO", jPanel3);
@@ -356,9 +369,7 @@ public class HacerPedido extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 874, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,6 +426,7 @@ public class HacerPedido extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("CarritoE")) {
+
                     PlatoEspecialPed aux = new PlatoEspecialPed (pedido.getIdPedido(),this.especiales.get(row).getId_pe(),1);
                     System.out.println(aux.getPedId());
                     try {
@@ -440,6 +452,86 @@ public class HacerPedido extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnConfirmarPedidoActionPerformed
+
+    private void tblCarritoRacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCarritoRacionesMouseClicked
+        int column = tblCarritoRaciones.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / tblCarritoRaciones.getRowHeight();
+        
+        if (row < tblCarritoRaciones.getRowCount() && row >= 0 && column < tblCarritoRaciones.getColumnCount() && column >= 0) {
+            Object value = tblCarritoRaciones.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                var boton = (JButton) value;
+                if (boton.getName().equals("Aumentar")) {
+                    try {
+                        this.servicioRestaurante.aumentarCantidad("RACION", this.carritoR.get(row).getIdCarrito(), this.carritoR.get(row).getCantidad());
+                        this.crearTablaCarritoRaciones(this.pedido.getIdPedido());
+                        this.crearTablaCarritoRacionesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (boton.getName().equals("Disminuir")) {
+                    try {
+                        this.servicioRestaurante.disminuirCantidad("RACION", this.carritoR.get(row).getIdCarrito(), this.carritoR.get(row).getCantidad());
+                        this.crearTablaCarritoRaciones(this.pedido.getIdPedido());
+                        this.crearTablaCarritoRacionesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (boton.getName().equals("Eliminar")) {
+                    try {
+                        this.servicioRestaurante.deleteRacionPedido(this.carritoR.get(row).getIdCarrito());
+                        this.crearTablaCarritoRaciones(this.pedido.getIdPedido());
+                        this.crearTablaCarritoRacionesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_tblCarritoRacionesMouseClicked
+
+    private void tblCarritoPlatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCarritoPlatosMouseClicked
+        int column = tblCarritoPlatos.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / tblCarritoPlatos.getRowHeight();
+        
+        if (row < tblCarritoPlatos.getRowCount() && row >= 0 && column < tblCarritoPlatos.getColumnCount() && column >= 0) {
+            Object value = tblCarritoPlatos.getValueAt(row, column);
+            if (value instanceof JButton) {
+                ((JButton) value).doClick();
+                var boton = (JButton) value;
+                if (boton.getName().equals("Aumentar")) {
+                    try {
+                        this.servicioRestaurante.aumentarCantidad("PLATO", this.carritoE.get(row).getIdCarrito(), this.carritoE.get(row).getCantidad());
+                        this.crearTablaCarritoEspeciales(this.pedido.getIdPedido());
+                        this.crearTablaCarritoEspecialesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (boton.getName().equals("Disminuir")) {
+                    try {
+                        this.servicioRestaurante.disminuirCantidad("PLATO", this.carritoE.get(row).getIdCarrito(), this.carritoE.get(row).getCantidad());
+                        this.crearTablaCarritoEspeciales(this.pedido.getIdPedido());
+                        this.crearTablaCarritoEspecialesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (boton.getName().equals("Eliminar")) {
+                    try {
+                        this.servicioRestaurante.deletePlatoEspecialPedido(this.carritoE.get(row).getIdCarrito());
+                        this.crearTablaCarritoEspeciales(this.pedido.getIdPedido());
+                        this.crearTablaCarritoEspecialesCf(this.pedido.getIdPedido());
+                    } catch (Exception ex) {
+                        Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_tblCarritoPlatosMouseClicked
     public void crearTablaCarritoEspecialesCf(int idPedido) throws Exception {
         this.tblCarritoPlatosCf.removeAll();
         this.serviceListarCarritoEspeciales(idPedido);
@@ -473,6 +565,7 @@ public class HacerPedido extends javax.swing.JFrame {
     }
     private void serviceListarRaciones() throws Exception {
         this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),diaSemana(),"administrador");
+        //this.raciones = servicioRestaurante.listMenuDayAll(pedido.getResId(),"administrador");
     }
     public void crearTablaEspeciales() throws Exception {
         this.tblRaciones.removeAll();

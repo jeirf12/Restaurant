@@ -62,9 +62,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearTablaRestaurantes(tipoRestaurante);
             this.crearTablaHistoria(estadoPedido);
-            //this.crearTablaHistoria(estadoPedido);
 
-            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
             photoNull = "\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
@@ -260,9 +258,10 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                     Pedido pedido = new Pedido(idCliente,this.restaurantes.get(row).getId());
                     try {
                         int idPedido = Integer.parseInt(this.servicioRestaurante.addPedido(pedido));
-                        Pedido aux = new Pedido(idPedido,idCliente,this.restaurantes.get(row).getId());
+                        Pedido aux = new Pedido(idPedido,idCliente);
                         HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         frameRacion.setVisible(true);
+                        this.setVisible(false);
                     } catch (Exception ex) {
                         Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -281,17 +280,18 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
 
     private void tblPedidosEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPedidosEstadoMouseClicked
         int column = tblPedidosEstado.getColumnModel().getColumnIndexAtX(evt.getX());
-        int row = evt.getY() / tblRestaurantes.getRowHeight();
+        int row = evt.getY() / tblPedidosEstado.getRowHeight();
         
-        if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
+        if (row < tblPedidosEstado.getRowCount() && row >= 0 && column < tblPedidosEstado.getColumnCount() && column >= 0) {
             Object value = tblPedidosEstado.getValueAt(row, column);
             if (value instanceof JButton) {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("Visualizar")) {
                     String aux = String.valueOf(cbxEstadoDelPedido.getSelectedItem());
+                    System.out.println(aux+"ESTE ES EL ESTADO DEL PEDIDO");
                     if (aux.equals("Creado")){
-                        Pedido pedido = new Pedido(idCliente,this.historiaPedidos.get(row).getIdRes());
+                        Pedido pedido = new Pedido(this.historiaPedidos.get(row).getIdPed(),idCliente);
                         try {
                             HacerPedido frameRacion = new HacerPedido(pedido,this.servicioRestaurante);
                             frameRacion.setVisible(true);
@@ -299,6 +299,13 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                             Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }else{
+                        Pedido pedido = new Pedido(this.historiaPedidos.get(row).getIdPed(),idCliente);
+                        try {
+                            HacerPedido frameRacion = new HacerPedido(pedido,this.servicioRestaurante);
+                            frameRacion.setVisible(true);
+                        }catch (Exception ex) {
+                            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         //se va a confirmar pedido donde esta el monto
                     }
                     
