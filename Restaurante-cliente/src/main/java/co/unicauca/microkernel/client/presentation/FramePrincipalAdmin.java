@@ -17,6 +17,7 @@ import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
 import co.unicauca.microkernel.common.entities.Cliente;
 import co.unicauca.microkernel.common.entities.Pedido;
 import co.unicauca.microkernel.common.entities.Restaurante;
+import co.unicauca.microkernel.common.infra.Protocol;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,12 +54,14 @@ public class FramePrincipalAdmin extends JFrame {
     private int idSeleccionado;
     private String photoNull;
     private List<Pedido> pedidos;
+    private int IdUsuario;
 
     /**
      * Creates new form FramePrincipalAdmin
+     * @param idRestaurantes
      */
-    public FramePrincipalAdmin(List<String> idRestaurantes) {
-
+    public FramePrincipalAdmin(List<String> idRestaurantes, int idUsuario) {
+        this.IdUsuario = idUsuario;
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             this.estilo();
@@ -83,10 +86,9 @@ public class FramePrincipalAdmin extends JFrame {
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
             
-            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
+            this.showInfoUsuario();
             //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
             photoNull = "F:\\proyectos\\proyectoCorte2\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
-
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -124,6 +126,22 @@ public class FramePrincipalAdmin extends JFrame {
         /* Create and display the form */
     }
     
+    private void showInfoUsuario(){
+        try {
+            Cliente aux = this.servicioRestaurante.getClient(this.IdUsuario);
+            if (aux != null){
+                this.lblNombreUsuario.setText("NOMBRE: "+aux.getNombre());
+                this.lblDireccionUsuario.setText("DIRECCION: carrera "+ aux.getCarrera()+" calle "+aux.getCalle());
+                this.lblTipoUsuario1.setText("TIPO: "+aux.getTipo()+" de restaurante");
+                this.lblImagenUsuario.setIcon(Utilities.crearIcono(aux.getImagen(), this.lblImagenUsuario.getWidth(),this.lblImagenUsuario.getHeight()));
+            }else{
+                System.out.println("id: "+this.IdUsuario);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -139,9 +157,12 @@ public class FramePrincipalAdmin extends JFrame {
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
-        lblNomUsu = new javax.swing.JLabel();
         cbxRestaurante = new javax.swing.JComboBox<>();
         lblImagenInicio = new javax.swing.JLabel();
+        lblInformacionUsuario = new javax.swing.JLabel();
+        lblDireccionUsuario = new javax.swing.JLabel();
+        lblTipoUsuario1 = new javax.swing.JLabel();
+        lblTituloRestaurante = new javax.swing.JLabel();
         pnlRaciones = new javax.swing.JPanel();
         pnlFondoRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
@@ -171,13 +192,25 @@ public class FramePrincipalAdmin extends JFrame {
         lblNombreUsuario.setText("Nombre: ");
 
         lblNombreRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblNombreRestaurante.setText("Restaurante:");
+        lblNombreRestaurante.setText("Restaurantes:");
 
         cbxRestaurante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxRestauranteActionPerformed(evt);
             }
         });
+
+        lblInformacionUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblInformacionUsuario.setText("INFORMACION DEL USUARIO");
+
+        lblDireccionUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDireccionUsuario.setText("direccion:");
+
+        lblTipoUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblTipoUsuario1.setText("Tipo: ");
+
+        lblTituloRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloRestaurante.setText("nombre de restaurante");
 
         javax.swing.GroupLayout pnlInfoUsuarioLayout = new javax.swing.GroupLayout(pnlInfoUsuario);
         pnlInfoUsuario.setLayout(pnlInfoUsuarioLayout);
@@ -186,17 +219,20 @@ public class FramePrincipalAdmin extends JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE)))
-                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDireccionUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTipoUsuario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblInformacionUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTituloRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16))
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
@@ -204,20 +240,26 @@ public class FramePrincipalAdmin extends JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(40, 40, 40)
                         .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNomUsu)
                         .addGap(18, 18, 18)
-                        .addComponent(lblNombreUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombreRestaurante)
-                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(lblInformacionUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNombreUsuario)
+                        .addGap(2, 2, 2)
+                        .addComponent(lblTipoUsuario1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDireccionUsuario))
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
+                        .addGap(9, 9, 9)
+                        .addComponent(lblTituloRestaurante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -622,6 +664,7 @@ public class FramePrincipalAdmin extends JFrame {
             String[] dat = idRestaurante.get(i).split("-");
             if (dat[1].equals(sel)) {
                 this.idSeleccionado = Integer.parseInt(dat[0]);
+                this.lblTituloRestaurante.setText(sel);
                 break;
             }
         }
@@ -698,14 +741,17 @@ public class FramePrincipalAdmin extends JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jtpPestanias;
+    private javax.swing.JLabel lblDireccionUsuario;
     private javax.swing.JLabel lblFiltro;
     private javax.swing.JLabel lblImagenEspecial;
     private javax.swing.JLabel lblImagenInicio;
     private javax.swing.JLabel lblImagenRacion;
     private javax.swing.JLabel lblImagenUsuario;
-    private javax.swing.JLabel lblNomUsu;
+    private javax.swing.JLabel lblInformacionUsuario;
     private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblTipoUsuario1;
+    private javax.swing.JLabel lblTituloRestaurante;
     private javax.swing.JPanel pnlEspeciales;
     private javax.swing.JPanel pnlFondoEspeciales;
     private javax.swing.JPanel pnlFondoRaciones;

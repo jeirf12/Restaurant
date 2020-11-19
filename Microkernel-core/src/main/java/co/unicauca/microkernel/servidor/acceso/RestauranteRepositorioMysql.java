@@ -3,6 +3,7 @@ package co.unicauca.microkernel.servidor.acceso;
 import co.unicauca.microkernel.app.Application;
 import co.unicauca.microkernel.business.DeliveryService;
 import co.unicauca.microkernel.common.entities.*;
+import co.unicauca.microkernel.common.infra.Protocol;
 import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.plugin.manager.DeliveryPluginManager;
 import com.google.gson.Gson;
@@ -867,7 +868,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             this.connect();
             String sqlTipo = "SELECT CLI_TIPO"
                         + " from cliente"
-                        + " where CLI_NOMBRE = '" + cliente.getNombre() + "' and CLI_CONTRASENIA = '"
+                        + " where CLI_NOMBRE LIKE BINARY '" + cliente.getNombre() + "' and CLI_CONTRASENIA LIKE BINARY '"
                     + cliente.getContrasenia() + "'";
             PreparedStatement pstmtTipo = conn.prepareStatement(sqlTipo);
             ResultSet rsTipo = pstmtTipo.executeQuery();
@@ -877,30 +878,30 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
             }
             System.out.println(tipo);
             pstmtTipo.close();
-            if(tipo.equals("ADMINISTRADOR")){
+            if (tipo.equals("ADMINISTRADOR")) {
                 String sql = "Select c.CLI_TIPO,r.RES_ID,r.RES_NOMBRE from cliente c inner join restaurante r"
-                        + " on c.CLI_ID=r.CLI_ID where c.CLI_NOMBRE = '" + cliente.getNombre() + "' and c.CLI_CONTRASENIA = '"
+                        + " on c.CLI_ID=r.CLI_ID where c.CLI_NOMBRE LIKE BINARY '" + cliente.getNombre() + "' and c.CLI_CONTRASENIA LIKE BINARY '"
                         + cliente.getContrasenia() + "'";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 ResultSet rs1 = pstmt.executeQuery();
                 while (rs1.next()) {
                     resultado +=rs1.getString(1)+"-"+rs1.getInt(2)+"-"+rs1.getString(3)+"-";
                 }
-            pstmt.close();
+                pstmt.close();
             }
-            if(tipo.equals("COMPRADOR")){
+            if (tipo.equals("COMPRADOR")) {
                 String sql = "Select CLI_TIPO,CLI_ID,CLI_CONTRASENIA"
                         + " from cliente"
-                        + " where CLI_NOMBRE = '" + cliente.getNombre() + "' and CLI_CONTRASENIA = '"
+                        + " where CLI_NOMBRE LIKE BINARY '" + cliente.getNombre() + "' and CLI_CONTRASENIA LIKE BINARY '"
                         + cliente.getContrasenia() + "'";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 ResultSet rs1 = pstmt.executeQuery();
                 while (rs1.next()) {
-                    resultado +=rs1.getString(1)+"-"+rs1.getString(2)+"-"+rs1.getString(3);
+                    resultado +=rs1.getString(1)+"-"+rs1.getInt(2)+"-"+rs1.getString(3)+"-";
                 }
-            pstmt.close();
+                pstmt.close();
             }
-
+            
             this.disconnect();
         } catch (SQLException ex) {
             Logger.getLogger(RestauranteRepositorioMysql.class.getName()).log(Level.SEVERE, "Error al validar usuario", ex);
@@ -1160,10 +1161,10 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     public String getClient(int id) {
         List<Cliente> list=new ArrayList<>();
         String response=null;
-        System.out.println("Entered the obtener cliente");
+        System.out.println("Entered the obtener cliente: "+id);
         try{
             this.connect();
-            String sql = "SELECT CLI_ID, CLI_NOMBRE, CLI_CARRERA, CLI_CALLE, CLI_FOTO, CLI_TIPO WHERE CLI_ID = ?";
+            String sql = "SELECT CLI_ID, CLI_NOMBRE, CLI_CARRERA, CLI_CALLE, CLI_FOTO, CLI_TIPO FROM CLIENTE WHERE CLI_ID = ?";
             PreparedStatement pstmt=conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -1173,7 +1174,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
                 cli.setNombre(rs.getString(2));
                 cli.setCarrera(rs.getInt(3));
                 cli.setCalle(rs.getInt(4));
-                cli.setIdCliente(rs.getByte(5));
+                cli.setImagen(rs.getBytes(5));
                 cli.setTipo(TipoClien.valueOf(rs.getString(6)));
                 list.add(cli);
             }

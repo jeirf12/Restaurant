@@ -3,6 +3,7 @@ package co.unicauca.microkernel.client.domain;
 import co.unicauca.microkernel.client.access.IClienteAccess;
 import java.util.List;
 import co.unicauca.microkernel.common.entities.*;
+import co.unicauca.microkernel.common.infra.Protocol;
 
 /**
  * servicios que el cliente puede usar del servidor (mascaras)

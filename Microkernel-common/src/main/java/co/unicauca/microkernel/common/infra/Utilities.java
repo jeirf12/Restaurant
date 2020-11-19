@@ -59,7 +59,7 @@ public class Utilities {
         byte[] icono;
         try {
             File rut=new File(ruta);
-            icono = new byte[(int) rut.length()];
+            icono = new byte[(int)rut.length()];
             InputStream input = new FileInputStream(ruta);
             input.read(icono);
         } catch (Exception ex) {
