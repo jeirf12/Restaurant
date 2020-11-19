@@ -75,4 +75,6 @@ public class Utilities {
         iconoEscalado = new ImageIcon(imgEscalada);
         return iconoEscalado;
     }
+     
+     
 }

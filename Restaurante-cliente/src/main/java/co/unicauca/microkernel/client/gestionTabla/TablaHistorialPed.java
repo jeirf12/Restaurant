@@ -67,7 +67,7 @@ public class TablaHistorialPed {
                 var btnVisualizar = new JButton("Visualizar");
                 btnVisualizar.setName("Visualizar");
                 //btnAgregar.setSize(new Dimension (100,50));
-                informacion[x][ID] = historial.get(x).getIdRes() + "";
+                informacion[x][ID] = historial.get(x).getIdPed() + "";
                 informacion[x][NOMBRE] = historial.get(x).getNombre() + "";
                 informacion[x][FECHA_CREADO] = historial.get(x).getFechaCreado() + "";
                 informacion[x][FECHA_PAGADO] = historial.get(x).getFechaPagado() + "";

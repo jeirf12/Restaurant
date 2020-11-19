@@ -128,23 +128,7 @@ public class FramePrincipalAdmin extends JFrame {
         /* Create and display the form */
     }
     
-    private void fijarNula(JLabel refLabel, byte[] imagen, String nombre){
-        if (imagen != null) {
-            refLabel.setIcon(Utilities.crearIcono(imagen, refLabel.getWidth(), refLabel.getHeight()));
-        } else {
-            try {
-                Recurso aux;
-                aux = this.servicioRestaurante.getRecuso(nombre);
-                if(aux!=null){
-                    refLabel.setIcon(Utilities.crearIcono(aux.getRecurso(), refLabel.getWidth(), refLabel.getHeight()));
-                }else{
-                    refLabel.setIcon(null);
-                }
-            } catch (Exception ex) {
-                refLabel.setIcon(null);
-            }
-        }
-    }
+    
     private void showInfoUsuario(){
         try {
             Cliente aux = this.servicioRestaurante.getClient(this.IdUsuario);
@@ -152,7 +136,7 @@ public class FramePrincipalAdmin extends JFrame {
                 this.lblNombreUsuario.setText("NOMBRE: "+aux.getNombre());
                 this.lblDireccionUsuario.setText("DIRECCION: carrera "+ aux.getCarrera()+" calle "+aux.getCalle());
                 this.lblTipoUsuario1.setText("TIPO: "+aux.getTipo()+" de restaurante");
-                this.fijarNula(this.lblImagenUsuario, aux.getImagen(), "FOTOPERFIL");
+                this.servicioRestaurante.fijarImagen(this.lblImagenUsuario, aux.getImagen(), "FOTOPERFIL");
             }else{
                 System.out.println("id: "+this.IdUsuario);
             }
@@ -520,7 +504,7 @@ public class FramePrincipalAdmin extends JFrame {
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
-        this.fijarNula(this.lblImagenRacion, imagen, "FOTONULA");
+        this.servicioRestaurante.fijarImagen(this.lblImagenRacion, imagen, "FOTONULA");
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -552,7 +536,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.fijarNula(this.lblImagenRacion, null, "FOTONULA");
+                                this.servicioRestaurante.fijarImagen(this.lblImagenRacion, null, "FOTONULA");
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -581,7 +565,7 @@ public class FramePrincipalAdmin extends JFrame {
         int column = tblEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        this.fijarNula(this.lblImagenEspecial, imagen, "FOTONULA");
+        this.servicioRestaurante.fijarImagen(this.lblImagenEspecial, imagen, "FOTONULA");
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -613,7 +597,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.fijarNula(this.lblImagenEspecial, null, "FOTONULA");
+                                this.servicioRestaurante.fijarImagen(this.lblImagenEspecial, null, "FOTONULA");
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -682,7 +666,7 @@ public class FramePrincipalAdmin extends JFrame {
         }
         try {
             Restaurante aux = this.servicioRestaurante.getRestaurante(idSeleccionado);
-            this.fijarNula(this.lblImagenInicio, aux.getImagen(), "FOTONULA");
+            this.servicioRestaurante.fijarImagen(this.lblImagenInicio, aux.getImagen(), "FOTONULA");
         } catch (Exception ex) {
             Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         }

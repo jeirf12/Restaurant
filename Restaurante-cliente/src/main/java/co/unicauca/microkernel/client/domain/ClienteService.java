@@ -4,6 +4,8 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import java.util.List;
 import co.unicauca.microkernel.common.entities.*;
 import co.unicauca.microkernel.common.infra.Protocol;
+import co.unicauca.microkernel.common.infra.Utilities;
+import javax.swing.JLabel;
 
 /**
  * servicios que el cliente puede usar del servidor (mascaras)
@@ -136,5 +138,23 @@ public class ClienteService {
     public Recurso getRecuso(String nombre)throws Exception{
         Recurso aux = service.getRecuso(nombre);
         return aux;
+    }
+    
+    public void fijarImagen(JLabel refLabel, byte[] imagen, String nombre){
+        if (imagen != null) {
+            refLabel.setIcon(Utilities.crearIcono(imagen, refLabel.getWidth(), refLabel.getHeight()));
+        } else {
+            try {
+                Recurso aux;
+                aux = this.getRecuso(nombre);
+                if(aux!=null){
+                    refLabel.setIcon(Utilities.crearIcono(aux.getRecurso(), refLabel.getWidth(), refLabel.getHeight()));
+                }else{
+                    refLabel.setIcon(null);
+                }
+            } catch (Exception ex) {
+                refLabel.setIcon(null);
+            }
+        }
     }
 }
