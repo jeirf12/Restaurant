@@ -22,7 +22,10 @@ import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.RacionPed;
 import co.unicauca.microkernel.common.infra.Utilities;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -469,7 +472,7 @@ public class HacerPedido extends javax.swing.JFrame {
         tabRacionesHaP.ver_tabla(tblRaciones, raciones);
     }
     private void serviceListarRaciones() throws Exception {
-        this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),"MIERCOLES","administrador");
+        this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),diaSemana(),"administrador");
     }
     public void crearTablaEspeciales() throws Exception {
         this.tblRaciones.removeAll();
@@ -480,6 +483,35 @@ public class HacerPedido extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(pedido.getResId(), "administrador");
     }
     
+    private String diaSemana(){
+        Calendar fecha = Calendar.getInstance();
+        int diaSemana = fecha.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+        String dia = "";
+        switch (diaSemana){
+            case 1:
+                dia = "LUNES";
+                break;
+            case 2:
+                dia = "MARTES";
+                break;
+            case 3:
+                dia = "MIERCOLES";
+                break;
+            case 4:
+                dia = "JUEVES";
+                break;
+            case 5:
+                dia = "VIERNES";
+                break;
+            case 6:
+                dia = "SABADO";
+                break;
+            case 7:
+                dia = "DOMINGO";
+                break;
+        }
+        return dia;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmarPedido;
     private javax.swing.JPanel jPanel1;
