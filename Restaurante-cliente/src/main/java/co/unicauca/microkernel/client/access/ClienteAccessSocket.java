@@ -357,6 +357,9 @@ public class ClienteAccessSocket implements IClienteAccess {
     @Override
     public String addPedido(Pedido instancia) throws Exception {
         String jsonResponse = null;
+        System.out.println("antes de la llamada");
+        System.out.println("cli_id:"+instancia.getCliente());
+        System.out.println("cli_restaurante:"+instancia.getIdPedido());
         //devuelve un string en formato Json que lo que se enviara
         var requestJson = crearPedido(instancia);
         var response=procesarConexion(requestJson);
@@ -653,7 +656,99 @@ public class ClienteAccessSocket implements IClienteAccess {
         String response=procesarConexion(requestJson);
         return jsonListMenuDay(response);
     }
+    
+    @Override
+    public Restaurante getRestaurante(int id) throws Exception {
+        var requestJson = getRestauranteJson(id);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonRestaurante(response);
+    }
+     private Restaurante convertJsonRestaurante(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Restaurante>>(){}.getType();
+        List<Restaurante> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
+    private String getRestauranteJson(int id){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("administrador");
+        protocol.setAction("getRestaurant");
+        protocol.addParameter("clave", "" + id);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+    
 
+
+    @Override
+    public Cliente getClient(int id)throws Exception {
+        var requestJson = getClientJson(id);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonClient(response);
+    }
+    
+    private String getClientJson(int id){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("administrador");
+        protocol.setAction("getClient");
+        protocol.addParameter("clave", "" + id);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+    
+      private Cliente convertJsonClient(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Cliente>>(){}.getType();
+        List<Cliente> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
+
+      @Override
+    public Recurso getRecuso(String nombre) throws Exception {
+        var requestJson = getRecursoJson(nombre);
+        String response = procesarConexion(requestJson);
+        if(response.equals("FALLO")){
+            out.println("devolvio fallo");
+            return null;
+        }
+        out.println("devolvio ");
+        return this.convertJsonRecurso(response);
+    }
+    private String getRecursoJson(String nombre){
+        var protocol = new Protocol();
+        //el orden debe ser respetado
+        protocol.setResource("sistema");
+        protocol.setAction("getRecurso");
+        protocol.addParameter("clave", "" + nombre);
+        var gson = new Gson();
+        var requestJson = gson.toJson(protocol);
+        out.println("json enviado: "+requestJson);
+        return requestJson;
+    }
+      
+     private Recurso convertJsonRecurso(String respuestaConsulta){
+        var gson=new Gson();
+        var list = new TypeToken<List<Recurso>>(){}.getType();
+        List<Recurso> lista = gson.fromJson(respuestaConsulta, list);
+        return lista.get(0);
+    }
+    
     @Override
     public List<Pedido> listPedido(int idRestaurante) throws Exception {
         String accion="listPedido";
@@ -861,4 +956,5 @@ public class ClienteAccessSocket implements IClienteAccess {
 
         return requestJson;
     }
+
 }

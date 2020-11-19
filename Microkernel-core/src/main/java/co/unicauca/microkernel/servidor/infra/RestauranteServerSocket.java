@@ -203,6 +203,14 @@ public class RestauranteServerSocket implements Runnable {
                     this.administradorRegistrarRacionDia(protocolRequest);       
                 }
                 
+                if(protocolRequest.getAction().equals("getRestaurant")){
+                    this.administradorGetRestaurant(protocolRequest);       
+                }
+                
+                if(protocolRequest.getAction().equals("getClient")){
+                    this.administradorGetClient(protocolRequest);
+                }
+                
                 if (protocolRequest.getAction().equals("listMenuDayAll")) {
                     this.listarMenuDiaTodos(protocolRequest);
                 }
@@ -237,6 +245,7 @@ public class RestauranteServerSocket implements Runnable {
                 if (protocolRequest.getAction().equals("listarMenuDia")) {
                     this.listarMenuDia(protocolRequest);
                 }
+                
                 if (protocolRequest.getAction().equals("listarMenuEspecial")) {
                     this.listarMenuEspecial(protocolRequest);
                 }
@@ -292,12 +301,22 @@ public class RestauranteServerSocket implements Runnable {
              if (protocolRequest.getAction().equals("validarAcceso")) {
                     this.validarAcceso(protocolRequest);
                 }
+             if(protocolRequest.getAction().equals("getRecurso")){
+                    getRecurso(protocolRequest);
+                }
              break;
 
         }
 
     }
 
+    private void getRecurso(Protocol protocolRequest){
+        String nombre = protocolRequest.getParameters().get(0).getValue();
+        String response = null;
+        response = service.getRecurso(nombre);
+        output.println(response);
+        Logger.getLogger(RestauranteServerSocket.class.getName()).log(Level.SEVERE, "response: "+response);
+    }
     /**
      * recibe un protocolo con la informacion necesarioa para modificar el plato
      * del dia en la base de datos.
@@ -468,6 +487,18 @@ public class RestauranteServerSocket implements Runnable {
         //se pasa el plato creado, y servicio llamara al repositorio
         response = service.saveRacionDia(racionD,idRestaurante);
         output.println(response);
+    }
+    
+    private void administradorGetRestaurant(Protocol protocolRequest){
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response = service.getRestaurant(id);
+        output.print(response);
+    }
+    
+    private void administradorGetClient(Protocol protocolRequest){
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        String response = service.getCliente(id);
+        output.print(response);
     }
 
     /**
@@ -666,16 +697,16 @@ public class RestauranteServerSocket implements Runnable {
     }
     private void adminAumentarCantidad(Protocol protocolRequest) {
         String typeOrden = protocolRequest.getParameters().get(0).getValue();
-        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
         String response;
         response = service.aumentarCantidad(typeOrden, idOrden, cantidadActual);
         output.println(response);
     }
     private void adminDisminuirCantidad(Protocol protocolRequest) {
         String typeOrden = protocolRequest.getParameters().get(0).getValue();
-        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int idOrden = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int cantidadActual = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
         String response;
         response = service.disminuirCantidad(typeOrden, idOrden, cantidadActual);
         output.println(response);

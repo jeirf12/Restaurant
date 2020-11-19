@@ -172,7 +172,7 @@ public class GUILogin extends javax.swing.JFrame {
                     this.setVisible(false);
                     JOptionPane.showMessageDialog(null, "Bienvenido");
                     this.limpiarCampos();
-                    FramePrincipalAdmin ingreso = new FramePrincipalAdmin(datoRestaurante);
+                    FramePrincipalAdmin ingreso = new FramePrincipalAdmin(datoRestaurante,idCliente);
                     ingreso.setVisible(true);
                     ingreso.pack();
                 }

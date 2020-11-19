@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Properties;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -74,5 +75,35 @@ public class Utilities {
         Image imgEscalada = i.getImage().getScaledInstance(anchura, altura, SCALE_SMOOTH);
         iconoEscalado = new ImageIcon(imgEscalada);
         return iconoEscalado;
+    }
+     
+    public static String DiaActual(){
+        java.util.Date fecha = new Date();
+        int dia = fecha.getDay();
+        String myDia=null;
+        switch (dia){
+            case 1:
+                myDia="LUNES";
+                break;
+            case 2:
+                myDia="MARTES";
+                break;
+            case 3:
+                myDia="MIERCOLES";
+                break;
+            case 4:
+                myDia="JUEVES";
+                break;
+            case 5:
+                myDia="VIERNES";
+                break;
+            case 6:
+                myDia="SABADO";
+                break;
+            case 7:
+                myDia="DOMINGO";
+                break; 
+        }
+        return myDia;
     }
 }
