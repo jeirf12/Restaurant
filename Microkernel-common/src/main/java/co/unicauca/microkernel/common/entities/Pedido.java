@@ -3,17 +3,44 @@ package co.unicauca.microkernel.common.entities;
 import java.time.LocalDateTime;
 
 /**
- *
- * @author jafes
+ *representa el pediado realizado por un cliente
+ * @author edynson, james, mateo, jhonfer,camilo
  */
 public class Pedido {
+    /**
+     * identificador del padido
+     */
     private int idPedido;
+    /**
+     * identificador del cliente
+     */
     private int cliente;
+    /**
+     * identificador del restaurante
+     */
     private int resId;
+    /**
+     * estado del pedido
+     */
     private EstadoPed estado;
+    /**
+     * fecha de creacion del pedido
+     */
     private LocalDateTime fechaCreado;
+    /**
+     * fecha de pado del pedido
+     */
     private LocalDateTime fechaPagado;
 
+    /**
+     * constructor parametrizado pedido
+     * @param idPedido identificador del pedido
+     * @param cliente identificador del cliente
+     * @param resId identificador del restaurante
+     * @param estado estado del pedido
+     * @param fechaCreado fecha de cracion
+     * @param fechaPagado fecha de pago
+     */
     public Pedido(int idPedido, int cliente, int resId, EstadoPed estado, LocalDateTime fechaCreado, LocalDateTime fechaPagado) {
         this.idPedido = idPedido;
         this.cliente = cliente;
@@ -23,9 +50,9 @@ public class Pedido {
         this.fechaPagado = fechaPagado;
     }
     /**
-     * 
-     * @param idPedido id pedidos primero restaurante
-     * @param cliente id cliente 
+     * constructor parametrizado para cliente y restaurante
+     * @param idCliente identificador del cliente
+     * @param resId identificador del restaurante
      */
     public Pedido(int idCliente, int resId) {
         this.cliente = idCliente;
@@ -38,10 +65,13 @@ public class Pedido {
         this.resId = resId;
     }
 
+    /**
+     * constructor por defecto
+     */
     public Pedido() {
         
     }
-
+//SET AND GET
     public int getIdPedido() {
         return idPedido;
     }

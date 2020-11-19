@@ -6,21 +6,36 @@
 package co.unicauca.microkernel.common.entities;
 
 /**
- *
+ *representa un objeto en bytes mas especificamente imagenes, que se encuentran en la base de datos
+ * y seran usadas en el proyecto
  * @author EdynsonMJ
  */
 public class Recurso {
+    /**
+     * nombre del recurso o identificador
+     */
     private String nombre;
+    /**
+     * contenido del recuro en un arreglo de bytes
+     */
     private byte[] recurso;
 
+    /**
+     * constructor por defecto
+     */
     public Recurso() {
     }
 
+    /**
+     * constructor parametrizado
+     * @param nombre nombre del recurso
+     * @param recurso contenido en bytes
+     */
     public Recurso(String nombre, byte[] recurso) {
         this.nombre = nombre;
         this.recurso = recurso;
     }
-
+//SET AND GET
     public String getNombre() {
         return nombre;
     }

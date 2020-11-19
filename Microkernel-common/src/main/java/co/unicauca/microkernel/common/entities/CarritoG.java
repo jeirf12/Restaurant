@@ -7,7 +7,7 @@ package co.unicauca.microkernel.common.entities;
 
 /**
  *
- * @author jafes
+ * @author edynson muñoz, jhonfer ruiz, mateo, camilo
  */
 public class CarritoG{
     private int idCarrito;

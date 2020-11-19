@@ -8,16 +8,34 @@ package co.unicauca.microkernel.common.entities;
 import java.time.LocalDateTime;
 
 /**
- *
- * @author jafes
+ *representa el historial del pedido
+ * @author james, jhonfer, camilo, mateo, edynson
  */
 public class HistorialPed {
-    
+    /**
+     * identificador del pedido
+     */
     private int idPed;
+    /**
+     * nombre del pedido
+     */
     private String nombre;
+    /**
+     * fecha en la que fue creado el pedido
+     */
     private String fechaCreado;
+    /**
+     * fecha en la que es pagado el pedido
+     */
     private String fechaPagado;
 
+    /**
+     * constructor parametrizado
+     * @param idPed identificador
+     * @param nombre 
+     * @param fechaCreado fecha en la que se crea el pedido
+     * @param fechaPagado fecha en la que se paga
+     */
     public HistorialPed(int idPed, String nombre, String fechaCreado, String fechaPagado) {
         this.idPed = idPed;
         this.nombre = nombre;
@@ -25,9 +43,13 @@ public class HistorialPed {
         this.fechaPagado = fechaPagado;
     }
 
+    /**
+     * constructor por defecto
+     */
     public HistorialPed() {
     }
 
+    //SET AND GET
     public String getNombre() {
         return nombre;
     }

@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 /**
  * Utilidades varias utilizadas por otras clases
  *
- * @author Libardo, Julio
+ * @author edynson muñoz, jhonfer, mateo, camilo james
  */
 public class Utilities {
 
@@ -55,7 +55,11 @@ public class Utilities {
 
         return resultado;
     }
-    
+    /**
+     * a partir de una ruta carga una imagen a un arrego de bytes
+     * @param ruta hubicacion de la foto o imagen
+     * @return arreglo de bytes que representan la foto
+     */
     public static byte [] convertirFoto(String ruta){
         byte[] icono;
         try {
@@ -68,7 +72,13 @@ public class Utilities {
         }
         return icono;
     }
-    
+    /**
+     * crea un objeto de tipo icon a partir de un arreglo de bytes
+     * @param imagen conjunto de bytes
+     * @param anchura ancho de la imagen
+     * @param altura alto de la imagen
+     * @return objeto de iipo icon que representa laimagen
+     */
      public static Icon crearIcono(byte[] imagen,int anchura,int altura) {
         Icon iconoEscalado;
         ImageIcon i = new ImageIcon(imagen);
@@ -76,7 +86,10 @@ public class Utilities {
         iconoEscalado = new ImageIcon(imgEscalada);
         return iconoEscalado;
     }
-     
+    /**
+     * obtine el dia actual del sistema
+     * @return string que representa el dia
+     */
     public static String DiaActual(){
         java.util.Date fecha = new Date();
         int dia = fecha.getDay();
