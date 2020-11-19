@@ -383,7 +383,13 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     public String addPedido(Pedido instancia) {
         int resultado = 0;
         try {
-            System.out.println("entro");
+            System.out.println("entro agregar pedido");
+            System.out.println("cliente"+instancia.getCliente());
+            System.out.println("cliente"+instancia.getEstado());
+            System.out.println("cliente"+instancia.getFechaCreado());
+            System.out.println("cliente"+instancia.getFechaPagado());
+            System.out.println("cliente"+instancia.getIdPedido());
+            System.out.println("cliente"+instancia.getResId());
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string
@@ -460,7 +466,7 @@ public class RestauranteRepositorioMysql implements IPlatoRepositorio {
     @Override
     public String addRacionPedido(RacionPed instancia) {
         try {
-            System.out.println("entro");
+            System.out.println("entro a agregar pedido");
             //primero se establece la conexion
             this.connect(); //validar cuando la conexion no sea exitosa
             //se estructura la sentencia sql en un string

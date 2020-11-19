@@ -357,6 +357,9 @@ public class ClienteAccessSocket implements IClienteAccess {
     @Override
     public String addPedido(Pedido instancia) throws Exception {
         String jsonResponse = null;
+        System.out.println("antes de la llamada");
+        System.out.println("cli_id:"+instancia.getCliente());
+        System.out.println("cli_restaurante:"+instancia.getIdPedido());
         //devuelve un string en formato Json que lo que se enviara
         var requestJson = crearPedido(instancia);
         var response=procesarConexion(requestJson);

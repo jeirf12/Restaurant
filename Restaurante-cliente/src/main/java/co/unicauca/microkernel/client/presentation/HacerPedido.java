@@ -391,6 +391,8 @@ public class HacerPedido extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("CarritoR")) {
+                    System.out.println("fila: "+row);
+                    System.out.println("ide: "+this.raciones.get(row).getRacId());
                     RacionPed aux = new RacionPed (pedido.getIdPedido(),this.raciones.get(row).getRacId(),1);
                     System.out.println(aux.getPedId());
                     try {
@@ -560,7 +562,7 @@ public class HacerPedido extends javax.swing.JFrame {
         tabRacionesHaP.ver_tabla(tblRaciones, raciones);
     }
     private void serviceListarRaciones() throws Exception {
-        this.raciones = servicioRestaurante.listMenuDayAll(pedido.getResId(),"administrador");
+        this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),Utilities.DiaActual(),"administrador");
         System.out.println("tamaño: "+raciones.size());
     }
     public void crearTablaEspeciales() throws Exception {

@@ -254,11 +254,16 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("Pedir")) {
+                    System.out.println("id cliente: "+idCliente+" id res:"+restaurantes.get(row).getId());
                     Pedido pedido = new Pedido(idCliente,this.restaurantes.get(row).getId());
                     try {
                         int idPedido = Integer.parseInt(this.servicioRestaurante.addPedido(pedido));
                         System.out.println("ide pedido: "+idPedido);
                         Pedido aux = new Pedido(idPedido,idCliente,this.restaurantes.get(row).getId());
+                        System.out.println("cliente"+aux.getCliente());
+                        System.out.println("estado"+aux.getEstado());
+                        System.out.println("id pedido"+aux.getIdPedido());
+                        System.out.println("restaurante id"+aux.getResId());
                         //HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         frameRacion.setVisible(true);
