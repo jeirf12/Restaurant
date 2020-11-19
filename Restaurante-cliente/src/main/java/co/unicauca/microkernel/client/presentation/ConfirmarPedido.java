@@ -60,41 +60,37 @@ public class ConfirmarPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTOTAL = new javax.swing.JLabel();
-        lblSumaOrdenes = new javax.swing.JLabel();
-        lblDomicilio = new javax.swing.JLabel();
-        lblImpuesto = new javax.swing.JLabel();
-        btnCancelarPedido = new javax.swing.JButton();
-        btnPagarPedido = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         lblSumaOrdenesR = new javax.swing.JLabel();
         lblImpuestoPedido = new javax.swing.JLabel();
         lblPrecioDomicilio = new javax.swing.JLabel();
         lblTotalR = new javax.swing.JLabel();
+        btnPagarPedido = new javax.swing.JButton();
+        btnCancelarPedido = new javax.swing.JButton();
+        lblTOTAL = new javax.swing.JLabel();
+        lblDomicilio = new javax.swing.JLabel();
+        lblImpuesto = new javax.swing.JLabel();
+        lblSumaOrdenes = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(30, 100, 85));
 
-        lblTOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblTOTAL.setForeground(new java.awt.Color(255, 0, 0));
-        lblTOTAL.setText("TOTAL: ");
+        jPanel1.setBackground(new java.awt.Color(30, 100, 85));
 
-        lblSumaOrdenes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblSumaOrdenes.setText("SUMA ORDENES: ");
+        lblSumaOrdenesR.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblSumaOrdenesR.setText(" ");
 
-        lblDomicilio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblDomicilio.setText("DOMICILIO");
+        lblImpuestoPedido.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblImpuestoPedido.setText(" ");
 
-        lblImpuesto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblImpuesto.setText("IMPUESTO PEDIDO: ");
+        lblPrecioDomicilio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblPrecioDomicilio.setText(" ");
 
-        btnCancelarPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnCancelarPedido.setText("CANCELAR PEDIDO");
-        btnCancelarPedido.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarPedidoActionPerformed(evt);
-            }
-        });
+        lblTotalR.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTotalR.setText(" ");
 
-        btnPagarPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPagarPedido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnPagarPedido.setText("PAGAR PEDIDO");
         btnPagarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -102,68 +98,107 @@ public class ConfirmarPedido extends javax.swing.JFrame {
             }
         });
 
-        lblSumaOrdenesR.setText(" ");
+        btnCancelarPedido.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnCancelarPedido.setText("CANCELAR PEDIDO");
+        btnCancelarPedido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarPedidoActionPerformed(evt);
+            }
+        });
 
-        lblImpuestoPedido.setText(" ");
+        lblTOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTOTAL.setForeground(new java.awt.Color(255, 0, 0));
+        lblTOTAL.setText("TOTAL: ______________");
 
-        lblPrecioDomicilio.setText(" ");
+        lblDomicilio.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblDomicilio.setText("COSTO DOMICILIO:_____");
 
-        lblTotalR.setText(" ");
+        lblImpuesto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblImpuesto.setText("PRECIO NETO:_________");
+
+        lblSumaOrdenes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblSumaOrdenes.setText("PRECIO BRUTO:________");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("FACTURA");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCancelarPedido))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lblImpuesto)
+                            .addComponent(lblDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblSumaOrdenes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblImpuestoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSumaOrdenesR, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPagarPedido)
+                    .addComponent(lblPrecioDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblTOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblTotalR, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(148, 148, 148))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1)
+                .addGap(38, 38, 38)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSumaOrdenes)
+                    .addComponent(lblSumaOrdenesR))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblImpuesto)
+                    .addComponent(lblImpuestoPedido))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDomicilio)
+                    .addComponent(lblPrecioDomicilio))
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTOTAL)
+                    .addComponent(lblTotalR))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelarPedido)
+                    .addComponent(btnPagarPedido))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblDomicilio)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblTOTAL)
-                                .addGap(8, 8, 8)))
-                        .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblSumaOrdenes)
-                        .addGap(60, 60, 60))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnCancelarPedido)
-                            .addComponent(lblImpuesto))
-                        .addGap(50, 50, 50)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnPagarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblSumaOrdenesR, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblImpuestoPedido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblPrecioDomicilio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblTotalR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(46, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblSumaOrdenes)
-                    .addComponent(lblSumaOrdenesR))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblImpuesto)
-                    .addComponent(lblImpuestoPedido))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDomicilio)
-                    .addComponent(lblPrecioDomicilio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTOTAL)
-                    .addComponent(lblTotalR))
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarPedido)
-                    .addComponent(btnPagarPedido))
-                .addGap(47, 47, 47))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -195,6 +230,8 @@ public class ConfirmarPedido extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarPedido;
     private javax.swing.JButton btnPagarPedido;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDomicilio;
     private javax.swing.JLabel lblImpuesto;
     private javax.swing.JLabel lblImpuestoPedido;

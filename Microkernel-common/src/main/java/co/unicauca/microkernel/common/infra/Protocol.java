@@ -18,7 +18,7 @@ public class Protocol {
     public Protocol() {
         parameters = new ArrayList<>();
     }
-
+    
     public String getResource() {
         return resource;
     }
@@ -42,7 +42,7 @@ public class Protocol {
     public void setBytes(byte[] bytes) {
         this.bytes = bytes;
     }
-
+    
     public List<Parameter> getParameters() {
         return parameters;
     }
@@ -54,6 +54,6 @@ public class Protocol {
     public void addParameter(String name, String value) {
         parameters.add(new Parameter(name, value));
     }
-
+    
 }
 

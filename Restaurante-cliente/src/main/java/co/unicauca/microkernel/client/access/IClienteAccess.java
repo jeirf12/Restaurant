@@ -2,6 +2,7 @@ package co.unicauca.microkernel.client.access;
 
 import java.util.List;
 import co.unicauca.microkernel.common.entities.*;
+import co.unicauca.microkernel.common.infra.Protocol;
 
 /**
  * entidad abstracta del los servicios que el cliente puede solicitar al servidor
@@ -83,6 +84,12 @@ public interface IClienteAccess {
      * @throws Exception 
      */
     public List<RacionDia> listMenuDayAll(int idRes,String resource)throws Exception;
+    
+    public Restaurante getRestaurante(int id)throws Exception;
+    
+    public Cliente getClient(int id)throws Exception;
+    
+    public Recurso getRecuso(String nombre)throws Exception;
 
     public List<Pedido> listPedido(int idRestaurante)throws Exception;
     

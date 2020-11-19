@@ -5,18 +5,15 @@
  */
 package co.unicauca.microkernel.client.presentation;
 
-import static co.unicauca.microkernel.client.access.Factory.getInstance;
 import co.unicauca.microkernel.client.domain.ClienteService;
 import static co.unicauca.microkernel.common.entities.CategoriaEnum.valueOf;
 import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.infra.Utilities;
 import static co.unicauca.microkernel.common.infra.Utilities.convertirFoto;
-import java.awt.Image;
 import static java.awt.Image.SCALE_SMOOTH;
 import static java.lang.Integer.parseInt;
 import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Logger.getLogger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.APPROVE_OPTION;

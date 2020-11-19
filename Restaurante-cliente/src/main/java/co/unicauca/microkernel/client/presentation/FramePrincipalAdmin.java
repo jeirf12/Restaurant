@@ -10,11 +10,12 @@ import co.unicauca.microkernel.client.access.IClienteAccess;
 import co.unicauca.microkernel.client.domain.ClienteService;
 import co.unicauca.microkernel.common.entities.PlatoEspecial;
 import co.unicauca.microkernel.common.entities.RacionDia;
-import co.unicauca.microkernel.common.infra.Utilities;
 import co.unicauca.microkernel.client.gestionTabla.TablaEspeciales;
 import co.unicauca.microkernel.client.gestionTabla.TablaPedidos;
 import co.unicauca.microkernel.client.gestionTabla.TablaRaciones;
+import co.unicauca.microkernel.common.entities.Cliente;
 import co.unicauca.microkernel.common.entities.Pedido;
+import co.unicauca.microkernel.common.entities.Restaurante;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,15 +52,20 @@ public class FramePrincipalAdmin extends JFrame {
     private int idSeleccionado;
     private String photoNull;
     private List<Pedido> pedidos;
+    private int IdUsuario;
 
     /**
      * Creates new form FramePrincipalAdmin
+     * @param idRestaurantes
      */
-    public FramePrincipalAdmin(List<String> idRestaurantes) {
-
+    public FramePrincipalAdmin(List<String> idRestaurantes, int idUsuario) {
+        this.IdUsuario = idUsuario;
         try {
             //INSTANCIANDO EL SERVICIO, POR FABRICA
             this.estilo();
+            for(int i = 0 ; i< idRestaurantes.size(); i++){
+                System.out.println("["+i+"]="+idRestaurantes.get(i));
+            }
             idRestaurante = idRestaurantes;
             service = getInstance().getClienteService();
             servicioRestaurante = new ClienteService(service);
@@ -77,10 +83,8 @@ public class FramePrincipalAdmin extends JFrame {
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearIndexRestaurante();
             this.crearTablaPedidos();
-            lblNomUsu.setText(idRestaurantes.get(idRestaurantes.size() - 1));
-            //F:\UNIVERSIDAD\LAB SOFTWARE 2\proyecto corte 2\Restaurant\Restaurante-cliente\src\main\java\imagenes
-            photoNull = "\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
 
+            this.showInfoUsuario();
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -118,6 +122,23 @@ public class FramePrincipalAdmin extends JFrame {
         /* Create and display the form */
     }
     
+    
+    private void showInfoUsuario(){
+        try {
+            Cliente aux = this.servicioRestaurante.getClient(this.IdUsuario);
+            if (aux != null){
+                this.lblNombreUsuario.setText("NOMBRE: "+aux.getNombre());
+                this.lblDireccionUsuario.setText("DIRECCION: carrera "+ aux.getCarrera()+" calle "+aux.getCalle());
+                this.lblTipoUsuario1.setText("TIPO: "+aux.getTipo()+" de restaurante");
+                this.servicioRestaurante.fijarImagen(this.lblImagenUsuario, aux.getImagen(), "FOTOPERFIL");
+            }else{
+                System.out.println("id: "+this.IdUsuario);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -133,9 +154,12 @@ public class FramePrincipalAdmin extends JFrame {
         lblImagenUsuario = new javax.swing.JLabel();
         lblNombreUsuario = new javax.swing.JLabel();
         lblNombreRestaurante = new javax.swing.JLabel();
-        lblNomUsu = new javax.swing.JLabel();
         cbxRestaurante = new javax.swing.JComboBox<>();
         lblImagenInicio = new javax.swing.JLabel();
+        lblInformacionUsuario = new javax.swing.JLabel();
+        lblDireccionUsuario = new javax.swing.JLabel();
+        lblTipoUsuario1 = new javax.swing.JLabel();
+        lblTituloRestaurante = new javax.swing.JLabel();
         pnlRaciones = new javax.swing.JPanel();
         pnlFondoRaciones = new javax.swing.JPanel();
         lblFiltro = new javax.swing.JLabel();
@@ -165,13 +189,25 @@ public class FramePrincipalAdmin extends JFrame {
         lblNombreUsuario.setText("Nombre: ");
 
         lblNombreRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblNombreRestaurante.setText("Restaurante:");
+        lblNombreRestaurante.setText("Restaurantes:");
 
         cbxRestaurante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxRestauranteActionPerformed(evt);
             }
         });
+
+        lblInformacionUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblInformacionUsuario.setText("INFORMACION DEL USUARIO");
+
+        lblDireccionUsuario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblDireccionUsuario.setText("direccion:");
+
+        lblTipoUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblTipoUsuario1.setText("Tipo: ");
+
+        lblTituloRestaurante.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblTituloRestaurante.setText("nombre de restaurante");
 
         javax.swing.GroupLayout pnlInfoUsuarioLayout = new javax.swing.GroupLayout(pnlInfoUsuario);
         pnlInfoUsuario.setLayout(pnlInfoUsuarioLayout);
@@ -180,40 +216,47 @@ public class FramePrincipalAdmin extends JFrame {
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblNombreUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblNomUsu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxRestaurante, 0, 121, Short.MAX_VALUE))
-                        .addContainerGap(594, Short.MAX_VALUE))
-                    .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56))))
+                    .addComponent(lblNombreUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblDireccionUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTipoUsuario1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblInformacionUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInfoUsuarioLayout.createSequentialGroup()
+                        .addComponent(lblNombreRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTituloRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
         );
         pnlInfoUsuarioLayout.setVerticalGroup(
             pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
                 .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addComponent(lblImagenUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNombreRestaurante)
+                            .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addComponent(lblInformacionUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNombreUsuario)
+                        .addGap(2, 2, 2)
+                        .addComponent(lblTipoUsuario1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDireccionUsuario))
                     .addGroup(pnlInfoUsuarioLayout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreUsuario)
-                    .addComponent(lblNomUsu))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlInfoUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombreRestaurante)
-                    .addComponent(cbxRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(201, Short.MAX_VALUE))
+                        .addGap(9, 9, 9)
+                        .addComponent(lblTituloRestaurante)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblImagenInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlInicioLayout = new javax.swing.GroupLayout(pnlInicio);
@@ -322,7 +365,7 @@ public class FramePrincipalAdmin extends JFrame {
             pnlRacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRacionesLayout.createSequentialGroup()
                 .addComponent(pnlFondoRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 53, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("RACIONES", pnlRaciones);
@@ -364,7 +407,7 @@ public class FramePrincipalAdmin extends JFrame {
         pnlFondoEspecialesLayout.setHorizontalGroup(
             pnlFondoEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoEspecialesLayout.createSequentialGroup()
-                .addContainerGap(492, Short.MAX_VALUE)
+                .addContainerGap(516, Short.MAX_VALUE)
                 .addComponent(btnAddEspecial, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(218, 218, 218))
             .addGroup(pnlFondoEspecialesLayout.createSequentialGroup()
@@ -395,7 +438,7 @@ public class FramePrincipalAdmin extends JFrame {
             pnlEspecialesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEspecialesLayout.createSequentialGroup()
                 .addComponent(pnlFondoEspeciales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 72, Short.MAX_VALUE))
+                .addGap(0, 66, Short.MAX_VALUE))
         );
 
         jtpPestanias.addTab("PLATOS ESPECIALES", pnlEspeciales);
@@ -455,13 +498,7 @@ public class FramePrincipalAdmin extends JFrame {
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
         //INSTANCIAR IMAGEN
-        if (imagen != null) {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(imagen, this.lblImagenRacion.getWidth()
-                    , this.lblImagenRacion.getHeight()));
-        } else {
-            this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull)
-                    , lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
-        }
+        this.servicioRestaurante.fijarImagen(this.lblImagenRacion, imagen, "FOTONULA");
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -493,7 +530,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deleteRacionDia(clave) == "FALLO") {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenRacion.setIcon(Utilities.crearIcono(Utilities.convertirFoto(this.photoNull), lblImagenRacion.getWidth(), lblImagenRacion.getHeight()));
+                                this.servicioRestaurante.fijarImagen(this.lblImagenRacion, null, "FOTONULA");
                                 this.crearTablaRaciones();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -522,14 +559,7 @@ public class FramePrincipalAdmin extends JFrame {
         int column = tblEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        if (imagen != null) {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(imagen, this.lblImagenEspecial.getWidth()
-                    , this.lblImagenEspecial.getHeight()));
-        } else {
-            this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
-                    , this.lblImagenEspecial.getWidth(), this.lblImagenEspecial.getHeight()));
-
-        }
+        this.servicioRestaurante.fijarImagen(this.lblImagenEspecial, imagen, "FOTONULA");
         if (row < tblEspeciales.getRowCount() && row >= 0 && column < tblEspeciales.getColumnCount() && column >= 0) {
             Object value = tblEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -561,8 +591,7 @@ public class FramePrincipalAdmin extends JFrame {
                             if (this.servicioRestaurante.deletePlatoEspecial(clave).equals("FALLO")) {
                                 JOptionPane.showMessageDialog(rootPane, "El registro no existe");
                             } else {
-                                this.lblImagenEspecial.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull)
-                                        , lblImagenEspecial.getWidth(), lblImagenEspecial.getHeight()));
+                                this.servicioRestaurante.fijarImagen(this.lblImagenEspecial, null, "FOTONULA");
                                 this.crearTablaEspeciales();
                                 JOptionPane.showMessageDialog(rootPane, "operacion exitosa");
                             }
@@ -618,6 +647,7 @@ public class FramePrincipalAdmin extends JFrame {
             String[] dat = idRestaurante.get(i).split("-");
             if (dat[1].equals(sel)) {
                 this.idSeleccionado = Integer.parseInt(dat[0]);
+                this.lblTituloRestaurante.setText(sel);
                 break;
             }
         }
@@ -627,6 +657,12 @@ public class FramePrincipalAdmin extends JFrame {
             this.crearTablaEspeciales();
         } catch (Exception ex) {
             Logger.getLogger(FramePrincipalAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            Restaurante aux = this.servicioRestaurante.getRestaurante(idSeleccionado);
+            this.servicioRestaurante.fijarImagen(this.lblImagenInicio, aux.getImagen(), "FOTONULA");
+        } catch (Exception ex) {
+            Logger.getLogger(GUILogin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cbxRestauranteActionPerformed
 
@@ -686,14 +722,17 @@ public class FramePrincipalAdmin extends JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jtpPestanias;
+    private javax.swing.JLabel lblDireccionUsuario;
     private javax.swing.JLabel lblFiltro;
     private javax.swing.JLabel lblImagenEspecial;
     private javax.swing.JLabel lblImagenInicio;
     private javax.swing.JLabel lblImagenRacion;
     private javax.swing.JLabel lblImagenUsuario;
-    private javax.swing.JLabel lblNomUsu;
+    private javax.swing.JLabel lblInformacionUsuario;
     private javax.swing.JLabel lblNombreRestaurante;
     private javax.swing.JLabel lblNombreUsuario;
+    private javax.swing.JLabel lblTipoUsuario1;
+    private javax.swing.JLabel lblTituloRestaurante;
     private javax.swing.JPanel pnlEspeciales;
     private javax.swing.JPanel pnlFondoEspeciales;
     private javax.swing.JPanel pnlFondoRaciones;

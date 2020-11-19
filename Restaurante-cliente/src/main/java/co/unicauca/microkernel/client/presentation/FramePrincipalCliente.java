@@ -13,7 +13,6 @@ import co.unicauca.microkernel.client.gestionTabla.TableRestaurantesHaPed;
 import co.unicauca.microkernel.common.entities.HistorialPed;
 import co.unicauca.microkernel.common.entities.Pedido;
 import co.unicauca.microkernel.common.entities.Restaurante;
-import co.unicauca.microkernel.common.infra.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,7 +44,6 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
      */
     public FramePrincipalCliente(int parIdCliente) {
     try {
-
             service = getInstance().getClienteService();
             servicioRestaurante = new ClienteService(service);
             //INICIALIZANDO TABLAS
@@ -62,8 +60,6 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             //crear index debe estar antes de fiar texto para lblNomUsu
             this.crearTablaRestaurantes(tipoRestaurante);
             this.crearTablaHistoria(estadoPedido);
-
-            photoNull = "\\Restaurant\\Restaurante-cliente\\src\\main\\java\\imagenes\\photoNotAvailable.jpg";
         } catch (Exception ex) {
             getLogger(FramePrincipalAdmin.class.getName()).log(SEVERE, null, ex);
         }
@@ -92,6 +88,10 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         tblPedidosEstado = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        pstFrmPrnCli.setBackground(new java.awt.Color(30, 100, 85));
+
+        pstHacerPedido.setBackground(new java.awt.Color(30, 100, 85));
 
         lblTipoRestaurante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblTipoRestaurante.setText("Tipo de restaurante: ");
@@ -132,29 +132,31 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                     .addGroup(pstHacerPedidoLayout.createSequentialGroup()
                         .addComponent(lblTipoRestaurante)
                         .addGap(26, 26, 26)
-                        .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pstHacerPedidoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                        .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         pstHacerPedidoLayout.setVerticalGroup(
             pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pstHacerPedidoLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoRestaurante)
-                    .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblImagenRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pstHacerPedidoLayout.createSequentialGroup()
+                        .addGroup(pstHacerPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTipoRestaurante)
+                            .addComponent(cbxTipoRestaurante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pstFrmPrnCli.addTab("HACER PEDIDO", pstHacerPedido);
+
+        pstHistorialPedido.setBackground(new java.awt.Color(30, 100, 85));
 
         lblEstadoDelPedido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEstadoDelPedido.setText("Estado del pedido: ");
@@ -192,12 +194,12 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
             .addGroup(pstHistorialPedidoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pstHistorialPedidoLayout.createSequentialGroup()
                         .addComponent(lblEstadoDelPedido)
                         .addGap(18, 18, 18)
                         .addComponent(cbxEstadoDelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(309, Short.MAX_VALUE))
         );
         pstHistorialPedidoLayout.setVerticalGroup(
             pstHistorialPedidoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +210,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                     .addComponent(cbxEstadoDelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         pstFrmPrnCli.addTab("HISTORIAL PEDIDO", pstHistorialPedido);
@@ -217,18 +219,15 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 718, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pstFrmPrnCli, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbxTipoRestauranteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbxTipoRestauranteItemStateChanged
@@ -243,11 +242,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
         int column = tblRestaurantes.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRestaurantes.getRowHeight();
         byte[] imagen = this.restaurantes.get(row).getImagen();
-        if (imagen != null) {
-            this.lblImagenRestaurante.setIcon(Utilities.crearIcono(imagen, this.lblImagenRestaurante.getWidth(), this.lblImagenRestaurante.getHeight()));
-        } else {
-            this.lblImagenRestaurante.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenRestaurante.getWidth(), this.lblImagenRestaurante.getHeight()));
-        }
+        this.servicioRestaurante.fijarImagen(this.lblImagenRestaurante, imagen, "FOTONULA");
         
         if (row < tblRestaurantes.getRowCount() && row >= 0 && column < tblRestaurantes.getColumnCount() && column >= 0) {
             Object value = tblRestaurantes.getValueAt(row, column);
@@ -255,10 +250,17 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("Pedir")) {
+                    System.out.println("id cliente: "+idCliente+" id res:"+restaurantes.get(row).getId());
                     Pedido pedido = new Pedido(idCliente,this.restaurantes.get(row).getId());
                     try {
                         int idPedido = Integer.parseInt(this.servicioRestaurante.addPedido(pedido));
-                        Pedido aux = new Pedido(idPedido,idCliente);
+                        System.out.println("ide pedido: "+idPedido);
+                        Pedido aux = new Pedido(idPedido,idCliente,this.restaurantes.get(row).getId());
+                        System.out.println("cliente"+aux.getCliente());
+                        System.out.println("estado"+aux.getEstado());
+                        System.out.println("id pedido"+aux.getIdPedido());
+                        System.out.println("restaurante id"+aux.getResId());
+                        //HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         HacerPedido frameRacion = new HacerPedido(aux,this.servicioRestaurante);
                         frameRacion.setVisible(true);
                         this.setVisible(false);
@@ -356,7 +358,7 @@ public class FramePrincipalCliente extends javax.swing.JFrame {
                 return "CREADO";
         }
     }
-
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbxEstadoDelPedido;

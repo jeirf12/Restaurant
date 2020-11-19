@@ -22,9 +22,20 @@ public class Pedido {
         this.fechaCreado = fechaCreado;
         this.fechaPagado = fechaPagado;
     }
-    public Pedido(int idPedido, int cliente) {
+    /**
+     * 
+     * @param idPedido id pedidos primero restaurante
+     * @param cliente id cliente 
+     */
+    public Pedido(int idCliente, int resId) {
+        this.cliente = idCliente;
+        this.resId = resId;
+    }
+    
+    public Pedido(int idPedido, int cliente, int resId) {
         this.idPedido = idPedido;
         this.cliente = cliente;
+        this.resId = resId;
     }
 
     public Pedido() {

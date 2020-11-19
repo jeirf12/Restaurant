@@ -22,10 +22,7 @@ import co.unicauca.microkernel.common.entities.RacionDia;
 import co.unicauca.microkernel.common.entities.RacionPed;
 import co.unicauca.microkernel.common.infra.Utilities;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -82,7 +79,6 @@ public class HacerPedido extends javax.swing.JFrame {
         this.crearTablaRaciones();
         this.crearTablaEspeciales();
         
-        photoNull = "/home/fallen/NetBeansProjects/microkernel/Restaurant/Restaurante-cliente/src/main/java/imagenes/photoNotAvailable.jpg";
         
     }
 
@@ -124,8 +120,12 @@ public class HacerPedido extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(874, 491));
 
+        jTabbedPane1.setBackground(new java.awt.Color(30, 100, 85));
+
+        jPanel1.setBackground(new java.awt.Color(30, 100, 85));
+
         lblRaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblRaciones.setText("Raciones: ");
+        lblRaciones.setText("Raciones disponible para es dia: ");
 
         tblRaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -175,36 +175,36 @@ public class HacerPedido extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblRaciones)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCarritoRaciones)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35))))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(lblRaciones)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(lblCarritoRaciones)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(53, Short.MAX_VALUE))
+                    .addComponent(lblImagenRaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("COMPRAR RACIONES", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(30, 100, 85));
 
         lblPlatosEspeciales.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblPlatosEspeciales.setText("Platos especiales: ");
@@ -283,10 +283,12 @@ public class HacerPedido extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(42, 42, 42)
                         .addComponent(lblImagenPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("COMPRAR PLATOS ESPECIALES", jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(30, 100, 85));
 
         lblCarritoRacionesCf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCarritoRacionesCf.setText("Carrito raciones: ");
@@ -337,13 +339,13 @@ public class HacerPedido extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblCarritoRacionesCf)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCarritoPlatosCf))
                 .addGap(21, 21, 21))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(307, 307, 307)
+                .addGap(348, 348, 348)
                 .addComponent(btnConfirmarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -358,9 +360,9 @@ public class HacerPedido extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(38, 38, 38)
-                .addComponent(btnConfirmarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addGap(54, 54, 54)
+                .addComponent(btnConfirmarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("CONFIRMAR PEDIDO", jPanel3);
@@ -395,6 +397,8 @@ public class HacerPedido extends javax.swing.JFrame {
                 ((JButton) value).doClick();
                 var boton = (JButton) value;
                 if (boton.getName().equals("CarritoR")) {
+                    System.out.println("fila: "+row);
+                    System.out.println("ide: "+this.raciones.get(row).getRacId());
                     RacionPed aux = new RacionPed (pedido.getIdPedido(),this.raciones.get(row).getRacId(),1);
                     System.out.println(aux.getPedId());
                     try {
@@ -564,8 +568,8 @@ public class HacerPedido extends javax.swing.JFrame {
         tabRacionesHaP.ver_tabla(tblRaciones, raciones);
     }
     private void serviceListarRaciones() throws Exception {
-        this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),diaSemana(),"administrador");
-        //this.raciones = servicioRestaurante.listMenuDayAll(pedido.getResId(),"administrador");
+        this.raciones = servicioRestaurante.listMenuDay(pedido.getResId(),Utilities.DiaActual(),"administrador");
+        System.out.println("tamaño: "+raciones.size());
     }
     public void crearTablaEspeciales() throws Exception {
         this.tblRaciones.removeAll();
@@ -576,35 +580,6 @@ public class HacerPedido extends javax.swing.JFrame {
         this.especiales = servicioRestaurante.listMenuSpecial(pedido.getResId(), "administrador");
     }
     
-    private String diaSemana(){
-        Calendar fecha = Calendar.getInstance();
-        int diaSemana = fecha.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-        String dia = "";
-        switch (diaSemana){
-            case 1:
-                dia = "LUNES";
-                break;
-            case 2:
-                dia = "MARTES";
-                break;
-            case 3:
-                dia = "MIERCOLES";
-                break;
-            case 4:
-                dia = "JUEVES";
-                break;
-            case 5:
-                dia = "VIERNES";
-                break;
-            case 6:
-                dia = "SABADO";
-                break;
-            case 7:
-                dia = "DOMINGO";
-                break;
-        }
-        return dia;
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnConfirmarPedido;
     private javax.swing.JPanel jPanel1;

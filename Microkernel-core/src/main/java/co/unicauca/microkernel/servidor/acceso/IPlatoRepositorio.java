@@ -63,4 +63,25 @@ public interface IPlatoRepositorio {
     public String impuestoRestaurante(int idCliente, int idPedido);    
     public String total(int idCliente, int idPedido);
     public String listHistoryPed(int idCliente, String estado);
+    
+    /**
+     * Obtiene un restaurante basado en el codigo
+     * @param id clave del restaurante a recuperar
+     * @return string con la informacion necesaria para construir un restaurante
+     */
+    public String getRestaurant(int id);
+    
+    /**
+     * Obtiene un ciente basado en el id
+     * @param id indentificador para busqueda
+     * @return retorna un estring con la informacion necesaria para construir un cliente
+     */
+    public String getClient(int id);
+    
+    /**
+     * retorna un recurso en bytes
+     * @param nombreClave identificador del recurso
+     * @return un arreglo de bytes
+     */
+    public String getRecurso(String nombreClave);
 }
