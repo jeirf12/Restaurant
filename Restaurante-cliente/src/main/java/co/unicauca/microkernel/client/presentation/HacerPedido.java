@@ -387,12 +387,7 @@ public class HacerPedido extends javax.swing.JFrame {
         int column = tblRaciones.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblRaciones.getRowHeight();
         byte[] imagen = this.raciones.get(row).getImagen();
-        if (imagen != null) {
-            this.lblImagenRaciones.setIcon(Utilities.crearIcono(imagen, this.lblImagenRaciones.getWidth(), this.lblImagenRaciones.getHeight()));
-        } else {
-            this.lblImagenRaciones.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenRaciones.getWidth(), this.lblImagenRaciones.getHeight()));
-        }
-        
+        this.servicioRestaurante.fijarImagen(this.lblImagenRaciones, imagen, "FOTONULA");
         if (row < tblRaciones.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblRaciones.getValueAt(row, column);
             if (value instanceof JButton) {
@@ -420,12 +415,7 @@ public class HacerPedido extends javax.swing.JFrame {
         int column = tblPlatosEspeciales.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / tblPlatosEspeciales.getRowHeight();
         byte[] imagen = this.especiales.get(row).getImagen();
-        if (imagen != null) {
-            this.lblImagenPlatos.setIcon(Utilities.crearIcono(imagen, this.lblImagenPlatos.getWidth(), this.lblImagenPlatos.getHeight()));
-        } else {
-            this.lblImagenPlatos.setIcon(Utilities.crearIcono(Utilities.convertirFoto(photoNull), this.lblImagenPlatos.getWidth(), this.lblImagenPlatos.getHeight()));
-        }
-        
+        this.servicioRestaurante.fijarImagen(this.lblImagenPlatos, imagen, "FOTONULA");
         if (row < tblPlatosEspeciales.getRowCount() && row >= 0 && column < tblRaciones.getColumnCount() && column >= 0) {
             Object value = tblPlatosEspeciales.getValueAt(row, column);
             if (value instanceof JButton) {
